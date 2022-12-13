@@ -21,7 +21,7 @@ const ScreenContainer = ({ children }) => (
 );
 
 
-const User = ()=>{
+const userMain = ()=>{
     return(
         <SafeAreaView>
             <Text>
@@ -61,4 +61,4 @@ const CreateAccount = () => {
 };
 
 
-export {User, SignIn, CreateAccount};
+export {userMain, SignIn, CreateAccount};

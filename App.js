@@ -4,7 +4,7 @@ import Intro from './src/components/Intro'
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {User, SignIn, CreateAccount} from './src/pages/User'
+import {userMain, SignIn, CreateAccount} from './src/pages/User'
 import Home from './src/pages/Home'
 import Search from './src/pages/Search'
 import Add from './src/pages/Add'
@@ -45,12 +45,12 @@ const AddStackScreen = () =>(
 )
 const UserStackScreen = () =>(
     <UserStack.Navigator>
-        <UserStack.Screen name ='User' component={User} />
+        <UserStack.Screen name ='User' component={userMain} />
     </UserStack.Navigator>
 )
 const SettingsStackScreen = () =>(
     <SettingsStack.Navigator>
-        <SettingsStack.Screen name ='Settings' component={Setting} />
+        <SettingsStack.Screen name ='Settings' component={Settings} title={"Test"} />
     </SettingsStack.Navigator>
 )
 
