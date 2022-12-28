@@ -5,7 +5,7 @@ const Settings = ()=>{
     return(
         <SafeAreaView>
             <Text>
-                This is the add page
+                This is the settings page
             </Text>
 
         </SafeAreaView>
