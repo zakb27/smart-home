@@ -13,6 +13,10 @@ import Search from './src/pages/Search'
 import Add from './src/pages/Add'
 import Settings from './src/pages/Settings'
 import {auth} from "./firebase"
+
+
+
+
 const Authenticator = () =>{
     return (
         <NavigationContainer>
@@ -40,7 +44,7 @@ const Main = () =>{
         );
 }
 
-export default function App() {
+const App = ()=> {
 
     const [isSignedIn, setIsSignedIn] = useState(false);
 
@@ -68,6 +72,8 @@ export default function App() {
     }
 
 }
+
+export default App;
 
 const styles = StyleSheet.create({
     container: {
