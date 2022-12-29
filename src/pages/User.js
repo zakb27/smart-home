@@ -34,33 +34,4 @@ const UserMain = ()=>{
     )
 }
 
-const SignIn = ({ navigation }) => {
-
-
-    return (
-        <ScreenContainer>
-            <Text>Sign In Screen</Text>
-              <Button title="Sign In" onPress={() => alert('sdf')} />
-              <Button
-                  title="Create Account"
-                  onPress={() => navigation.push("CreateAccount")}
-              />
-        </ScreenContainer>
-    );
-
-};
-
-
-const CreateAccount = () => {
-
-    return (
-        <ScreenContainer>
-            <Text>Create Account Screen</Text>
-            <Button title="Sign Up" onPress={() => console.log('sdf')} />
-        </ScreenContainer>
-    // <Text>Create Account Screen</Text>
-    );
-};
-
-
-export {UserMain, SignIn, CreateAccount};
+export {UserMain};
