@@ -1,34 +1,42 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, TextInput,SafeAreaView,Button,StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    TextInput,
+    SafeAreaView,
+    Button,
+    StyleSheet,
+    TouchableOpacity
+} from 'react-native';
 import {auth} from "../../firebase";
+import {signOut} from "firebase/auth";
 
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    button: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        marginVertical: 10,
-        borderRadius: 5
-    }
-});
-
-const ScreenContainer = ({ children }) => (
-    <View style={styles.container}>{children}</View>
-);
 
 
 const UserMain = ()=>{
+
+    const handleSignOut = () => {
+        signOut(auth)
+            .then(() => {
+                console.log('Sign out successful')
+            })
+            .catch(error => alert(error.message))
+    }
+
+
     return(
         <SafeAreaView>
             <Text>
                 hello {auth.currentUser?.email}
             </Text>
-
+            <TouchableOpacity
+                onPress={handleSignOut}
+                style={styles.button}
+            >
+                <Text style={styles.buttonText}>Sign out</Text>
+            </TouchableOpacity>
         </SafeAreaView>
 
 
@@ -36,3 +44,25 @@ const UserMain = ()=>{
 }
 
 export {UserMain};
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    button: {
+        backgroundColor: '#0782F9',
+        width: '60%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 40,
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+})

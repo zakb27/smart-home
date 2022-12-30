@@ -15,8 +15,8 @@ import Add from './src/pages/Add'
 import Settings from './src/pages/Settings'
 import {auth} from "./firebase"
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import { Ionicons } from '@expo/vector-icons';
-
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider} from '@ui-kitten/components';
 
 
 const Authenticator = () =>{
@@ -37,10 +37,9 @@ const Main = () =>{
             <NavigationContainer>
                 <Tabs.Navigator
                 screenOptions ={({ route })=>({
-
                     tabBarIcon: ({focused,color,size})=>{
                         let iconName;
-
+                        size=27
                         if(route.name==='Home'){
                             iconName=focused?'home'
                                 : 'home-outline';
@@ -50,21 +49,24 @@ const Main = () =>{
                         }
                         else if (route.name === 'Search') {
                             iconName = focused ? 'search' : 'search-outline';
+
                         }
                         else if (route.name === 'Add') {
                             iconName = focused ? 'add' : 'add-outline';
-                            size=35;
+                            size=40;
                         }
                         else if (route.name === 'User') {
                             iconName = focused ? 'person' : 'person-outline';
+
                         }
 
                         return <Ionicons name={iconName} size={size} color={color} />;
 
                     },
-                    tabBarActiveTintColor: 'forestgreen',
+                    tabBarActiveTintColor: '#2d4d68',
                     tabBarInactiveTintColor: 'gray',
-                    // tabBarShowLabel: false,
+                    tabBarShowLabel: false,
+                    tabBarStyle: { height: 85 },
                 })}
                 >
                     <Tabs.Screen name={"Home"} component={Home} tabBarShowLabel={false} />
@@ -97,11 +99,18 @@ const App = ()=> {
     }, []);
 
     if(!isSignedIn){
-        return(<Authenticator />)
-        // return(<View><Text>Yhooho</Text></View>)
+        return(
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <Authenticator />
+            </ApplicationProvider>
+            )
     }
     else{
-        return(<Main />)
+        return(
+            <ApplicationProvider {...eva} theme={eva.light}>
+                <Main />
+            </ApplicationProvider>
+            )
     }
 
 }

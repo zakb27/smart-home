@@ -6,6 +6,7 @@
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Search.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +70,7 @@
       <workItem from="1672243989633" duration="4960000" />
       <workItem from="1672322628061" duration="650000" />
       <workItem from="1672326272641" duration="6658000" />
-      <workItem from="1672411502341" duration="1830000" />
+      <workItem from="1672411502341" duration="7575000" />
     </task>
     <servers />
   </component>

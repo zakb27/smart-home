@@ -4,29 +4,14 @@ import {auth} from "../../firebase";
 import {signOut} from "firebase/auth";
 const Home = ()=>{
 
-    const handleSignOut = () => {
-        signOut(auth)
-            .then(() => {
-                console.log('Sign out successful')
-            })
-            .catch(error => alert(error.message))
-    }
 
 
     return(
         <SafeAreaView>
             <Text>
                 This is the Home page
-
-
-
             </Text>
-            <TouchableOpacity
-                onPress={handleSignOut}
-                style={styles.button}
-            >
-                <Text style={styles.buttonText}>Sign out</Text>
-            </TouchableOpacity>
+
         </SafeAreaView>
 
 
