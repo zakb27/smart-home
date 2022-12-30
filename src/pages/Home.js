@@ -12,20 +12,22 @@ const Home = ()=>{
     useEffect(()=>{
         setRooms(rooms.rooms)
         setDevices(devices.devices)
-    },[])
+    })
 
     return(
         <SafeAreaView>
             <Text>
                 You have {currentDevices.length} amount
             </Text>
-                {currentRooms.map((item,index)=>{
-                    return(
-                        <View key={index}>
-                            <Text>{item.name}</Text>
-                        </View>
-                    )
-                })}
+            {/*<View>*/}
+            {/*    {currentRooms.map((item,index)=>{*/}
+            {/*        return(*/}
+            {/*            <View key={index}>*/}
+            {/*                <Text>{item.name}</Text>*/}
+            {/*            </View>*/}
+            {/*        )*/}
+            {/*    })}*/}
+            {/*</View>*/}
 
         </SafeAreaView>
 
