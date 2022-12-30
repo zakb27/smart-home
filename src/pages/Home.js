@@ -17,7 +17,7 @@ const Home = ()=>{
         <SafeAreaView>
             <Text>
                 This is the Home page
-                hello {auth.currentUser?.email}
+
 
 
             </Text>

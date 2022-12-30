@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, TextInput,SafeAreaView,Button,StyleSheet } from 'react-native';
+import {auth} from "../../firebase";
 
 
 const styles = StyleSheet.create({
@@ -25,7 +26,7 @@ const UserMain = ()=>{
     return(
         <SafeAreaView>
             <Text>
-                This is the user page
+                hello {auth.currentUser?.email}
             </Text>
 
         </SafeAreaView>

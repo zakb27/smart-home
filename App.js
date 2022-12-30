@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterScreen from "./src/screens/RegisterScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+
 const Stack = createNativeStackNavigator();
 import { onAuthStateChanged } from "firebase/auth";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
@@ -13,7 +14,8 @@ import Search from './src/pages/Search'
 import Add from './src/pages/Add'
 import Settings from './src/pages/Settings'
 import {auth} from "./firebase"
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+// import { Ionicons } from '@expo/vector-icons';
 
 
 
@@ -33,12 +35,43 @@ const Main = () =>{
 
     return (
             <NavigationContainer>
-                <Tabs.Navigator>
-                    <Tabs.Screen name={"Home"} component={Home} options={{ title: 'My home' }} />
+                <Tabs.Navigator
+                screenOptions ={({ route })=>({
+
+                    tabBarIcon: ({focused,color,size})=>{
+                        let iconName;
+
+                        if(route.name==='Home'){
+                            iconName=focused?'home'
+                                : 'home-outline';
+                        }
+                        else if (route.name === 'Settings') {
+                            iconName = focused ? 'settings' : 'settings-outline';
+                        }
+                        else if (route.name === 'Search') {
+                            iconName = focused ? 'search' : 'search-outline';
+                        }
+                        else if (route.name === 'Add') {
+                            iconName = focused ? 'add' : 'add-outline';
+                            size=35;
+                        }
+                        else if (route.name === 'User') {
+                            iconName = focused ? 'person' : 'person-outline';
+                        }
+
+                        return <Ionicons name={iconName} size={size} color={color} />;
+
+                    },
+                    tabBarActiveTintColor: 'forestgreen',
+                    tabBarInactiveTintColor: 'gray',
+                    // tabBarShowLabel: false,
+                })}
+                >
+                    <Tabs.Screen name={"Home"} component={Home} tabBarShowLabel={false} />
                     <Tabs.Screen name={"Search"} component={Search} />
                     <Tabs.Screen name={"Add"} component={Add} />
-                    <Tabs.Screen name={"User"} component={UserMain} />
                     <Tabs.Screen name={"Settings"} component={Settings} />
+                    <Tabs.Screen name={"User"} component={UserMain} />
                 </Tabs.Navigator>
             </NavigationContainer>
         );
