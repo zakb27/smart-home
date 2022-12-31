@@ -17,9 +17,6 @@ const Search = ()=>{
             accessoryLeft={<Ionicons name={'search'} size={20} />}
             onChangeText={nextValue => setValue(nextValue)}
             />
-            <Text>
-                This is the search page
-            </Text>
             <PerformSearch
             value={value}
             />

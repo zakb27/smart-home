@@ -18,7 +18,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider} from '@ui-kitten/components';
 
-
 const Authenticator = () =>{
     return (
         <NavigationContainer>

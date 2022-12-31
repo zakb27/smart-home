@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { TouchableWithoutFeedback, StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback, StyleSheet, View,ScrollView } from 'react-native';
 import { Icon, Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import rooms from '../utils/rooms.json'
@@ -30,16 +30,39 @@ const PerformSearch = ({value})=>{
 
 
     return(
-        <View>
+        <ScrollView contentContainerStyle={styles.container}>
                 {currentSearch.map((item,index)=>{
                     return(
-                        <View key={index}>
+                        <View key={index} style={styles.card}>
                             <Text>{item.name}</Text>
                         </View>
                     )
                 })}
-        </View>
+        </ScrollView>
     )
 }
 
 export default PerformSearch
+
+const styles = StyleSheet.create({
+    container:{
+        padding:25,
+        flexDirection:'row',
+        flexWrap:"wrap",
+        alignItems:'center'
+    },
+    card: {
+        width:150,
+        height:150,
+        padding:25,
+        margin:10,
+        backgroundColor:'white',
+        borderRadius:8,
+    },
+    text:{
+        color: '#2d4d68',
+        fontSize:12,
+    }
+
+
+})
