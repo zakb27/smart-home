@@ -43,8 +43,8 @@ const Main = () =>{
                             iconName=focused?'home'
                                 : 'home-outline';
                         }
-                        else if (route.name === 'Settings') {
-                            iconName = focused ? 'settings' : 'settings-outline';
+                        else if (route.name === 'Favourites') {
+                            iconName = focused ? 'bookmark' : 'bookmark-outline';
                         }
                         else if (route.name === 'Search') {
                             iconName = focused ? 'search' : 'search-outline';
@@ -71,7 +71,7 @@ const Main = () =>{
                     <Tabs.Screen name={"Home"} component={Home} tabBarShowLabel={false} />
                     <Tabs.Screen name={"Search"} component={Search} />
                     <Tabs.Screen name={"Add"} component={Add} />
-                    <Tabs.Screen name={"Settings"} component={Settings} />
+                    <Tabs.Screen name={"Favourites"} component={Settings} />
                     <Tabs.Screen name={"User"} component={UserMain} />
                 </Tabs.Navigator>
             </NavigationContainer>

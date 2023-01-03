@@ -5,27 +5,12 @@ import {signOut} from "firebase/auth";
 import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 
-const RoomScreen = ({route,navigation}) =>{
-    const { roomID } = route.params;
-    const [currentSearch,performSearch] = useState([]);
-
-
-    useEffect(() => {
-        performSearch([])
-
-        for(let i=0;i<devices.devices.length;i++){
-            if(devices.devices[i].parent==roomID)
-            {
-                performSearch(current=>[...current,devices.devices[i]])
-            }
-        }
-    },[route]);
-
-
+const AllDeviceScreen = ({navigation}) =>{
     return(
         <View>
+            <Button title="<" onPress={() => navigation.goBack()} />
             <ScrollView contentContainerStyle={styles.container}>
-                {currentSearch.map((item,index)=>{
+                {devices.devices.map((item,index)=>{
                     return(
                         <View key={index} style={styles.card}>
                             <Text>{item.name}</Text>
@@ -34,12 +19,13 @@ const RoomScreen = ({route,navigation}) =>{
                 })}
             </ScrollView>
 
-            <Button title="<" onPress={() => navigation.goBack()} />
+
         </View>
     )
-
 }
-export default RoomScreen;
+
+export default AllDeviceScreen;
+
 
 
 const styles = StyleSheet.create({

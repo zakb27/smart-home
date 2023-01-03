@@ -6,6 +6,7 @@ import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 import RoomScreen from "../screens/RoomScreen";
 import { createStackNavigator } from '@react-navigation/stack';
+import AllDeviceScreen from "../screens/AllDeviceScreen";
 const Stack = createStackNavigator();
 
 const HomeRooms = ({navigation}) =>{
@@ -22,11 +23,15 @@ const HomeRooms = ({navigation}) =>{
 
     return(
         <SafeAreaView style={styles.overall}>
-            <View style={styles.cardConnected}>
+            <TouchableOpacity style={styles.cardConnected}
+                              onPress={() =>{
+                                  navigation.navigate('AllDevices')
+                              }}
+            >
                 <Text style={styles.text2}>
                     {currentDevices.length} devices connected
                 </Text>
-            </View>
+            </TouchableOpacity>
 
             <ScrollView contentContainerStyle={styles.container}>
                 {currentRooms.map((item,index)=>{
@@ -61,6 +66,7 @@ const Home = ()=>{
         >
             <Stack.Screen name="HomeRooms" component={HomeRooms} />
             <Stack.Screen name="RoomDevice" component={RoomScreen} />
+            <Stack.Screen name="AllDevices" component={AllDeviceScreen} />
         </Stack.Navigator>
 
 
