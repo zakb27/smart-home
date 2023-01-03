@@ -138,7 +138,11 @@ const Display = ({navigation}) =>{
 const UserMain = ()=>{
 
     return(
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
+        >
             <Stack.Screen name="Home" component={Display} />
             <Stack.Screen name="Email" component={EmailChange} />
             <Stack.Screen name="Password" component={PassChange} />

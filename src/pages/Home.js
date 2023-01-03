@@ -4,11 +4,11 @@ import {auth} from "../../firebase";
 import {signOut} from "firebase/auth";
 import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
+import RoomScreen from "../screens/RoomScreen";
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
 
-
-
-// SplashScreen.preventAutoHideAsync();
-const Home = ()=>{
+const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
     const [appIsReady, setAppIsReady] = useState(false);
     const [currentDevices,setDevices] = useState('')
@@ -24,21 +24,44 @@ const Home = ()=>{
         <SafeAreaView style={styles.overall}>
             <View style={styles.cardConnected}>
                 <Text style={styles.text2}>
-                   {currentDevices.length} devices connected
+                    {currentDevices.length} devices connected
                 </Text>
             </View>
 
             <ScrollView contentContainerStyle={styles.container}>
                 {currentRooms.map((item,index)=>{
                     return(
-                        <View key={index} style={styles.card}>
+                        <TouchableOpacity key={index} style={styles.card}
+                                          onPress={() => {
+                                              navigation.navigate('RoomDevice',
+                                                  {
+                                                      roomID:item.id
+                                                  })
+                                          }}
+                        >
                             <Text style={styles.text}>{item.name}</Text>
-                        </View>
+                        </TouchableOpacity>
                     )
                 })}
             </ScrollView>
 
         </SafeAreaView>
+
+
+    )
+}
+
+// SplashScreen.preventAutoHideAsync();
+const Home = ()=>{
+    return(
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}
+        >
+            <Stack.Screen name="HomeRooms" component={HomeRooms} />
+            <Stack.Screen name="RoomDevice" component={RoomScreen} />
+        </Stack.Navigator>
 
 
     )
