@@ -9,15 +9,17 @@ import DeviceScreen from "../screens/DeviceScreen";
 const PerformSearch = ({value})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [selectedData, setData] = useState('');
+
 
     useEffect(() => {
         performSearch([])
-        for(let i=0;i<rooms.rooms.length;i++){
-            if(rooms.rooms[i].name.toLowerCase().includes(value.toLowerCase()))
-            {
-                performSearch(current=>[...current,rooms.rooms[i]])
-            }
-        }
+        // for(let i=0;i<rooms.rooms.length;i++){
+        //     if(rooms.rooms[i].name.toLowerCase().includes(value.toLowerCase()))
+        //     {
+        //         performSearch(current=>[...current,rooms.rooms[i]])
+        //     }
+        // }
         for(let i=0;i<devices.devices.length;i++){
             if(devices.devices[i].name.toLowerCase().includes(value.toLowerCase()) ||
                devices.devices[i].type.toLowerCase().includes(value.toLowerCase()))
@@ -35,13 +37,18 @@ const PerformSearch = ({value})=>{
                 {currentSearch.map((item,index)=>{
                     return(
                         <TouchableOpacity key={index} style={styles.card}
-                        onPress={() => setModalVisible(true)}
+                                          onPress={() => {
+                                              setData(item);
+                                              setModalVisible(true)
+                                          }}
                         >
                             <Text>{item.name}</Text>
                         </TouchableOpacity>
                     )
                 })}
-            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} />
+            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible}
+            data={selectedData}
+            />
         </ScrollView>
     )
 }

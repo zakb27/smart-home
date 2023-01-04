@@ -4,9 +4,20 @@ import {auth} from "../../firebase";
 import {signOut} from "firebase/auth";
 import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
+import {LightDevice} from "../devices/Devices";
+import {TemperatureDevice} from "../devices/Devices";
+const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
 
-const DeviceScreen = ({modalVisible,setModalVisible}) =>{
-
+    const renderSwitch=()=>{
+        switch(data.type){
+            case "light":
+                return <LightDevice data={data} />
+            case "temp":
+                return <TemperatureDevice data={data} />
+            default:
+                return <Text>Error</Text>
+        }
+    }
 
     return(
         <Modal
@@ -23,7 +34,7 @@ const DeviceScreen = ({modalVisible,setModalVisible}) =>{
             </TouchableWithoutFeedback>
                     <View style={styles.modalView}
                     >
-                        <Text style={styles.modalText}>Hello World!</Text>
+                        {renderSwitch()}
                         <TouchableOpacity
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => setModalVisible(!modalVisible)}

@@ -8,6 +8,7 @@ import DeviceScreen from "./DeviceScreen";
 
 const AllDeviceScreen = ({navigation}) =>{
     const [modalVisible, setModalVisible] = useState(false);
+    const [selectedData, setData] = useState('');
 
     return(
         <View>
@@ -16,14 +17,17 @@ const AllDeviceScreen = ({navigation}) =>{
                 {devices.devices.map((item,index)=>{
                     return(
                         <TouchableOpacity key={index} style={styles.card}
-                                          onPress={() => setModalVisible(true)}
+                                          onPress={() => {
+                                              setData(item);
+                                              setModalVisible(true)
+                                          }}
                         >
                             <Text>{item.name}</Text>
                         </TouchableOpacity>
                     )
                 })}
             </ScrollView>
-            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} />
+            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} data={selectedData} />
 
 
         </View>

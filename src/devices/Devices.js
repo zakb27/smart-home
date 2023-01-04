@@ -1,73 +1,73 @@
 import React, { useEffect, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet} from 'react-native';
 
-const LightDevice = ({id,type,name}) =>{
+const LightDevice = ({data}) =>{
 
 
     return(
 
         <View>
-            <Text>This is the light of {name}</Text>
+            <Text>This is the light of {data.name}</Text>
         </View>
     )
 }
-const TemperatureDevice = ({id,type,name}) =>{
-    
-    return(
-
-        <View>
-            <Text>This is the temp of {name}</Text>
-        </View>
-    )
-}
-
-const WashingDevice = ({id,type,name}) =>{
-
+const TemperatureDevice = ({data}) =>{
 
     return(
 
         <View>
-            <Text>This is the machine of {name}</Text>
-        </View>
-    )
-}
-const DoorDevice = ({id,type,name}) =>{
-
-
-    return(
-
-        <View>
-            <Text>This is the door of {name}</Text>
+            <Text>This is the temp of {data.name}</Text>
         </View>
     )
 }
 
-const DishDevice = ({id,type,name}) =>{
+const WashingDevice = ({data}) =>{
 
 
     return(
 
         <View>
-            <Text>This is the dishwasher of {name}</Text>
+            <Text>This is the machine of {data.name}</Text>
+        </View>
+    )
+}
+const DoorDevice = ({data}) =>{
+
+
+    return(
+
+        <View>
+            <Text>This is the door of {data.name}</Text>
+        </View>
+    )
+}
+
+const DishDevice = ({data}) =>{
+
+
+    return(
+
+        <View>
+            <Text>This is the dishwasher of {data.name}</Text>
         </View>
     )
 }
 
 
-const SpeakerDevice = ({id,type,name}) =>{
+const SpeakerDevice = ({data}) =>{
     return(
 
         <View>
-            <Text>This is the speaker of {name}</Text>
+            <Text>This is the speaker of {data.name}</Text>
         </View>
     )
 }
 
-const OtherDevice = ({id,type,name}) =>{
+const OtherDevice = ({data}) =>{
     return(
 
         <View>
-            <Text>This is the other of {name}</Text>
+            <Text>This is the other of {data.name}</Text>
         </View>
     )
 }

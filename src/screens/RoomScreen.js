@@ -9,6 +9,7 @@ const RoomScreen = ({route,navigation}) =>{
     const { roomID } = route.params;
     const [currentSearch,performSearch] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [selectedData, setData] = useState('');
 
     useEffect(() => {
         performSearch([])
@@ -28,14 +29,17 @@ const RoomScreen = ({route,navigation}) =>{
                 {currentSearch.map((item,index)=>{
                     return(
                         <TouchableOpacity key={index} style={styles.card}
-                            onPress={() => setModalVisible(true)}
+                                          onPress={() => {
+                                              setData(item);
+                                              setModalVisible(true)
+                                          }}
                         >
                             <Text>{item.name}</Text>
                         </TouchableOpacity>
                     )
                 })}
             </ScrollView>
-            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} />
+            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} data={selectedData} />
             <Button title="<" onPress={() => navigation.goBack()} />
         </View>
     )
