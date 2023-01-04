@@ -33,7 +33,7 @@ const Main = () =>{
     const Tabs = createBottomTabNavigator()
 
     return (
-            <NavigationContainer>
+            <NavigationContainer >
                 <Tabs.Navigator
                 screenOptions ={({ route })=>({
                     tabBarIcon: ({focused,color,size})=>{
@@ -65,7 +65,8 @@ const Main = () =>{
                     tabBarActiveTintColor: '#2d4d68',
                     tabBarInactiveTintColor: 'gray',
                     tabBarShowLabel: false,
-                    tabBarStyle: { height: 85 },
+                    tabBarStyle: { height: 85,
+                    },
                 })}
                 >
                     <Tabs.Screen name={"Home"} component={Home} tabBarShowLabel={false} />
