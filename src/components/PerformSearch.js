@@ -1,13 +1,14 @@
 import React,{useEffect,useState} from 'react';
-import { TouchableWithoutFeedback, StyleSheet, View,ScrollView } from 'react-native';
+import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView } from 'react-native';
 import { Icon, Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
-
+import DeviceScreen from "../screens/DeviceScreen";
 
 const PerformSearch = ({value})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(() => {
         performSearch([])
@@ -33,11 +34,14 @@ const PerformSearch = ({value})=>{
         <ScrollView contentContainerStyle={styles.container}>
                 {currentSearch.map((item,index)=>{
                     return(
-                        <View key={index} style={styles.card}>
+                        <TouchableOpacity key={index} style={styles.card}
+                        onPress={() => setModalVisible(true)}
+                        >
                             <Text>{item.name}</Text>
-                        </View>
+                        </TouchableOpacity>
                     )
                 })}
+            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} />
         </ScrollView>
     )
 }

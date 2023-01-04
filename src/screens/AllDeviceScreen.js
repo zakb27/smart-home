@@ -4,20 +4,26 @@ import {auth} from "../../firebase";
 import {signOut} from "firebase/auth";
 import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
+import DeviceScreen from "./DeviceScreen";
 
 const AllDeviceScreen = ({navigation}) =>{
+    const [modalVisible, setModalVisible] = useState(false);
+
     return(
         <View>
             <Button title="<" onPress={() => navigation.goBack()} />
             <ScrollView contentContainerStyle={styles.container}>
                 {devices.devices.map((item,index)=>{
                     return(
-                        <View key={index} style={styles.card}>
+                        <TouchableOpacity key={index} style={styles.card}
+                                          onPress={() => setModalVisible(true)}
+                        >
                             <Text>{item.name}</Text>
-                        </View>
+                        </TouchableOpacity>
                     )
                 })}
             </ScrollView>
+            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} />
 
 
         </View>
