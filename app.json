@@ -6,6 +6,10 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "plugins": [
+      "@config-plugins/react-native-ble-plx",
+      "with-rn-bluetooth-classic"
+    ],
     "splash": {
       "image": "./assets/homerino.png",
       "resizeMode": "contain",
@@ -18,16 +22,31 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zakb27.smarthome"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/homerino.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_CONNECT",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.BLUETOOTH_SCAN",
+        "android.permission.BLUETOOTH_ADVERTISE"
+      ],
+      "package": "com.zakb27.smarthome"
     },
     "web": {
       "favicon": "./assets/homerino.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d2588416-b6c2-4f0c-8e0e-dd65a53a3d17"
+      }
     }
   }
 }
