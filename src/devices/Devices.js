@@ -1,22 +1,48 @@
 import React, { useEffect, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet} from 'react-native';
-
+import {sendInfo} from "../hooks/Database";
 const LightDevice = ({data}) =>{
 
+    const handleSend =() => {
+        const info = {
+            id: data.id,
+            status: 1,
+            type:data.type,
+            value:50
+        }
+        sendInfo(info).then(response => {
+            console.log(response)
+        });
+    }
 
     return(
 
         <View>
-            <Text>This is the light of {data.name}</Text>
+            <Text>This is light of {data.name}</Text>
+            <Button onPress={handleSend} title={"On/Off"} />
+
         </View>
     )
 }
 const TemperatureDevice = ({data}) =>{
 
+    const handleSend =() => {
+        const info = {
+            id: data.id,
+            status: 1,
+            type:data.type,
+            value:50
+        }
+        sendInfo(info).then(response => {
+            console.log(response)
+        });
+    }
     return(
 
         <View>
-            <Text>This is the temp of {data.name}</Text>
+            <Text>This is temperature of {data.name}</Text>
+            <Button onPress={handleSend} title={"On/Off"} />
+
         </View>
     )
 }

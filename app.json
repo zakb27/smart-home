@@ -23,7 +23,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.zakb27.smarthome"
+      "bundleIdentifier": "com.zakb27.smarthome",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {

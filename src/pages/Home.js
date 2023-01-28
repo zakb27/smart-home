@@ -1,21 +1,23 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
-import {auth} from "../../firebase";
-import {signOut} from "firebase/auth";
-import rooms from '../utils/rooms.json'
-import devices from '../utils/devices.json'
+
 import RoomScreen from "../screens/RoomScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import AllDeviceScreen from "../screens/AllDeviceScreen";
 const Stack = createStackNavigator();
-
+import {fetchRooms} from "../hooks/Database";
+import {fetchDevices} from "../hooks/Database";
 const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
     const [appIsReady, setAppIsReady] = useState(false);
     const [currentDevices,setDevices] = useState('')
     useEffect(()=>{
-        setRooms(rooms.rooms)
-        setDevices(devices.devices)
+        fetchRooms().then((data)=>{
+            setRooms(data)
+        })
+        fetchDevices().then((data)=>{
+            setDevices(data)
+        })
 
     },[])
 

@@ -1,26 +1,35 @@
 import React, { useEffect, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet} from 'react-native';
-import {auth} from "../../firebase";
-import {signOut} from "firebase/auth";
-import rooms from '../utils/rooms.json'
-import devices from '../utils/devices.json'
+
 import DeviceScreen from "./DeviceScreen";
+import {fetchDevices} from "../hooks/Database";
 const RoomScreen = ({route,navigation}) =>{
     const { roomID } = route.params;
     const [currentSearch,performSearch] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
 
+    // useEffect(() => {
+    //     fetchDevices().then((data)=>{
+    //         setDevicesCall(data)
+    //         console.log("here")
+    //         console.log(data);
+    //         console.log('nodevices')
+    //     })
+    // }, []);
+
+
     useEffect(() => {
         performSearch([])
-
-        for(let i=0;i<devices.devices.length;i++){
-            if(devices.devices[i].parent==roomID)
-            {
-                performSearch(current=>[...current,devices.devices[i]])
+        fetchDevices().then((data)=>{
+            for(let i=0;i<data.length;i++){
+                if(data[i].parent==roomID)
+                {
+                    performSearch(current=>[...current,data[i]])
+                }
             }
-        }
-    },[route]);
+        })
+    },[]);
 
 
     return(

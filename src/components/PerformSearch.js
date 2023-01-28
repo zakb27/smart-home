@@ -2,32 +2,35 @@ import React,{useEffect,useState} from 'react';
 import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView } from 'react-native';
 import { Icon, Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import rooms from '../utils/rooms.json'
-import devices from '../utils/devices.json'
 import DeviceScreen from "../screens/DeviceScreen";
-
+import {fetchDevices} from "../hooks/Database";
 const PerformSearch = ({value})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
+    const [devices,setDevices] = useState([]);
+
+
 
 
     useEffect(() => {
         performSearch([])
+        fetchDevices().then((data)=>{
+            setDevices(data)
+        })
         // for(let i=0;i<rooms.rooms.length;i++){
         //     if(rooms.rooms[i].name.toLowerCase().includes(value.toLowerCase()))
         //     {
         //         performSearch(current=>[...current,rooms.rooms[i]])
         //     }
         // }
-        for(let i=0;i<devices.devices.length;i++){
-            if(devices.devices[i].name.toLowerCase().includes(value.toLowerCase()) ||
-               devices.devices[i].type.toLowerCase().includes(value.toLowerCase()))
+        for(let i=0;i<devices.length;i++){
+            if(devices[i].name.toLowerCase().includes(value.toLowerCase()) ||
+               devices[i].type.toLowerCase().includes(value.toLowerCase()))
             {
-                    performSearch(current=>[...current,devices.devices[i]])
+                    performSearch(current=>[...current,devices[i]])
             }
         }
-
 
     }, [value]);
 

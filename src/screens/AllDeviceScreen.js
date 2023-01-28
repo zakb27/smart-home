@@ -1,20 +1,26 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
-import {auth} from "../../firebase";
-import {signOut} from "firebase/auth";
-import rooms from '../utils/rooms.json'
-import devices from '../utils/devices.json'
+
 import DeviceScreen from "./DeviceScreen";
+import {fetchDevices} from "../hooks/Database";
 
 const AllDeviceScreen = ({navigation}) =>{
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
+    const [devices,setDevices] = useState([]);
+
+    useEffect(()=>{
+        fetchDevices().then((data)=>{
+            setDevices(data)
+        })
+
+    },[])
 
     return(
         <View>
             <Button title="<" onPress={() => navigation.goBack()} />
             <ScrollView contentContainerStyle={styles.container}>
-                {devices.devices.map((item,index)=>{
+                {devices.map((item,index)=>{
                     return(
                         <TouchableOpacity key={index} style={styles.card}
                                           onPress={() => {

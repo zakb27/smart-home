@@ -1,9 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback} from 'react-native';
-import {auth} from "../../firebase";
-import {signOut} from "firebase/auth";
-import rooms from '../utils/rooms.json'
-import devices from '../utils/devices.json'
 import {LightDevice} from "../devices/Devices";
 import {TemperatureDevice} from "../devices/Devices";
 const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
@@ -35,12 +31,6 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
                     <View style={styles.modalView}
                     >
                         {renderSwitch()}
-                        <TouchableOpacity
-                            style={[styles.button, styles.buttonClose]}
-                            onPress={() => setModalVisible(!modalVisible)}
-                        >
-                            <Text style={styles.textStyle}>Hide Modal</Text>
-                        </TouchableOpacity>
                     </View>
         </Modal>
     )
