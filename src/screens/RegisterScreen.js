@@ -3,8 +3,8 @@ import React, {useState} from 'react'
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 
 import {createUserWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
-import {auth} from "../../firebase"
-
+import {auth,db} from "../../firebase"
+import {collection, getDocs, doc, addDoc,} from "firebase/firestore";
 const RegisterScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -15,12 +15,27 @@ const RegisterScreen = () => {
         navigation.replace("Login")
     }
 
+    const handleDatabase = async() =>{
+        const docRef = await doc(db, "users", email);
+        const secondRef = await collection(db,'users',email,'devices')
+        const thirdRef = await collection(db,'users',email,'rooms')
+
+        await addDoc(secondRef, {
+            'index':'0'
+        });
+        await addDoc(thirdRef, {
+            'index':'0'
+        });
+    }
+
+
     const handleSignUp = () => {
         // const auth = getAuth();
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
+                handleDatabase().then(e=>console.log('Database created'))
             })
             .catch(error => alert(error.message))
     }
