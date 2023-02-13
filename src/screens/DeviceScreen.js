@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback} from 'react-native';
-import {LightDevice} from "../devices/Devices";
-import {TemperatureDevice} from "../devices/Devices";
+import {DoorDevice, LightDevice,TemperatureDevice} from "../devices/Devices";
 const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
 
     const renderSwitch=()=>{
@@ -10,6 +9,8 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
                 return <LightDevice data={data} />
             case "temp":
                 return <TemperatureDevice data={data} />
+            case "door":
+                return <DoorDevice data={data} />
             default:
                 return <Text>Error</Text>
         }

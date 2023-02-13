@@ -1,0 +1,67 @@
+{
+"devices":
+[
+{
+"id": 1,
+"name": "Light1",
+"type": "light",
+"parent": "1"
+},
+{
+"id": 2,
+"name": "Light2",
+"type": "light",
+"parent": "1"
+},
+{
+"id": 3,
+"name": "Temperature1",
+"type": "temp",
+"parent": "1"
+},
+{
+"id": 4,
+"name": "Light3",
+"type": "light",
+"parent": "2"
+},
+{
+"id": 5,
+"name": "Light4",
+"type": "light",
+"parent": "2"
+},
+{
+"id": 6,
+"name": "Temperature2",
+"type": "temp",
+"parent": "2"
+},
+{
+"id": 7,
+"name": "Light5",
+"type": "light",
+"parent": "3"
+},
+{
+"id": 8,
+"name": "Light6",
+"type": "light",
+"parent": "3"
+},
+{
+"id": 9,
+"name": "Temperature3",
+"type": "temp",
+"parent": "3"
+},
+  {
+    "id": 9,
+    "name": "Main door",
+    "type": "door",
+    "parent": "4"
+  }
+
+
+]
+}
