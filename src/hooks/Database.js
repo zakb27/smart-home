@@ -3,9 +3,9 @@ import devices from '../utils/devices.json'
 
 export const fetchRooms = async() =>{
     try{
-        const response = await fetch('http://192.168.0.18:3000/getAllRooms');
-        // console.log(json);
-        const json = await response.json();
+        // const response = await fetch('http://192.168.0.18:3000/getAllRooms');
+        // // console.log(json);
+        // const json = await response.json();
         // return json.rooms;
         return (rooms.rooms);
     }
@@ -37,8 +37,8 @@ export const sendInfo = async(info) =>{
 
 export const fetchDevices = async() =>{
     try{
-        const response = await fetch('http://192.168.0.18:3000/getAllDevices');
-        const json = await response.json();
+        // const response = await fetch('http://192.168.0.18:3000/getAllDevices');
+        // const json = await response.json();
         // return json.devices;
         return (devices.devices);
 

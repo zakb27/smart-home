@@ -96,6 +96,9 @@ const DoorDevice = ({data}) =>{
         } else {
             setShowCompletedButton(false)
         }
+        if(enteredPin==='4422'){
+            alert('correct');
+        }
     }, [enteredPin])
     return(
 
