@@ -7,6 +7,7 @@ import Slider from '@react-native-community/slider';
 import PinView from 'react-native-pin-view';
 const LightDevice = ({data}) =>{
     const [percent,changePercent] = useState(0)
+    // const [isSaved,changeSaved] = useState('')
     const handleSend =() => {
         const info = {
             id: data.id,
@@ -34,6 +35,7 @@ const LightDevice = ({data}) =>{
             />
 
             <Button onPress={handleSend} title={"On/Off"} />
+            {/*<Button title={'Save'} onPress={handleSave} />*/}
 
         </View>
     )
