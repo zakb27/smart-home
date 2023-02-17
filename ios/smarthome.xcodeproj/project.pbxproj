@@ -11,6 +11,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		4429EC499E604AB2BC0A5B85 /* key.js in Resources */ = {isa = PBXBuildFile; fileRef = 71A45134DE094D43BBEBA89E /* key.js */; };
 		8AC940C503784AB7B2FA799C /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A06229CB0242EFBE08B7E3 /* noop-file.swift */; };
 		9C2CF594CA659402069DA7B5 /* libPods-smarthome.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0682702E83B4ED56F7DE97A /* libPods-smarthome.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
@@ -27,6 +28,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = smarthome/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = smarthome/main.m; sourceTree = "<group>"; };
 		15932EAE3B57C0133E8F935B /* Pods-smarthome.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smarthome.release.xcconfig"; path = "Target Support Files/Pods-smarthome/Pods-smarthome.release.xcconfig"; sourceTree = "<group>"; };
+		71A45134DE094D43BBEBA89E /* key.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = key.js; path = ../src/assets/key.js; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = smarthome/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		C0A06229CB0242EFBE08B7E3 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "smarthome/noop-file.swift"; sourceTree = "<group>"; };
@@ -63,6 +65,15 @@
 			name = smarthome;
 			sourceTree = "<group>";
 		};
+		15B7943DB94447489C187D92 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				71A45134DE094D43BBEBA89E /* key.js */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +99,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				15B7943DB94447489C187D92 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -200,6 +212,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				4429EC499E604AB2BC0A5B85 /* key.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

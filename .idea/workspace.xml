@@ -3,8 +3,15 @@
   <component name="ChangeListManager">
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/devices/Devices.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/devices/Devices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/link-assets-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/android/link-assets-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/link-assets-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/ios/link-assets-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/smarthome.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/smarthome.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/smarthome/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/smarthome/Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hooks/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/Database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Add.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/devices.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,6 +97,7 @@
       <workItem from="1676306355989" duration="5893000" />
       <workItem from="1676376051828" duration="470000" />
       <workItem from="1676561393669" duration="3229000" />
+      <workItem from="1676639752651" duration="10001000" />
     </task>
     <servers />
   </component>

@@ -1,4 +1,9 @@
 {
   "migIndex": 1,
-  "data": []
+  "data": [
+    {
+      "path": "src/assets/key.js",
+      "sha1": "ece5b2e6708aa2d012074e04f7306eec1dbf2234"
+    }
+  ]
 }

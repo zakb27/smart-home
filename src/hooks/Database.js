@@ -2,6 +2,8 @@ import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 // import {key} from '../../assets/key'
 import key from '../assets/key'
+import {collection, getDocs} from "firebase/firestore";
+import {auth, db} from "../../firebase";
 export const fetchRooms = async() =>{
     try{
         const response = await fetch(key+'beta2/getAllRooms');
@@ -13,6 +15,58 @@ export const fetchRooms = async() =>{
     catch(error){
         // console.error(error)
         return (rooms.rooms);
+    }
+}
+
+export const getRegisteredDevices = async() =>{
+    try{
+        const email = auth.currentUser?.email
+
+        const docRef = await collection(db,'users',email,'devices')
+        const docsSnap = await getDocs(docRef);
+        const fire = []
+        docsSnap.forEach(doc=>{
+            fire.push(doc.data())
+        })
+
+
+        const response = await fetch(key+'beta2/fetchRegistered', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(fire)
+        });
+    }
+
+    catch (error) {
+        // console.error(error);
+        return json([]);
+    }
+}
+
+export const getRoomDevices = async() =>{
+    try{
+        const email = auth.currentUser?.email
+
+        const docRef = await collection(db,'users',email,'rooms')
+        const docsSnap = await getDocs(docRef);
+        const fire = []
+        docsSnap.forEach(doc=>{
+            fire.push(doc.data().devices)
+        })
+        const response = await fetch(key+'beta2/fetchRoomDevices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(fire)
+        });
+        return await response.text();
+    }
+    catch (error) {
+        // console.error(error);
+        return json([]);
     }
 }
 
@@ -64,7 +118,6 @@ export const fetchDevices = async() =>{
     try{
         const response = await fetch(key+'beta2/getAllDevices');
         const json = await response.json();
-        console.log(json);
         return json.devices;
         // return (devices.devices);
 

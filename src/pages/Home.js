@@ -80,7 +80,8 @@ export default Home;
 
 const styles = StyleSheet.create({
     overall:{
-      alignItems:"center"
+      alignItems:"center",
+        justifyContent:'center'
     },
     container:{
         padding:25,
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
 
         flexDirection:'row',
         flexWrap:"wrap",
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     cardConnected:{
         marginTop:25,
