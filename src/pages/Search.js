@@ -6,7 +6,7 @@ import PerformSearch from "../components/PerformSearch";
 
 
 
-const Search = ()=>{
+const Search = ({navigation})=>{
     const [value, setValue] = React.useState('');
 
     return(
@@ -19,6 +19,7 @@ const Search = ()=>{
             />
             <PerformSearch
             value={value}
+            navigation={navigation}
             />
         </View>
     )

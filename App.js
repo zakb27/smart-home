@@ -12,7 +12,7 @@ import {UserMain} from './src/pages/User'
 import Home from './src/pages/Home'
 import Search from './src/pages/Search'
 import Add from './src/pages/Add'
-import Settings from './src/pages/Settings'
+import Saved from './src/pages/Saved'
 import {auth} from "./firebase"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as eva from '@eva-design/eva';
@@ -72,7 +72,7 @@ const Main = () =>{
                     <Tabs.Screen name={"Home"} component={Home} tabBarShowLabel={false} />
                     <Tabs.Screen name={"Search"} component={Search} />
                     <Tabs.Screen name={"Add"} component={Add} />
-                    <Tabs.Screen name={"Favourites"} component={Settings} />
+                    <Tabs.Screen name={"Favourites"} component={Saved} />
                     <Tabs.Screen name={"User"} component={UserMain} />
                 </Tabs.Navigator>
             </NavigationContainer>

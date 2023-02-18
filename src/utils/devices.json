@@ -6,70 +6,79 @@
 "name": "Light1",
 "type": "light",
 "parent": "1",
-  "saved": false
+  "value": 25,
+  "on": true
 },
 {
 "id": 2,
 "name": "beep",
 "type": "light",
 "parent": "1",
-  "saved": false
+  "value": 25,
+  "on": true
 },
 {
 "id": 3,
 "name": "Temperature1",
 "type": "temp",
 "parent": "1",
-  "saved": false
+  "value": 20,
+  "on": true
 },
 {
 "id": 4,
 "name": "Light3",
 "type": "light",
 "parent": "2",
-  "saved": false
+  "value": 20,
+  "on": true
 },
 {
 "id": 5,
 "name": "Light4",
 "type": "light",
 "parent": "2",
-  "saved": false
+  "value": 20,
+  "on": true
 },
 {
 "id": 6,
 "name": "Temperature2",
 "type": "temp",
 "parent": "2",
-  "saved": false
+  "value": 20,
+  "on": true
 },
 {
 "id": 7,
 "name": "Light5",
 "type": "light",
 "parent": "3",
-  "saved": false
+  "value": 20,
+  "on": true
 },
 {
 "id": 8,
 "name": "Light6",
 "type": "light",
 "parent": "3",
-  "saved": false
+  "value": 20,
+  "on": true
 },
 {
 "id": 9,
 "name": "Temperature3",
 "type": "temp",
 "parent": "3",
-  "saved": false
+  "value": 20,
+  "on": true
 },
   {
     "id": 10,
     "name": "Main door",
     "type": "door",
     "parent": "4",
-    "saved": false
+    "value": 2244
   }
 
 

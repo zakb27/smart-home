@@ -1,24 +1,37 @@
 import React, { useEffect, useState,useRef} from 'react';
 import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet,ImageBackground, SafeAreaView, StatusBar,} from 'react-native';
-import {sendInfo} from "../hooks/Database";
+import {sendInfo, checkSaved, performSave} from "../hooks/Database";
 import Icon from "react-native-vector-icons/Ionicons"
 import { RadialSlider } from 'react-native-radial-slider';
 import Slider from '@react-native-community/slider';
 import PinView from 'react-native-pin-view';
+
 const LightDevice = ({data}) =>{
-    const [percent,changePercent] = useState(0)
-    // const [isSaved,changeSaved] = useState('')
+    const [percent,changePercent] = useState(data.value)
+    const [isSaved,changeSaved] = useState(false)
     const handleSend =() => {
         const info = {
             id: data.id,
-            status: 1,
-            type:data.type,
-            value:50
+            value:percent,
+            on:true,
         }
         sendInfo(info).then(response => {
             console.log(response)
         });
     }
+
+    const handleSave = () =>{
+        performSave(data.id).then((data)=>{
+            changeSaved(!isSaved)
+        })
+    }
+
+    useEffect(()=>{
+        checkSaved(data.id).then((item)=>{
+            changeSaved(item.exists)
+        })
+    },[])
+
 
     return(
 
@@ -30,31 +43,46 @@ const LightDevice = ({data}) =>{
                 value={percent}
                 onValueChange={changePercent}
                 maximumValue={100}
+                onSlidingComplete={handleSend}
                 minimumTrackTintColor="#f4a261"
                 maximumTrackTintColor="#e9c46a"
             />
 
-            <Button onPress={handleSend} title={"On/Off"} />
-            {/*<Button title={'Save'} onPress={handleSave} />*/}
+            <Button onPress={handleSave} title={isSaved.toString()} />
 
         </View>
     )
 }
 const TemperatureDevice = ({data}) =>{
-    const [speed, setSpeed] = useState(0);
+    const [speed, setSpeed] = useState(data.value);
+    const [isSaved,changeSaved] = useState(false);
 
 
     const handleSend =() => {
+        console.log(speed);
         const info = {
             id: data.id,
-            status: 1,
-            type:data.type,
-            value:50
+            on: true,
+            value:speed
         }
         sendInfo(info).then(response => {
             console.log(response)
         });
     }
+
+    const handleSave = () =>{
+        performSave(data.id).then((data)=>{
+            changeSaved(!isSaved)
+        })
+    }
+
+    useEffect(()=>{
+        checkSaved(data.id).then((data)=>{
+            changeSaved(data.exists)
+        })
+    },[])
+
+
     return(
 
         <View>
@@ -64,9 +92,12 @@ const TemperatureDevice = ({data}) =>{
             <RadialSlider value={speed}
                           subTitle={"Temperature"}
                           unit={'\u2103'}
-                          min={14} max={25} onChange={setSpeed} />
+                          min={14} max={25} onChange={setSpeed}
+                          onComplete={handleSend}
+            />
 
-            <Button onPress={handleSend} title={"On/Off"} />
+            <Button onPress={handleSave} title={isSaved.toString()} />
+
 
         </View>
     )
@@ -87,6 +118,8 @@ const DoorDevice = ({data}) =>{
     const [showRemoveButton, setShowRemoveButton] = useState(false)
     const [enteredPin, setEnteredPin] = useState("")
     const [showCompletedButton, setShowCompletedButton] = useState(false)
+    const [isSaved,changeSaved] = useState(false);
+
     useEffect(() => {
         if (enteredPin.length > 0) {
             setShowRemoveButton(true)
@@ -102,11 +135,25 @@ const DoorDevice = ({data}) =>{
             alert('correct');
         }
     }, [enteredPin])
+
+
+    const handleSave = () =>{
+        performSave(data.id).then((data)=>{
+            changeSaved(!isSaved)
+        })
+    }
+
+    useEffect(()=>{
+        checkSaved(data.id).then((data)=>{
+            changeSaved(data.exists)
+        })
+    },[])
+
     return(
 
         <View>
             <Text>This is the door of {data.name}</Text>
-
+            <Button onPress={handleSave} title={isSaved.toString()} />
             <StatusBar barStyle="light-content" />
             <View
                 style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>

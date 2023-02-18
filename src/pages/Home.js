@@ -5,7 +5,7 @@ import RoomScreen from "../screens/RoomScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import AllDeviceScreen from "../screens/AllDeviceScreen";
 const Stack = createStackNavigator();
-import {fetchRooms} from "../hooks/Database";
+import {fetchRooms, getRegisteredDevices} from "../hooks/Database";
 import {fetchDevices} from "../hooks/Database";
 const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
@@ -15,10 +15,12 @@ const HomeRooms = ({navigation}) =>{
         fetchRooms().then((data)=>{
             setRooms(data)
         })
-        fetchDevices().then((data)=>{
+        // fetchDevices().then((data)=>{
+        //     setDevices(data)
+        // })
+        getRegisteredDevices().then((data)=>{
             setDevices(data)
         })
-
     },[])
 
 
@@ -36,9 +38,9 @@ const HomeRooms = ({navigation}) =>{
             </TouchableOpacity>
 
             <ScrollView contentContainerStyle={styles.container}>
-                {currentRooms.map((item,index)=>{
+                {currentRooms.map((item)=>{
                     return(
-                        <TouchableOpacity key={index} style={styles.card}
+                        <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
                                               navigation.navigate('RoomDevice',
                                                   {

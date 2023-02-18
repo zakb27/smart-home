@@ -3,8 +3,8 @@ import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView } fro
 import { Icon, Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceScreen from "../screens/DeviceScreen";
-import {fetchDevices} from "../hooks/Database";
-const PerformSearch = ({value})=>{
+import {fetchDevices, getRegisteredDevices} from "../hooks/Database";
+const PerformSearch = ({value,navigation})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
@@ -15,7 +15,7 @@ const PerformSearch = ({value})=>{
 
     useEffect(() => {
         performSearch([])
-        fetchDevices().then((data)=>{
+        getRegisteredDevices().then((data)=>{
             setDevices(data)
         })
         // for(let i=0;i<rooms.rooms.length;i++){
@@ -32,7 +32,7 @@ const PerformSearch = ({value})=>{
             }
         }
 
-    }, [value]);
+    }, [value,navigation]);
 
 
     return(

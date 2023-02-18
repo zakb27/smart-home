@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
-import {fetchDevices} from "../hooks/Database";
+import {fetchDevices, getRegisteredDevices} from "../hooks/Database";
 
 const AllDeviceScreen = ({navigation}) =>{
     const [modalVisible, setModalVisible] = useState(false);
@@ -10,19 +10,23 @@ const AllDeviceScreen = ({navigation}) =>{
     const [devices,setDevices] = useState([]);
 
     useEffect(()=>{
-        fetchDevices().then((data)=>{
+        // fetchDevices().then((data)=>{
+        //     setDevices(data)
+        // })
+
+        getRegisteredDevices().then((data)=>{
             setDevices(data)
         })
 
-    },[])
+    },[selectedData])
 
     return(
         <View>
             <Button title="<" onPress={() => navigation.goBack()} />
             <ScrollView contentContainerStyle={styles.container}>
-                {devices.map((item,index)=>{
+                {devices.map((item)=>{
                     return(
-                        <TouchableOpacity key={index} style={styles.card}
+                        <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
                                               setData(item);
                                               setModalVisible(true)
@@ -49,7 +53,8 @@ const styles = StyleSheet.create({
         padding:25,
         flexDirection:'row',
         flexWrap:"wrap",
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     card: {
         width:150,

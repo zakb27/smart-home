@@ -1,36 +1,28 @@
-import React, { useEffect, useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {getSaved} from "../hooks/Database";
+import DeviceScreen from "../screens/DeviceScreen";
 
-import DeviceScreen from "./DeviceScreen";
-import {fetchDevices, fetchRooms, getRoomDevices} from "../hooks/Database";
-const RoomScreen = ({route,navigation}) =>{
-    const { roomID } = route.params;
-    const [currentSearch,performSearch] = useState([]);
+const Saved = ({navigation})=>{
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
-
-    // useEffect(() => {
-    //     fetchDevices().then((data)=>{
-    //         setDevicesCall(data)
-    //         console.log("here")
-    //         console.log(data);
-    //         console.log('nodevices')
-    //     })
-    // }, []);
-
-
+    const [devices,setDevices] = useState([]);
     useEffect(() => {
-        performSearch([])
-        getRoomDevices(roomID).then((data)=>{
-            performSearch(data)
+        const test =  navigation.addListener('focus', () => {
+            getSaved().then((data) => {
+                setDevices(data);
+            })
+        });
+        getSaved().then((data) => {
+            setDevices(data);
         })
-    },[]);
-
+        return test;
+    }, [navigation,modalVisible]);
 
     return(
-        <View>
+        <SafeAreaView>
             <ScrollView contentContainerStyle={styles.container}>
-                {currentSearch.map((item)=>{
+                {devices.map((item)=>{
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
@@ -44,12 +36,14 @@ const RoomScreen = ({route,navigation}) =>{
                 })}
             </ScrollView>
             <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} data={selectedData} />
-            <Button title="<" onPress={() => navigation.goBack()} />
-        </View>
-    )
 
+        </SafeAreaView>
+
+
+    )
 }
-export default RoomScreen;
+
+export default Saved;
 
 
 const styles = StyleSheet.create({
@@ -57,7 +51,8 @@ const styles = StyleSheet.create({
         padding:25,
         flexDirection:'row',
         flexWrap:"wrap",
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     card: {
         width:150,
