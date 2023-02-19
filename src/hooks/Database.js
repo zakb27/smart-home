@@ -58,11 +58,11 @@ export const getRegisteredDevices = async() =>{
     }
 }
 
-export const getRoomDevices = async(key) =>{
+export const getRoomDevices = async(roomID) =>{
     try{
         const email = auth.currentUser?.email
 
-        const docRef = await doc(db,'users',email,'rooms',key)
+        const docRef = await doc(db,'users',email,'rooms',roomID)
         const docsSnap = await getDoc(docRef);
         const fire = docsSnap.data().devices;
         // docsSnap.forEach(doc=>{

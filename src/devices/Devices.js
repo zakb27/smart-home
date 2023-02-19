@@ -58,18 +58,6 @@ const TemperatureDevice = ({data}) =>{
     const [isSaved,changeSaved] = useState(false);
 
 
-    const handleSend =() => {
-        console.log(speed);
-        const info = {
-            id: data.id,
-            on: true,
-            value:speed
-        }
-        sendInfo(info).then(response => {
-            console.log(response)
-        });
-    }
-
     const handleSave = () =>{
         performSave(data.id).then((data)=>{
             changeSaved(!isSaved)
@@ -82,6 +70,19 @@ const TemperatureDevice = ({data}) =>{
         })
     },[])
 
+    useEffect(() => {
+        const info = {
+            id: data.id,
+            on: true,
+            value:speed
+        }
+        console.log(speed);
+        sendInfo(info).then(response => {
+            console.log(response)
+        });
+    }, [speed]);
+
+
 
     return(
 
@@ -93,9 +94,7 @@ const TemperatureDevice = ({data}) =>{
                           subTitle={"Temperature"}
                           unit={'\u2103'}
                           min={14} max={25} onChange={setSpeed}
-                          onComplete={handleSend}
             />
-
             <Button onPress={handleSave} title={isSaved.toString()} />
 
 

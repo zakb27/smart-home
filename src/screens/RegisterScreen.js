@@ -4,7 +4,7 @@ import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vie
 
 import {createUserWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
 import {auth,db} from "../../firebase"
-import {collection, getDocs, doc, addDoc,} from "firebase/firestore";
+import {collection, getDocs, doc, addDoc, deleteDoc,} from "firebase/firestore";
 const RegisterScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -18,14 +18,18 @@ const RegisterScreen = () => {
     const handleDatabase = async() =>{
         const docRef = await doc(db, "users", email);
         const secondRef = await collection(db,'users',email,'devices')
-        const thirdRef = await collection(db,'users',email,'rooms')
+        // const thirdRef = await collection(db,'users',email,'rooms')
+        // const fourthRef = await collection(db,'users',email,'saved')
 
         await addDoc(secondRef, {
             'index':'0'
         });
-        await addDoc(thirdRef, {
-            'index':'0'
-        });
+        const docsSnap = await getDocs(secondRef);
+        docsSnap.forEach((item)=>{
+            deleteDoc(doc(db,'users',email,'devices',item.id))
+        })
+
+
     }
 
 

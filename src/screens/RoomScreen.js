@@ -21,8 +21,11 @@ const RoomScreen = ({route,navigation}) =>{
 
     useEffect(() => {
         performSearch([])
+
         getRoomDevices(roomID).then((data)=>{
             performSearch(data)
+
+
         })
     },[]);
 
