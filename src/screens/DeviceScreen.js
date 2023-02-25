@@ -1,7 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback} from 'react-native';
 import {DoorDevice, LightDevice,TemperatureDevice} from "../devices/Devices";
+
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import ScheduleScreen from "./ScheduleScreen";
+const Tab = createMaterialTopTabNavigator();
+
+
+
 const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
+
+    const [currentID,changeID] = useState(data.id)
 
     const renderSwitch=()=>{
         switch(data.type){
@@ -16,26 +25,43 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
         }
     }
 
+    const RenderDevice = () =>{
+        return(
+            <View style={styles.modalView}>
+                {renderSwitch()}
+            </View>
+        )
+    }
+
     return(
         <Modal
             animationType="fade"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-                Alert.alert("Modal has been closed.");
                 setModalVisible(!modalVisible);
             }}
         >
             <TouchableWithoutFeedback onPress={() =>setModalVisible(!modalVisible)}>
                 <View style={styles.centeredView} />
             </TouchableWithoutFeedback>
-                    <View style={styles.modalView}
-                    >
-                        {renderSwitch()}
-                    </View>
+            <ScheduleScreen />
+            {/*<Tab.Navigator screenOptions={{*/}
+            {/*    tabBarStyle: styles.tabView,*/}
+            {/*}}>*/}
+
+            {/*    <Tab.Screen name="Device" component={RenderDevice} />*/}
+            {/*    <Tab.Screen name="Schedule" component={ScheduleScreen} />*/}
+            {/*</Tab.Navigator>*/}
         </Modal>
     )
 }
+
+
+
+
+
+
 export default DeviceScreen;
 
 const styles = StyleSheet.create({
@@ -45,6 +71,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         marginBottom:84,
+    },
+    tabView: {
+        // flex:1,
+        // marginBottom:84,
+        // bottom:0,
+        // right:0,
+        // left:0,
     },
     modalView: {
         marginTop:200,
