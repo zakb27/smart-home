@@ -7,6 +7,9 @@ const Saved = ({navigation})=>{
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
     const [devices,setDevices] = useState([]);
+
+
+
     useEffect(() => {
         const test =  navigation.addListener('focus', () => {
             getSaved().then((data) => {

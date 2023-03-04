@@ -18,12 +18,6 @@ const PerformSearch = ({value,navigation})=>{
         getRegisteredDevices().then((data)=>{
             setDevices(data)
         })
-        // for(let i=0;i<rooms.rooms.length;i++){
-        //     if(rooms.rooms[i].name.toLowerCase().includes(value.toLowerCase()))
-        //     {
-        //         performSearch(current=>[...current,rooms.rooms[i]])
-        //     }
-        // }
         for(let i=0;i<devices.length;i++){
             if(devices[i].name.toLowerCase().includes(value.toLowerCase()) ||
                devices[i].type.toLowerCase().includes(value.toLowerCase()))
@@ -32,7 +26,7 @@ const PerformSearch = ({value,navigation})=>{
             }
         }
 
-    }, [value,navigation]);
+    }, [value,navigation,modalVisible]);
 
 
     return(

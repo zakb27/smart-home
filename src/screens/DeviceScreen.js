@@ -6,13 +6,24 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import ScheduleScreen from "./ScheduleScreen";
 const Tab = createMaterialTopTabNavigator();
 
-
+// const renderSwitch = ()=>{
+//     switch(data.type){
+//         case "light":
+//             return <LightDevice data={data} />
+//         case "temp":
+//             return <TemperatureDevice data={data} />
+//         case "door":
+//             return <DoorDevice data={data} />
+//         default:
+//             return <Text>Error</Text>
+//     }
+// }
 
 const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
 
     const [currentID,changeID] = useState(data.id)
 
-    const renderSwitch=()=>{
+    const RenderSwitch=()=>{
         switch(data.type){
             case "light":
                 return <LightDevice data={data} />
@@ -45,14 +56,19 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
             <TouchableWithoutFeedback onPress={() =>setModalVisible(!modalVisible)}>
                 <View style={styles.centeredView} />
             </TouchableWithoutFeedback>
-            <ScheduleScreen />
-            {/*<Tab.Navigator screenOptions={{*/}
-            {/*    tabBarStyle: styles.tabView,*/}
-            {/*}}>*/}
+            {/*<ScheduleScreen />*/}
+            {/*<View style={styles.modalView}*/}
+            {/*>*/}
+            {/*    {renderSwitch()}*/}
+            {/*</View>*/}
 
-            {/*    <Tab.Screen name="Device" component={RenderDevice} />*/}
-            {/*    <Tab.Screen name="Schedule" component={ScheduleScreen} />*/}
-            {/*</Tab.Navigator>*/}
+                <Tab.Navigator style={styles.tabView} screenOptions={{
+                    swipeEnabled:false,
+                }}>
+                    <Tab.Screen name="Device" component={RenderSwitch} />
+                    <Tab.Screen name="Schedule" component={ScheduleScreen} />
+                </Tab.Navigator>
+
         </Modal>
     )
 }
@@ -73,11 +89,15 @@ const styles = StyleSheet.create({
         marginBottom:84,
     },
     tabView: {
-        // flex:1,
-        // marginBottom:84,
-        // bottom:0,
-        // right:0,
-        // left:0,
+        height:500,
+        marginBottom:84,
+        position:"absolute",
+        bottom:0,
+        right:0,
+        left:0,
+        borderRadius: 20,
+        borderBottomLeftRadius:0,
+        borderBottomRightRadius:0,
     },
     modalView: {
         marginTop:200,
@@ -96,24 +116,4 @@ const styles = StyleSheet.create({
         padding: 35,
         alignItems: "center",
     },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    }
 });

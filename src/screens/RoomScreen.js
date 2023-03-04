@@ -2,33 +2,25 @@ import React, { useEffect, useState} from 'react';
 import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
-import {fetchDevices, fetchRooms, getRoomDevices} from "../hooks/Database";
+import {fetchDevices, fetchRooms, getRoomDevices, getSaved} from "../hooks/Database";
 const RoomScreen = ({route,navigation}) =>{
     const { roomID } = route.params;
     const [currentSearch,performSearch] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
     const [selectedData, setData] = useState('');
 
-    // useEffect(() => {
-    //     fetchDevices().then((data)=>{
-    //         setDevicesCall(data)
-    //         console.log("here")
-    //         console.log(data);
-    //         console.log('nodevices')
-    //     })
-    // }, []);
-
 
     useEffect(() => {
-        performSearch([])
-
+        const test =  navigation.addListener('focus', () => {
+            getRoomDevices(roomID).then((data)=>{
+                performSearch(data)
+            })
+        });
         getRoomDevices(roomID).then((data)=>{
             performSearch(data)
-
-
         })
-    },[]);
-
+        return test;
+    }, [navigation,modalVisible]);
 
     return(
         <View>

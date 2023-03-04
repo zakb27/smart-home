@@ -2,6 +2,10 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Button} from 'react-native';
 import {DoorDevice, LightDevice,TemperatureDevice} from "../devices/Devices";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {
+    SelectMultipleButton,
+    SelectMultipleGroupButton
+} from "react-native-selectmultiple-button";
 
 const DAYS = [
     {
@@ -35,6 +39,8 @@ const DAYS = [
 ];
 
 
+const ios_blue = "#007AFF";
+const themeColor = "#0D1014";
 
 const ScheduleScreen = () =>{
     const [date, setDate] = useState(new Date(1598051730000));
@@ -54,6 +60,7 @@ const ScheduleScreen = () =>{
     };
 
 
+
     return(
         <View style={styles.modalView}>
             <View style={styles.buttonContainer}>
@@ -63,6 +70,28 @@ const ScheduleScreen = () =>{
                     </TouchableOpacity>
                 ))}
             </View>
+
+
+            {/*<SelectMultipleGroupButton*/}
+            {/*    multiple={true}*/}
+            {/*    group={[*/}
+            {/*        { value: "SimpleBtn" },*/}
+            {/*        { value: "GroupBtn" },*/}
+            {/*        { value: "Segment" },*/}
+            {/*        { value: "List" }*/}
+            {/*    ]}*/}
+            {/*    defaultSelectedIndexes={[0]}*/}
+            {/*    buttonViewStyle={{ flex: 1, margin: 0, borderRadius: 0 }}*/}
+            {/*    highLightStyle={{*/}
+            {/*        borderColor: ios_blue,*/}
+            {/*        textColor: ios_blue,*/}
+            {/*        backgroundColor: themeColor,*/}
+            {/*        borderTintColor: ios_blue,*/}
+            {/*        textTintColor: "white",*/}
+            {/*        backgroundTintColor: ios_blue*/}
+            {/*    }}*/}
+            {/*/>*/}
+
 
                 <DateTimePicker
                     testID="dateTimePicker"
@@ -107,8 +136,7 @@ const styles = StyleSheet.create({
         font:'black',
     },
     modalView: {
-        marginTop:200,
-        marginBottom:84,
+        paddingTop:50,
         bottom:0,
         right:0,
         left:0,
@@ -118,8 +146,6 @@ const styles = StyleSheet.create({
         height:500,
         backgroundColor: "white",
         borderRadius: 20,
-        borderBottomLeftRadius:0,
-        borderBottomRightRadius:0,
         padding: 15,
         alignItems: "center",
     }

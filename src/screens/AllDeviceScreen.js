@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
-import {fetchDevices, getRegisteredDevices} from "../hooks/Database";
+import {fetchDevices, getRegisteredDevices, getSaved} from "../hooks/Database";
 
 const AllDeviceScreen = ({navigation}) =>{
     const [modalVisible, setModalVisible] = useState(false);
@@ -10,15 +10,17 @@ const AllDeviceScreen = ({navigation}) =>{
     const [devices,setDevices] = useState([]);
 
     useEffect(()=>{
-        // fetchDevices().then((data)=>{
-        //     setDevices(data)
-        // })
+        const test =  navigation.addListener('focus', () => {
+            getRegisteredDevices().then((data) => {
+                setDevices(data);
+            })
+        });
 
         getRegisteredDevices().then((data)=>{
             setDevices(data)
         })
-
-    },[selectedData])
+        return test;
+    },[navigation,selectedData,modalVisible])
 
     return(
         <View>

@@ -9,6 +9,9 @@ import PinView from 'react-native-pin-view';
 const LightDevice = ({data}) =>{
     const [percent,changePercent] = useState(data.value)
     const [isSaved,changeSaved] = useState(false)
+
+
+
     const handleSend =() => {
         const info = {
             id: data.id,
@@ -35,8 +38,8 @@ const LightDevice = ({data}) =>{
 
     return(
 
-        <View>
-            <Text>This is light of {data.name}</Text>
+        <View style={styles.modalView}>
+            <Text>{data.name}</Text>
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
@@ -86,8 +89,8 @@ const TemperatureDevice = ({data}) =>{
 
     return(
 
-        <View>
-            <Text>This is temperature of {data.name}</Text>
+        <View style={styles.modalView}>
+            <Text>{data.name}</Text>
 
 
             <RadialSlider value={speed}
@@ -150,8 +153,8 @@ const DoorDevice = ({data}) =>{
 
     return(
 
-        <View>
-            <Text>This is the door of {data.name}</Text>
+        <View style={styles.modalView}>
+            <Text>{data.name}</Text>
             <Button onPress={handleSave} title={isSaved.toString()} />
             <StatusBar barStyle="light-content" />
             <View
@@ -227,4 +230,42 @@ const OtherDevice = ({data}) =>{
 }
 
 
+const styles = StyleSheet.create({
+    buttonContainer:{
+        flexDirection:'row',
+    },
+    dayButton:{
+        margin:2,
+        borderRadius:'50',
+        padding: 5,
+        borderWidth:1,
+        flex:1,
+        textAlign:'center',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+        borderColor:'blue',
+        width:32,
+        height:32,
+        font:'black',
+    },
+    modalView: {
+        paddingTop:50,
+        bottom:0,
+        right:0,
+        left:0,
+        position:"absolute",
+        flex:1,
+        alignSelf: "stretch",
+        height:500,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 15,
+        alignItems: "center",
+    }
+});
+
+
 export {LightDevice,TemperatureDevice,OtherDevice,DishDevice,DoorDevice,SpeakerDevice,WashingDevice}
+

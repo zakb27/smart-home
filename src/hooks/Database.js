@@ -2,8 +2,46 @@ import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 // import {key} from '../../assets/key'
 import key from '../assets/key'
-import {collection, getDoc, getDocs,doc,deleteDoc,addDoc} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs} from "firebase/firestore";
 import {auth, db} from "../../firebase";
+
+
+export const createSchedule = async(data) =>{
+
+    try{
+        // const days = data.days
+        // days.forEach((day)=>{
+        //
+        // });
+        const response = await fetch(key+'/addSchedule', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.json();
+    }
+    catch(e){
+        console.error(e)
+    }
+}
+
+export const getSchedule = async(id)=>{
+    try{
+        const response  = await fetch(key+'/getSchedule', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(id)
+        });
+        return await response.json();
+    }
+    catch(e){
+        console.error(e)
+    }
+}
 
 export const fetchRooms = async() =>{
     try{
@@ -76,9 +114,7 @@ export const getRoomDevices = async(roomID) =>{
             },
             body: JSON.stringify(fire)
         });
-        const thing =  await response.json();
-
-        return thing;
+        return await response.json();
     }
     catch (error) {
         // console.error(error);
@@ -146,9 +182,7 @@ export const getSaved = async() =>{
         },
         body: JSON.stringify(objects)
     });
-    const thing =  await response.json();
-
-    return thing;
+    return await response.json();
 
 }
 
