@@ -24,6 +24,16 @@ export const createSchedule = async(data) =>{
     }
     catch(e){
         console.error(e)
+        // const days = req.body.days;
+        // const start = req.body.start.getTime();
+        // const end = req.body.end.getTime();
+        // const value = req.body.value;
+        // const on = req.body.on;
+        //
+        // for (const day of days){
+        //     if(schedule.day)
+        // }
+
     }
 }
 

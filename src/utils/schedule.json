@@ -1,32 +1,50 @@
 {
   "Monday": {
-    "1": [{
-      "start": "11:10",
-      "end": "12:50",
-      "value": 100,
-      "on": true
-    },{
-      "start": "13:10",
-      "end": "15:50",
+    "schedule1": {
+      "startTime": "9:00",
+      "endTime": "10:00",
       "value": 50,
-      "on": true
-    }]
+      "id":1
+    },
+    "schedule2": {
+      "startTime": "14:00",
+      "endTime": "15:00",
+      "value": 75,
+      "id":2
+    }
   },
   "Tuesday": {
-
-  },
-  "Wednesday": {
-
-  },
-  "Thursday": {
-
-  },
-  "Friday": {
-
-  },
-  "Saturday": {
-
-  },
-  "Sunday": {
+  "schedule3": {
+    "startTime": "10:30",
+    "endTime": "11:30",
+    "value": 22,
+    "id":3
   }
+},
+"Wednesday": {
+
+},
+"Thursday": {
+
+},
+"Friday": {
+
+},
+"Saturday": {
+
+},
+"Sunday": {
+"schedule1": {
+"startTime": "9:00",
+"endTime": "10:00",
+"value": 50,
+"id":1
+},
+"schedule2": {
+"startTime": "14:00",
+"endTime": "15:00",
+"value": 75,
+"id":2
+}
+}
 }

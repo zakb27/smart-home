@@ -44,14 +44,16 @@ const themeColor = "#0D1014";
 
 const ScheduleScreen = () =>{
     const [date, setDate] = useState(new Date(1598051730000));
-    const [date2, setDate2] = useState(new Date(1598051730000));
+    const [date2, setDate2] = useState(new Date(1598053001002));
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false);
 
     const onChange = (event, selectedDate) => {
+
         const currentDate = selectedDate;
         setShow(false);
         setDate(currentDate);
+        console.log(date)
     };
     const onChange2 = (event, selectedDate) => {
         const currentDate = selectedDate;
