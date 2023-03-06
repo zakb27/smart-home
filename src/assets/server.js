@@ -26,15 +26,68 @@ app.post('/getPromptDevices',function(req, res) {
     });
     res.json(newJson);
 });
+
+app.post('/getSchedules',function(req,res){
+    const id = req.body.id;
+
+    const idList = [];
+    const result = {};
+
+    // Loop through each day
+    for (const [day, schedules] of Object.entries(schedule)) {
+        // Loop through each schedule on the day
+        for (const [scheduleName, scheduleData] of Object.entries(schedules)) {
+            if (scheduleData.id === id) {
+                // Add the day to the list of days for this schedule
+                if (!result[scheduleData.startTime]) {
+                    result[scheduleData.startTime] = {
+                        startTime: scheduleData.startTime,
+                        endTime: scheduleData.endTime,
+                        value: scheduleData.value,
+                        days: [],
+                        ids:[]
+                    };
+                }
+                result[scheduleData.startTime].days.push(day);
+                result[scheduleData.startTime].ids.push(scheduleName);
+            }
+        }
+    }
+
+    const mergedSchedules = {};
+    for (const [startTime, scheduleData] of Object.entries(result)) {
+        const key = `${scheduleData.startTime}-${scheduleData.endTime}`;
+        if (!mergedSchedules[key]) {
+            mergedSchedules[key] = {
+                startTime: scheduleData.startTime,
+                endTime: scheduleData.endTime,
+                value: scheduleData.value,
+                days: [],
+                ids:scheduleData.ids
+            };
+        }
+        mergedSchedules[key].days = [...new Set([...mergedSchedules[key].days, ...scheduleData.days])];
+    }
+
+    // Convert the merged schedules object back to an array
+    const mergedSchedulesArray = Object.values(mergedSchedules);
+
+    // Filter out schedules that are not attached to the given ID
+    const filteredSchedules = mergedSchedulesArray.filter(schedule => schedule.days.length > 0);
+
+    res.json(filteredSchedules);
+
+
+
+})
+
 app.post('/createSchedule',function (req, res) {
     const schedules = schedule;
     const { id, days, starter, ender, value } = req.body;
 
-    const startTime = new Date(`1970-01-01T${starter}:00`);
-    const endTime = new Date(`1970-01-01T${ender}:00`);
-    const start = `${startTime.getHours().toString().padStart(2, '0')}:${startTime.getMinutes().toString().padStart(2, '0')}`;
-    const end = `${endTime.getHours().toString().padStart(2, '0')}:${endTime.getMinutes().toString().padStart(2, '0')}`;
-
+    const start = starter;
+    const end = ender;
+    console.log(req.body);
     for (const day of days) {
         const daySchedule = schedules[day] || {};
         for (const existingSchedule of Object.values(daySchedule)) {
@@ -47,18 +100,16 @@ app.post('/createSchedule',function (req, res) {
         }
     }
     // Generate a unique ID for the new schedule
-    const newScheduleId = uuidv4();
 
-    // Create the new schedule object
-    const newSchedule = {
-        startTime: start,
-        endTime: end,
-        value: value,
-        id:id
-    };
 
     for (const day of days) {
-        schedules[day][newScheduleId] = newSchedule;
+        const newScheduleId = uuidv4();
+        schedules[day][newScheduleId] ={
+            startTime: start,
+            endTime: end,
+            value: value,
+            id:id
+        };
     }
 
     fs.writeFile('./schedule.json', JSON.stringify(schedules), function(err) {
@@ -172,8 +223,6 @@ const scheduleDevice = () =>{
     const options = { weekday: "long" };
     const day = (new Intl.DateTimeFormat("en-US", options).format(date));
 
-    console.log(date.getMinutes());
-
     const start = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
 
     const daySchedule = schedule[day] || {};
@@ -186,7 +235,7 @@ const scheduleDevice = () =>{
 
 }
 
-setInterval(scheduleDevice,3000);
+setInterval(scheduleDevice,30000);
 
 app.listen(3000);
 console.log('App Server is listening on port 3000');

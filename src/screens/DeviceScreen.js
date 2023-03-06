@@ -3,7 +3,7 @@ import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback} f
 import {DoorDevice, LightDevice,TemperatureDevice} from "../devices/Devices";
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ScheduleScreen from "./ScheduleScreen";
+import ViewScheduleScreen from "./ViewScheduleScreen";
 const Tab = createMaterialTopTabNavigator();
 
 // const renderSwitch = ()=>{
@@ -59,7 +59,7 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
                     swipeEnabled:false,
                 }}>
                     <Tab.Screen name="Device" component={RenderSwitch} />
-                    <Tab.Screen name="Schedule" component={ScheduleScreen} initialParams={{data: data}} />
+                    <Tab.Screen name="Schedule" component={ViewScheduleScreen} initialParams={{data: data}} />
                 </Tab.Navigator>
 
         </Modal>

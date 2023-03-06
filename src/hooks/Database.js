@@ -7,9 +7,7 @@ import {auth, db} from "../../firebase";
 
 
 export const createSchedule = async(data) =>{
-
     try{
-
         console.log(data);
         const response = await fetch(key+'/createSchedule', {
             method: 'POST',
@@ -28,12 +26,14 @@ export const createSchedule = async(data) =>{
 
 export const getSchedule = async(id)=>{
     try{
-        const response  = await fetch(key+'/getSchedule', {
+        const test = {id:id}
+        console.log(test);
+        const response  = await fetch(key+'/getSchedules', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(id)
+            body: JSON.stringify(test)
         });
         return await response.json();
     }

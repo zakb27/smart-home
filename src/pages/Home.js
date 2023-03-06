@@ -2,8 +2,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
 
 import RoomScreen from "../screens/RoomScreen";
-import { createStackNavigator } from '@react-navigation/stack';
 import AllDeviceScreen from "../screens/AllDeviceScreen";
+import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import {fetchRooms, getRegisteredDevices} from "../hooks/Database";
 import {fetchDevices} from "../hooks/Database";
