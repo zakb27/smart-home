@@ -1,40 +1,37 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Button} from 'react-native';
-import {DoorDevice, LightDevice,TemperatureDevice} from "../devices/Devices";
+import {DeadDoorDevice, DeadLightDevice,DeadTemperatureDevice} from "../devices/DeadDevices";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {
-    SelectMultipleButton,
-    SelectMultipleGroupButton
-} from "react-native-selectmultiple-button";
+import {createSchedule, performSave} from "../hooks/Database";
 
 const DAYS = [
     {
-        key: "sunday",
-        label: "S"
+        key: "Sunday",
+        label: "Su",
     },
     {
-        key: "monday",
-        label: "M"
+        key: "Monday",
+        label: "Mo",
     },
     {
-        key: "tuesday",
-        label: "T"
+        key: "Tuesday",
+        label: "Tu",
     },
     {
-        key: "wednesday",
-        label: "W"
+        key: "Wednesday",
+        label: "We",
     },
     {
-        key: "thursday",
-        label: "T"
+        key: "Thursday",
+        label: "Th",
     },
     {
-        key: "friday",
-        label: "F"
+        key: "Friday",
+        label: "Fr",
     },
     {
-        key: "saturday",
-        label: "S"
+        key: "Saturday",
+        label: "Su",
     }
 ];
 
@@ -42,59 +39,92 @@ const DAYS = [
 const ios_blue = "#007AFF";
 const themeColor = "#0D1014";
 
-const ScheduleScreen = () =>{
+const ScheduleScreen = ({route}) =>{
     const [date, setDate] = useState(new Date(1598051730000));
     const [date2, setDate2] = useState(new Date(1598053001002));
-    const [show, setShow] = useState(false);
-    const [show2, setShow2] = useState(false);
+    const [isEnabled, setIsEnabled] = useState({});
+    const [selectedDays, setSelectedDays] = useState([]);
+    const [value,changeValue] = useState();
+
+    const data = route.params.data;
+
+    const RenderSwitch=()=>{
+
+        switch(data.type){
+            case "light":
+                return <DeadLightDevice value={value} changeValue = {changeValue}/>
+            case "temp":
+                return <DeadTemperatureDevice value={value} changeValue = {changeValue} />
+            case "door":
+                return <DeadDoorDevice value={value} changeValue = {changeValue} />
+            default:
+                return <Text>Error</Text>
+        }
+    }
+
+    const handleSubmit = () =>{
+
+        const start = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+        const end = `${date2.getHours().toString().padStart(2, '0')}:${date2.getMinutes().toString().padStart(2, '0')}`;
+        const sender = {
+            "id":data.id,
+            "value":value,
+            "starter":start,
+            "ender":end,
+            "days":selectedDays,
+        }
+        console.log(sender);
+        createSchedule(sender).then((data)=>{
+            console.log(data);
+        })
+    }
+
+    const toggleSwitch = (key) => {
+
+        if (selectedDays.includes(key)) {
+            setSelectedDays(selectedDays.filter((d) => d !== key));
+        } else {
+            setSelectedDays([...selectedDays, key]);
+        }
+
+        setIsEnabled((prevState) => ({
+            ...prevState,
+            [key]: !prevState[key],
+        }));
+    };
+
 
     const onChange = (event, selectedDate) => {
-
         const currentDate = selectedDate;
-        setShow(false);
         setDate(currentDate);
-        console.log(date)
     };
     const onChange2 = (event, selectedDate) => {
         const currentDate = selectedDate;
-        setShow2(false);
         setDate2(currentDate);
     };
-
-
 
     return(
         <View style={styles.modalView}>
             <View style={styles.buttonContainer}>
-                {DAYS.map((day,index)=>(
-                    <TouchableOpacity key={index} style={styles.dayButton}>
+                {DAYS.map((day, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={[
+                            styles.dayButton,
+                            {
+                                backgroundColor: isEnabled[day.key]
+                                    ? "#f5dd4b"
+                                    : "#f4f3f4",
+                            },
+                        ]}
+                        onPress={() => toggleSwitch(day.key)}
+                    >
                         <Text>{day.label}</Text>
                     </TouchableOpacity>
                 ))}
+
             </View>
-
-
-            {/*<SelectMultipleGroupButton*/}
-            {/*    multiple={true}*/}
-            {/*    group={[*/}
-            {/*        { value: "SimpleBtn" },*/}
-            {/*        { value: "GroupBtn" },*/}
-            {/*        { value: "Segment" },*/}
-            {/*        { value: "List" }*/}
-            {/*    ]}*/}
-            {/*    defaultSelectedIndexes={[0]}*/}
-            {/*    buttonViewStyle={{ flex: 1, margin: 0, borderRadius: 0 }}*/}
-            {/*    highLightStyle={{*/}
-            {/*        borderColor: ios_blue,*/}
-            {/*        textColor: ios_blue,*/}
-            {/*        backgroundColor: themeColor,*/}
-            {/*        borderTintColor: ios_blue,*/}
-            {/*        textTintColor: "white",*/}
-            {/*        backgroundTintColor: ios_blue*/}
-            {/*    }}*/}
-            {/*/>*/}
-
-
+            <View style={styles.timeView}>
                 <DateTimePicker
                     testID="dateTimePicker"
                     value={date}
@@ -102,13 +132,20 @@ const ScheduleScreen = () =>{
                     is24Hour={true}
                     onChange={onChange}
                 />
-            <DateTimePicker
-                testID="dateTimePicker"
-                value={date2}
-                mode={'time'}
-                is24Hour={true}
-                onChange={onChange2}
-            />
+                <DateTimePicker
+                    testID="dateTimePicker"
+                    value={date2}
+                    mode={'time'}
+                    is24Hour={true}
+                    onChange={onChange2}
+                />
+            </View>
+            {RenderSwitch()}
+
+            <TouchableOpacity onPress={handleSubmit}>
+                <Text>Submit</Text>
+            </TouchableOpacity>
+
         </View>
 
     )
@@ -120,6 +157,11 @@ export default ScheduleScreen;
 const styles = StyleSheet.create({
     buttonContainer:{
         flexDirection:'row',
+    },
+    timeView:{
+        flexDirection:'row',
+        justifyContent:'space-evenly',
+        padding:20,
     },
     dayButton:{
         margin:2,
@@ -136,6 +178,7 @@ const styles = StyleSheet.create({
         width:32,
         height:32,
         font:'black',
+
     },
     modalView: {
         paddingTop:50,

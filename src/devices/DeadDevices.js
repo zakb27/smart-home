@@ -6,106 +6,42 @@ import { RadialSlider } from 'react-native-radial-slider';
 import Slider from '@react-native-community/slider';
 import PinView from 'react-native-pin-view';
 
-const LightDevice = ({data}) =>{
-    const [percent,changePercent] = useState(data.value)
-    const [isSaved,changeSaved] = useState(false)
-
-
-
-    const handleSend =() => {
-        const info = {
-            id: data.id,
-            value:percent,
-            on:true,
-        }
-        sendInfo(info).then(response => {
-
-        });
-    }
-
-    const handleSave = () =>{
-        performSave(data.id).then((data)=>{
-            changeSaved(!isSaved)
-        })
-    }
-
-    useEffect(()=>{
-        checkSaved(data.id).then((item)=>{
-            changeSaved(item.exists)
-        })
-    },[])
-
+const DeadLightDevice = (schedule) =>{
+    const percent = schedule.value;
+    const changePercent = schedule.changeValue;
 
     return(
 
-        <View style={styles.modalView}>
-            <Text>{data.name}</Text>
+        <View>
             <Slider
                 style={{width: 200, height: 40}}
                 minimumValue={0}
                 value={percent}
                 onValueChange={changePercent}
                 maximumValue={100}
-                onSlidingComplete={handleSend}
                 minimumTrackTintColor="#f4a261"
                 maximumTrackTintColor="#e9c46a"
             />
-
-            <Button onPress={handleSave} title={isSaved.toString()} />
-
         </View>
     )
 }
-const TemperatureDevice = ({data}) =>{
-    const [speed, setSpeed] = useState(data.value);
-    const [isSaved,changeSaved] = useState(false);
-
-
-    const handleSave = () =>{
-        performSave(data.id).then((data)=>{
-            changeSaved(!isSaved)
-        })
-    }
-
-    useEffect(()=>{
-        checkSaved(data.id).then((data)=>{
-            changeSaved(data.exists)
-        })
-    },[])
-
-    useEffect(() => {
-        const info = {
-            id: data.id,
-            on: true,
-            value:speed
-        }
-        sendInfo(info).then(response => {
-        });
-    }, [speed]);
-
-
-
+const DeadTemperatureDevice = (schedule) =>{
+    const speed = schedule.value;
+    const setSpeed = schedule.changeValue
     return(
 
-        <View style={styles.modalView}>
-            <Text>{data.name}</Text>
-
-
+        <View>
             <RadialSlider value={speed}
                           subTitle={"Temperature"}
                           unit={'\u2103'}
                           min={14} max={25} onChange={setSpeed}
             />
-            <Button onPress={handleSave} title={isSaved.toString()} />
-
 
         </View>
     )
 }
 
-const WashingDevice = ({data}) =>{
-
-
+const DeadWashingDevice = (schedule) =>{
     return(
 
         <View>
@@ -113,12 +49,11 @@ const WashingDevice = ({data}) =>{
         </View>
     )
 }
-const DoorDevice = ({data}) =>{
+const DeadDoorDevice = () =>{
     const pinView = useRef(null)
     const [showRemoveButton, setShowRemoveButton] = useState(false)
     const [enteredPin, setEnteredPin] = useState("")
     const [showCompletedButton, setShowCompletedButton] = useState(false)
-    const [isSaved,changeSaved] = useState(false);
 
     useEffect(() => {
         if (enteredPin.length > 0) {
@@ -137,23 +72,9 @@ const DoorDevice = ({data}) =>{
     }, [enteredPin])
 
 
-    const handleSave = () =>{
-        performSave(data.id).then((data)=>{
-            changeSaved(!isSaved)
-        })
-    }
-
-    useEffect(()=>{
-        checkSaved(data.id).then((data)=>{
-            changeSaved(data.exists)
-        })
-    },[])
-
     return(
 
         <View style={styles.modalView}>
-            <Text>{data.name}</Text>
-            <Button onPress={handleSave} title={isSaved.toString()} />
             <StatusBar barStyle="light-content" />
             <View
                 style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
@@ -197,7 +118,7 @@ const DoorDevice = ({data}) =>{
     )
 }
 
-const DishDevice = ({data}) =>{
+const DeadDishDevice = (schedule) =>{
 
 
     return(
@@ -209,7 +130,7 @@ const DishDevice = ({data}) =>{
 }
 
 
-const SpeakerDevice = ({data}) =>{
+const DeadSpeakerDevice = (schedule) =>{
     return(
 
         <View>
@@ -218,7 +139,7 @@ const SpeakerDevice = ({data}) =>{
     )
 }
 
-const OtherDevice = ({data}) =>{
+const DeadOtherDevice = (schedule) =>{
     return(
 
         <View>
@@ -248,22 +169,8 @@ const styles = StyleSheet.create({
         height:32,
         font:'black',
     },
-    modalView: {
-        paddingTop:50,
-        bottom:0,
-        right:0,
-        left:0,
-        position:"absolute",
-        flex:1,
-        alignSelf: "stretch",
-        height:500,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 15,
-        alignItems: "center",
-    }
 });
 
 
-export {LightDevice,TemperatureDevice,OtherDevice,DishDevice,DoorDevice,SpeakerDevice,WashingDevice}
+export {DeadLightDevice,DeadTemperatureDevice,DeadOtherDevice,DeadDishDevice,DeadDoorDevice,DeadSpeakerDevice,DeadWashingDevice}
 

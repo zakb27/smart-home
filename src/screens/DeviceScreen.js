@@ -36,13 +36,6 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
         }
     }
 
-    const RenderDevice = () =>{
-        return(
-            <View style={styles.modalView}>
-                {renderSwitch()}
-            </View>
-        )
-    }
 
     return(
         <Modal
@@ -66,7 +59,7 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
                     swipeEnabled:false,
                 }}>
                     <Tab.Screen name="Device" component={RenderSwitch} />
-                    <Tab.Screen name="Schedule" component={ScheduleScreen} />
+                    <Tab.Screen name="Schedule" component={ScheduleScreen} initialParams={{data: data}} />
                 </Tab.Navigator>
 
         </Modal>

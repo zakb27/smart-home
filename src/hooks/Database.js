@@ -9,30 +9,19 @@ import {auth, db} from "../../firebase";
 export const createSchedule = async(data) =>{
 
     try{
-        // const days = data.days
-        // days.forEach((day)=>{
-        //
-        // });
-        const response = await fetch(key+'/addSchedule', {
+
+        console.log(data);
+        const response = await fetch(key+'/createSchedule', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(data)
         });
-        return await response.json();
+        return await response.text();
     }
     catch(e){
         console.error(e)
-        // const days = req.body.days;
-        // const start = req.body.start.getTime();
-        // const end = req.body.end.getTime();
-        // const value = req.body.value;
-        // const on = req.body.on;
-        //
-        // for (const day of days){
-        //     if(schedule.day)
-        // }
 
     }
 }
@@ -163,7 +152,6 @@ export const performSave = async(id) =>{
     await checkSaved(id).then((data)=>{
         item = data;
     })
-    console.log(item);
     if(item.exists){
         await deleteDoc(doc(db,'users',email,'saved',item.key))
     }
@@ -207,7 +195,6 @@ export const sendInfo = async(info) =>{
             },
             body: JSON.stringify(temp)
         });
-        console.log(temp)
 
         return await response.text();
     }
