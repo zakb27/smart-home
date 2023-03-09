@@ -4,9 +4,17 @@
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/EditSchedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/EditSchedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PerformSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PerformSearch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/SearchBar.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hooks/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/Database.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Saved.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Saved.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Search.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AllDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AllDeviceScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/DeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/DeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ViewScheduleScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ViewScheduleScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +115,10 @@
       <workItem from="1678019398694" duration="2779000" />
       <workItem from="1678111234789" duration="5712000" />
       <workItem from="1678140447323" duration="4269000" />
+      <workItem from="1678196150450" duration="70000" />
+      <workItem from="1678219278137" duration="112000" />
+      <workItem from="1678285894326" duration="6030000" />
+      <workItem from="1678377198149" duration="5895000" />
     </task>
     <servers />
   </component>

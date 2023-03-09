@@ -19,8 +19,8 @@ const Tab = createMaterialTopTabNavigator();
 //     }
 // }
 
-const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
-
+const DeviceScreen = ({route,navigation}) =>{
+    const {data} = route.params;
     const [currentID,changeID] = useState(data.id)
 
     const RenderSwitch=()=>{
@@ -38,23 +38,11 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
 
 
     return(
-        <Modal
-            animationType="fade"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-                setModalVisible(!modalVisible);
-            }}
+        <View
+            style={styles.modalView}
         >
-            <TouchableWithoutFeedback onPress={() =>setModalVisible(!modalVisible)}>
-                <View style={styles.centeredView} />
-            </TouchableWithoutFeedback>
-            {/*<ScheduleScreen />*/}
-            {/*<View style={styles.modalView}*/}
-            {/*>*/}
-            {/*    {renderSwitch()}*/}
-            {/*</View>*/}
 
+            <View style={styles.centeredView} />
                 <Tab.Navigator style={styles.tabView} screenOptions={{
                     swipeEnabled:false,
                 }}>
@@ -62,14 +50,9 @@ const DeviceScreen = ({modalVisible,setModalVisible,data}) =>{
                     <Tab.Screen name="Schedule" component={ViewScheduleScreen} initialParams={{data: data}} />
                 </Tab.Navigator>
 
-        </Modal>
+        </View>
     )
 }
-
-
-
-
-
 
 export default DeviceScreen;
 
@@ -78,7 +61,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "flex-end",
         alignItems: "center",
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
         marginBottom:84,
     },
     tabView: {
@@ -93,19 +75,14 @@ const styles = StyleSheet.create({
         borderBottomRightRadius:0,
     },
     modalView: {
-        marginTop:200,
-        marginBottom:84,
         bottom:0,
         right:0,
         left:0,
         position:"absolute",
         flex:1,
         alignSelf: "stretch",
-        height:500,
         backgroundColor: "white",
-        borderRadius: 20,
-        borderBottomLeftRadius:0,
-        borderBottomRightRadius:0,
+
         padding: 35,
         alignItems: "center",
     },

@@ -1,15 +1,21 @@
 import React,{useEffect,useState} from 'react';
-import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView } from 'react-native';
+import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView,View } from 'react-native';
 import { Icon, Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceScreen from "../screens/DeviceScreen";
+
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+import { TransitionPresets } from '@react-navigation/stack'
+
 import {fetchDevices, getRegisteredDevices} from "../hooks/Database";
-const PerformSearch = ({value,navigation})=>{
+import RoomScreen from "../screens/RoomScreen";
+import AllDeviceScreen from "../screens/AllDeviceScreen";
+const PerformSearchHome = ({route,navigation})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedData, setData] = useState('');
     const [devices,setDevices] = useState([]);
 
+    const [value, setValue] = React.useState('');
 
 
 
@@ -26,35 +32,69 @@ const PerformSearch = ({value,navigation})=>{
             }
         }
 
-    }, [value,navigation,modalVisible]);
+    }, [value,navigation]);
 
 
     return(
-        <ScrollView contentContainerStyle={styles.container}>
-                {currentSearch.map((item,index)=>{
-                    return(
-                        <TouchableOpacity key={index} style={styles.card}
-                                          onPress={() => {
-                                              setData(item);
-                                              setModalVisible(true)
-                                          }}
-                        >
-                            <Text>{item.name}</Text>
-                        </TouchableOpacity>
-                    )
-                })}
-            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible}
-            data={selectedData}
+        <View style={styles.fullContainer}>
+            <Input
+                value = {value}
+                placeholder={'Find'}
+                accessoryLeft={<Ionicons name={'search'} size={20} />}
+                onChangeText={nextValue => setValue(nextValue)}
             />
-        </ScrollView>
+            <ScrollView contentContainerStyle={styles.container}>
+                    {currentSearch.map((item,index)=>{
+                        return(
+                            <TouchableOpacity key={index} style={styles.card}
+                                              onPress={() => {
+                                                  navigation.navigate('DeviceContainer',{
+                                                      data:item,
+                                                  })
+                                              }}
+                            >
+                                <Text>{item.name}</Text>
+                            </TouchableOpacity>
+                        )
+                    })}
+            </ScrollView>
+        </View>
     )
+}
+
+const PerformSearch = () =>{
+
+
+    return(
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="HomeRooms" component={PerformSearchHome}/>
+            <Stack.Screen name="DeviceContainer" component={DeviceScreen}
+                          options={{
+                              headerShown: false,
+                              presentation: 'modal',
+                              cardOverlayEnabled: false,
+                              ...TransitionPresets.ModalPresentationIOS,
+                          }}
+            />
+        </Stack.Navigator>
+
+
+    )
+
 }
 
 export default PerformSearch
 
 const styles = StyleSheet.create({
+    fullContainer:{
+        padding:10,
+        flex:1,
+    },
     container:{
-        padding:25,
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',

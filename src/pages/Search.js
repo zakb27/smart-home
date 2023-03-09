@@ -10,18 +10,9 @@ const Search = ({navigation})=>{
     const [value, setValue] = React.useState('');
 
     return(
-        <View>
-            <Input
-            value = {value}
-            placeholder={'Find'}
-            accessoryLeft={<Ionicons name={'search'} size={20} />}
-            onChangeText={nextValue => setValue(nextValue)}
-            />
             <PerformSearch
             value={value}
-            navigation={navigation}
             />
-        </View>
     )
 }
 

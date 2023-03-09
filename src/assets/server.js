@@ -26,6 +26,33 @@ app.post('/getPromptDevices',function(req, res) {
     });
     res.json(newJson);
 });
+app.post('/deleteSchedules',function(req,res) {
+    const newSchedule = schedule;
+    const ids = req.body.ids;
+    const days = req.body.days;
+
+    for(const day of days) {
+        if (newSchedule.hasOwnProperty(day)) {
+            for (const id of ids) {
+                if (newSchedule[day].hasOwnProperty(id)) {
+                    delete newSchedule[day][id];
+                }
+            }
+        }
+    }
+
+    fs.writeFile('./schedule.json', JSON.stringify(newSchedule), function(err) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error updating schedule data');
+        } else {
+            schedule = newSchedule;
+            res.send('Schedule updated successfully');
+        }
+    });
+})
+
+
 
 app.post('/getSchedules',function(req,res){
     const id = req.body.id;

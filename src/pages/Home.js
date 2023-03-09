@@ -5,8 +5,11 @@ import RoomScreen from "../screens/RoomScreen";
 import AllDeviceScreen from "../screens/AllDeviceScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
+import { TransitionPresets } from '@react-navigation/stack'
 import {fetchRooms, getRegisteredDevices} from "../hooks/Database";
 import {fetchDevices} from "../hooks/Database";
+
+import DeviceScreen from "../screens/DeviceScreen";
 const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
     const [appIsReady, setAppIsReady] = useState(false);
@@ -65,12 +68,22 @@ const Home = ()=>{
     return(
         <Stack.Navigator
             screenOptions={{
-                headerShown: false
+                headerShown: false,
+                styles:{backgroundColor:"yellow"}
             }}
+
         >
             <Stack.Screen name="HomeRooms" component={HomeRooms} />
             <Stack.Screen name="RoomDevice" component={RoomScreen} />
             <Stack.Screen name="AllDevices" component={AllDeviceScreen} />
+            <Stack.Screen name="DeviceContainer" component={DeviceScreen}
+                          options={{
+                              headerShown: false,
+                              presentation: 'modal',
+                              cardOverlayEnabled: false,
+                              ...TransitionPresets.ModalPresentationIOS,
+                          }}
+            />
         </Stack.Navigator>
 
 

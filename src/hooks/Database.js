@@ -8,7 +8,6 @@ import {auth, db} from "../../firebase";
 
 export const createSchedule = async(data) =>{
     try{
-        console.log(data);
         const response = await fetch(key+'/createSchedule', {
             method: 'POST',
             headers: {
@@ -24,10 +23,28 @@ export const createSchedule = async(data) =>{
     }
 }
 
+export const deleteSchedule = async(data) =>{
+
+    try{
+        const response = await fetch(key+'/deleteSchedules', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        return await response.text();
+    }
+    catch(e){
+
+    }
+
+
+}
+
 export const getSchedule = async(id)=>{
     try{
         const test = {id:id}
-        console.log(test);
         const response  = await fetch(key+'/getSchedules', {
             method: 'POST',
             headers: {

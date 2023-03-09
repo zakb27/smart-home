@@ -3,10 +3,10 @@ import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity
 
 import DeviceScreen from "./DeviceScreen";
 import {fetchDevices, getRegisteredDevices, getSaved} from "../hooks/Database";
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { TransitionPresets } from '@react-navigation/stack'
 
 const AllDeviceScreen = ({navigation}) =>{
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedData, setData] = useState('');
     const [devices,setDevices] = useState([]);
 
     useEffect(()=>{
@@ -20,7 +20,7 @@ const AllDeviceScreen = ({navigation}) =>{
             setDevices(data)
         })
         return test;
-    },[navigation,selectedData,modalVisible])
+    },[navigation])
 
     return(
         <View>
@@ -30,8 +30,9 @@ const AllDeviceScreen = ({navigation}) =>{
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
-                                              setData(item);
-                                              setModalVisible(true)
+                                              navigation.navigate('DeviceContainer',{
+                                                  data:item,
+                                              })
                                           }}
                         >
                             <Text>{item.name}</Text>
@@ -39,8 +40,6 @@ const AllDeviceScreen = ({navigation}) =>{
                     )
                 })}
             </ScrollView>
-            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} data={selectedData} />
-
 
         </View>
     )

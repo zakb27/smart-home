@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {getSaved} from "../hooks/Database";
 import DeviceScreen from "../screens/DeviceScreen";
-
-const Saved = ({navigation})=>{
-    const [modalVisible, setModalVisible] = useState(false);
-    const [selectedData, setData] = useState('');
+import {TransitionPresets} from "@react-navigation/stack";
+import { createStackNavigator } from '@react-navigation/stack';
+const Stack = createStackNavigator();
+const SavedMain = ({navigation})=>{
     const [devices,setDevices] = useState([]);
 
 
@@ -20,17 +20,18 @@ const Saved = ({navigation})=>{
             setDevices(data);
         })
         return test;
-    }, [navigation,modalVisible]);
+    }, [navigation]);
 
     return(
         <SafeAreaView>
             <ScrollView contentContainerStyle={styles.container}>
-                {devices.map((item)=>{
+                {devices.map((item,index)=>{
                     return(
-                        <TouchableOpacity key={item.id} style={styles.card}
+                        <TouchableOpacity key={index} style={styles.card}
                                           onPress={() => {
-                                              setData(item);
-                                              setModalVisible(true)
+                                              navigation.navigate('DeviceContainer',{
+                                                  data:item,
+                                              })
                                           }}
                         >
                             <Text>{item.name}</Text>
@@ -38,9 +39,31 @@ const Saved = ({navigation})=>{
                     )
                 })}
             </ScrollView>
-            <DeviceScreen modalVisible = {modalVisible} setModalVisible = {setModalVisible} data={selectedData} />
 
         </SafeAreaView>
+
+
+    )
+}
+
+const Saved = ()=>{
+
+    return(
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen name="HomeRooms" component={SavedMain}/>
+            <Stack.Screen name="DeviceContainer" component={DeviceScreen}
+                          options={{
+                              headerShown: false,
+                              presentation: 'modal',
+                              cardOverlayEnabled: false,
+                              ...TransitionPresets.ModalPresentationIOS,
+                          }}
+            />
+        </Stack.Navigator>
 
 
     )
@@ -55,7 +78,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
     },
     card: {
         width:150,
