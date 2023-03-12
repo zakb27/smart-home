@@ -15,6 +15,7 @@ import {signOut,updateEmail,updatePassword} from "firebase/auth";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
+import * as ImagePicker from 'expo-image-picker';
 
 const PassChange = ({navigation}) =>{
     const [value,setValue] = useState('');
@@ -92,7 +93,9 @@ const EmailChange = ({navigation}) =>{
         </KeyboardAvoidingView>)
 }
 
+
 const Display = ({navigation}) =>{
+    const [image, setImage] = useState(null);
 
     const handleSignOut = () => {
         signOut(auth)
@@ -102,14 +105,33 @@ const Display = ({navigation}) =>{
             .catch(error => alert(error.message))
     }
 
+    const handleImage = async() =>{
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
 
+        console.log(result);
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    }
 
     return(
         <SafeAreaView>
             <Text>
                 hello {auth.currentUser?.email}
             </Text>
-
+            {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+            <TouchableOpacity
+                onPress={handleImage}
+                style={styles.button}
+            >
+                <Text style={styles.buttonText}>Choose image</Text>
+            </TouchableOpacity>
             <TouchableOpacity
                 onPress={()=>navigation.navigate("Email")}
                 style={styles.button}

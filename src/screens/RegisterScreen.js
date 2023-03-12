@@ -1,40 +1,59 @@
 import { useNavigation } from '@react-navigation/core'
 import React, {useState} from 'react'
-import {KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
-
+import {
+    KeyboardAvoidingView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    Image,
+    ImageBackground
+} from 'react-native'
 import {createUserWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
 import {auth,db} from "../../firebase"
 import {collection, getDocs, doc, addDoc, deleteDoc,} from "firebase/firestore";
-const RegisterScreen = () => {
+import Ionicons from "react-native-vector-icons/Ionicons";
+import * as ImagePicker from 'expo-image-picker';
+import placeholder from '../assets/placeholder_main.png'
+const RegisterScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    const navigation = useNavigation()
-
-    const handleSwitch = () =>{
-        navigation.replace("Login")
-    }
+    const [first, setFirst] = useState('')
+    const [last, setLast] = useState('')
+    const [image, setImage] = useState(null);
 
     const handleDatabase = async() =>{
         const docRef = await doc(db, "users", email);
-        const secondRef = await collection(db,'users',email,'devices')
+        const thirdRef = await collection(db,'users',email,'details')
         // const thirdRef = await collection(db,'users',email,'rooms')
         // const fourthRef = await collection(db,'users',email,'saved')
-
-        await addDoc(secondRef, {
-            'index':'0'
+        await addDoc(thirdRef, {
+            'firstname':first,
+            'lastname':last,
         });
-        const docsSnap = await getDocs(secondRef);
-        docsSnap.forEach((item)=>{
-            deleteDoc(doc(db,'users',email,'devices',item.id))
-        })
-
 
     }
 
+    const handleImageChange = async() =>{
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        console.log(result);
+        setImage(result.assets[0].uri);
+
+    }
 
     const handleSignUp = () => {
         // const auth = getAuth();
+        if(first===''||last===''){
+            alert('Must submit names')
+            return('Must submit first and last name')
+        }
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
@@ -44,41 +63,77 @@ const RegisterScreen = () => {
             .catch(error => alert(error.message))
     }
 
+
     return (
         <KeyboardAvoidingView
             style={styles.container}
             behavior="padding"
         >
+            <TouchableOpacity style={styles.imageContainer} onPress={handleImageChange}>
+
+                {/*<ImageBackground source={image} resizeMode="cover" style={styles.image} />*/}
+                {image && <ImageBackground source={{ uri: image }} style={{ width: 200, height: 200 }} /> }
+            </TouchableOpacity>
+
+            <View style={styles.goBack}>
+                <TouchableOpacity style={styles.goBackTouch} onPress={e=>{navigation.goBack()}}>
+                    <Ionicons name='arrow-back-outline' size={30} color={'white'} />
+
+                </TouchableOpacity>
+                <Text style={styles.titleText}>Register</Text>
+            </View>
+            <View style={styles.roundContainer3}></View>
+            <View style={styles.roundContainer2}></View>
+            <View style={styles.roundContainer}>
+
+            </View>
+            <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
+                <Text style={styles.introInput}>Email:</Text>
                 <TextInput
-                    placeholder="Email"
+                    placeholder="Type here..."
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}
                 />
+                <Text style={styles.introInput}>Password:</Text>
                 <TextInput
-                    placeholder="Password"
+                    placeholder="Type here..."
                     value={password}
                     onChangeText={text => setPassword(text)}
                     style={styles.input}
                     secureTextEntry
                 />
+                <View style={styles.namesContainer}>
+                    <View style={styles.namesMiniContainer}>
+                <Text style={styles.introInput}>Firstname:</Text>
+                <TextInput
+                    placeholder="Type here..."
+                    value={first}
+                    onChangeText={text => setFirst(text)}
+                    style={styles.input}
+                />
+                    </View>
+                    <View style={styles.namesMiniContainer}>
+                <Text style={styles.introInput}>Lastname:</Text>
+                <TextInput
+                    placeholder="Type here..."
+                    value={last}
+                    onChangeText={text => setLast(text)}
+                    style={styles.input}
+                />
+                    </View>
+                </View>
             </View>
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     onPress={handleSignUp}
-                    style={[styles.button, styles.buttonOutline]}
-                >
-                    <Text style={styles.buttonOutlineText}>Register</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={handleSwitch}
                     style={styles.button}
                 >
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>Register</Text>
                 </TouchableOpacity>
-
+            </View>
             </View>
         </KeyboardAvoidingView>
     )
@@ -89,11 +144,106 @@ export default RegisterScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
+        backgroundColor:'white',
+        overflow:'hidden'
+    },
+    namesMiniContainer:{
+        width:'49%'
+    },
+    introInput:{
+        color:'white',
+        marginLeft:5,
+        marginTop:5,
+    },
+    image:{
+        flex:1,
+        justifyContent:'center',
+        width:'100%',
+        height:'100%'
+    },
+    imageContainer:{
+        borderRadius:'100%',
+        borderColor:'#0782F9',
+        borderWidth:2,
+        height:150,
+        width:150,
+        zIndex:300,
+        overflow:'hidden',
+
+    },
+    namesContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center',
+        textAlign:'center',
+        width:'100%',
+    },
+    titleText:{
+        fontSize:35,
+        color:'white',
+        alignItems: 'center',
+        justifyContent:'center',
+    },
+    goBackTouch:{
+        padding:25,
+        alignItems: 'center',
+        justifyContent:'center',
+
+    },
+    goBack:{
+        position:"absolute",
+        backgroundColor:'#0782F9',
+        width:300,
+        padding:15,
+        height:300,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        borderRadius:500,
+        top:-120,
+        left:-80,
+        color:'white',
+    },
+    roundContainer:{
+        backgroundColor:'#2d4d68',
+        height:500,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+        alignItems:'center',
+    },
+    roundContainer2:{
+        backgroundColor:'rgba(45,77,104,0.12)',
+        height:600,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    roundContainer3:{
+        backgroundColor:'rgba(45,77,104,0.04)',
+        height:650,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    formContainer:{
+        backgroundColor:'#2d4d68',
+        width:'100%',
+        alignItems: 'center',
+        padding:22,
+        paddingBottom:100
+
     },
     inputContainer: {
-        width: '80%'
+        width: '80%',
+
     },
     input: {
         backgroundColor: 'white',

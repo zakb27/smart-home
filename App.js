@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterScreen from "./src/screens/RegisterScreen";
 import LoginScreen from "./src/screens/LoginScreen";
-
+import OpeningScreen from './src/screens/OpeningScreen'
 const Stack = createNativeStackNavigator();
 import { onAuthStateChanged } from "firebase/auth";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
@@ -19,9 +19,21 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider} from '@ui-kitten/components';
 
 const Authenticator = () =>{
+    const config = {
+        animation: 'spring',
+        config: {
+            stiffness: 1000,
+            damping: 500,
+            mass: 3,
+            overshootClamping: true,
+            restDisplacementThreshold: 0.01,
+            restSpeedThreshold: 0.01,
+        },
+    };
     return (
         <NavigationContainer>
             <Stack.Navigator>
+                <Stack.Screen options={{headerShown:false}}  name="Welcome" component={OpeningScreen} />
                 <Stack.Screen options={{headerShown:false}}  name="Login" component={LoginScreen} />
                 <Stack.Screen options={{headerShown:false}}  name="Register" component={RegisterScreen} />
             </Stack.Navigator>
