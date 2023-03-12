@@ -10,8 +10,10 @@ import {
     Image,
     ImageBackground
 } from 'react-native'
+import uuid from 'react-native-uuid';
 import {createUserWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
 import {auth,db} from "../../firebase"
+import { getStorage,ref,uploadString,uploadBytes } from "firebase/storage";
 import {collection, getDocs, doc, addDoc, deleteDoc,} from "firebase/firestore";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from 'expo-image-picker';
@@ -33,8 +35,29 @@ const RegisterScreen = ({navigation}) => {
             'lastname':last,
         });
 
+
     }
 
+    const uploadImage = async (uri) => {
+        // const response = await fetch(uri);
+        // const blob = await response.blob();
+        // const ref = getStorage().ref().child("images/" + uri.split("/").pop());
+        // return ref.put(blob);
+
+        try{
+            const storage = getStorage();
+            const response = await fetch(uri)
+            const blobFile = await response.blob()
+
+            const storageRef = ref(storage, `images/${uuid.v4()}`);
+            uploadBytes(storageRef, blobFile).then((snapshot) => {
+            });
+        }
+        catch(e){
+            console.error(e);
+        }
+
+    };
     const handleImageChange = async() =>{
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -43,9 +66,10 @@ const RegisterScreen = ({navigation}) => {
             quality: 1,
         });
 
-        console.log(result);
-        setImage(result.assets[0].uri);
 
+        await setImage(result.assets[0]);
+
+        await uploadImage(result.assets[0].uri)
     }
 
     const handleSignUp = () => {
@@ -71,8 +95,8 @@ const RegisterScreen = ({navigation}) => {
         >
             <TouchableOpacity style={styles.imageContainer} onPress={handleImageChange}>
 
-                {/*<ImageBackground source={image} resizeMode="cover" style={styles.image} />*/}
-                {image && <ImageBackground source={{ uri: image }} style={{ width: 200, height: 200 }} /> }
+                <ImageBackground source={placeholder} resizeMode="cover" style={styles.image} />
+                {image && <ImageBackground source={{ uri: image.uri }} style={{ width: 200, height: 200 }} /> }
             </TouchableOpacity>
 
             <View style={styles.goBack}>
