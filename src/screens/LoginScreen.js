@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, TextInput,Text, TouchableOpacity, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, TextInput,Text, TouchableOpacity, View,Modal,Pressable } from 'react-native'
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
 import {auth} from "../../firebase"
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -11,11 +11,10 @@ import Svg, {
     Rect,
 } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
-
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
+    const [modalVisible, setModalVisible] = useState(false);
 
 
     const handleLogin = () => {
@@ -25,7 +24,7 @@ const LoginScreen = ({navigation}) => {
                 const user = userCredentials.user;
                 console.log('Logged in with:', user.email);
             })
-            .catch(error => alert(error.message))
+            .catch(error => setModalVisible(true))
     }
 
     return (
@@ -48,19 +47,36 @@ const LoginScreen = ({navigation}) => {
                 </TouchableOpacity>
                 <Text style={styles.titleText}>Sign In</Text>
             </View>
+
+            {/*<Modal*/}
+            {/*    animationType="slide"*/}
+            {/*    transparent={true}*/}
+            {/*    visible={modalVisible}*/}
+            {/*    onRequestClose={() => {*/}
+            {/*        setModalVisible(!modalVisible);*/}
+            {/*    }}>*/}
+
+            {/*    <Text>Hello World!</Text>*/}
+            {/*    <Pressable*/}
+            {/*        onPress={() => setModalVisible(!modalVisible)}>*/}
+            {/*        <Text style={styles.textStyle}>Hide Modal</Text>*/}
+            {/*    </Pressable>*/}
+
+            {/*</Modal>*/}
+
             <View style={styles.roundContainer3}></View>
             <View style={styles.roundContainer2}></View>
             <View style={styles.roundContainer}></View>
             <View style={styles.formContainer}>
                 <View style={styles.inputContainer}>
-                    <Text>Email:</Text>
+                    <Text style={styles.text}>Email:</Text>
                     <TextInput
                         placeholder="Type here..."
                         value={email}
                         onChangeText={text => setEmail(text)}
                         style={styles.input}
                     />
-                    <Text>Password:</Text>
+                    <Text style={styles.text}>Password:</Text>
                     <TextInput
                         placeholder="Type here..."
                         value={password}
@@ -98,11 +114,17 @@ const styles = StyleSheet.create({
 
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: '#C4CBFD',
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
         marginTop: 5,
+    },
+    text:{
+        color:'#CDF4F0',
+        marginLeft:5,
+        marginTop:5,
+        fontWeight:'600',
     },
     titleText:{
         fontSize:35,
