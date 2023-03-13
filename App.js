@@ -48,6 +48,8 @@ const Main = () =>{
             <NavigationContainer >
                 <Tabs.Navigator
                 screenOptions ={({ route })=>({
+
+
                     tabBarIcon: ({focused,color,size})=>{
                         let iconName;
                         size=27
@@ -74,10 +76,13 @@ const Main = () =>{
                         return <Ionicons name={iconName} size={size} color={color} />;
 
                     },
-                    tabBarActiveTintColor: '#2d4d68',
-                    tabBarInactiveTintColor: 'gray',
+                    tabBarActiveTintColor: '#cdf4f0',
+                    tabBarInactiveTintColor: '#cdf4f0',
+                    headerShown:false,
                     tabBarShowLabel: false,
-                    tabBarStyle: { height: 85,
+                    tabBarStyle: { height: 75,
+                        backgroundColor: '#8da0e2',
+                        borderTopWidth:0,
                     },
                 })}
                 >
@@ -132,7 +137,6 @@ export default App;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },

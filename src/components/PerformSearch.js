@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView,View } from 'react-native';
+import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView,View,SafeAreaView } from 'react-native';
 import { Icon, Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceScreen from "../screens/DeviceScreen";
@@ -11,6 +11,8 @@ import { TransitionPresets } from '@react-navigation/stack'
 import {fetchDevices, getRegisteredDevices} from "../hooks/Database";
 import RoomScreen from "../screens/RoomScreen";
 import AllDeviceScreen from "../screens/AllDeviceScreen";
+import {LinearGradient} from "expo-linear-gradient";
+import GetProductImage from "./GetProductImage";
 const PerformSearchHome = ({route,navigation})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
     const [devices,setDevices] = useState([]);
@@ -36,9 +38,19 @@ const PerformSearchHome = ({route,navigation})=>{
 
 
     return(
-        <View style={styles.fullContainer}>
+        <SafeAreaView style={styles.fullContainer}>
+            <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+            <Text style={styles.mainTitle}>Search</Text>
             <Input
                 value = {value}
+                style={styles.searchBar}
                 placeholder={'Find'}
                 accessoryLeft={<Ionicons name={'search'} size={20} />}
                 onChangeText={nextValue => setValue(nextValue)}
@@ -53,12 +65,13 @@ const PerformSearchHome = ({route,navigation})=>{
                                                   })
                                               }}
                             >
-                                <Text>{item.name}</Text>
+                                <GetProductImage type ={item.type} />
+                                <Text style={styles.text}>{item.name}</Text>
                             </TouchableOpacity>
                         )
                     })}
             </ScrollView>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -92,7 +105,13 @@ export default PerformSearch
 const styles = StyleSheet.create({
     fullContainer:{
         padding:10,
+        backgroundColor:'#8da0e2',
         flex:1,
+        alignItems:'center'
+    },
+    searchBar:{
+        width:'90%',
+        backgroundColor:'rgba(255,255,255,0.8)',
     },
     container:{
         flexDirection:'row',
@@ -100,26 +119,37 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
+    mainTitle:{
+        color:'#8da0e2',
+        fontSize:40,
+        paddingHorizontal:30,
+        display:'flex',
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        fontWeight: '700',
+        width:'100%',
+    },
     card: {
         width:150,
         height:150,
-        padding:25,
+        padding:5,
+        paddingBottom:25,
         margin:10,
-        backgroundColor:'white',
+        backgroundColor:'rgba(255,255,255,0.6)',
         borderRadius:8,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5,
-        elevation: 5
+        alignItems: 'center',
+        justifyContent:'flex-end',
+
     },
-    text:{
-        color: '#2d4d68',
-        fontSize:12,
-    }
+    text: {
+        paddingTop:10,
+        marginBottom:-10,
+        color: '#8DA0E2',
+        fontWeight: '700',
+        fontSize: 15,
+
+    },
+
 
 
 })

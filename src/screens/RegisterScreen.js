@@ -18,6 +18,7 @@ import {collection, getDocs, doc, addDoc, deleteDoc,} from "firebase/firestore";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from 'expo-image-picker';
 import placeholder from '../assets/placeholder_main.png'
+import {LinearGradient} from "expo-linear-gradient";
 const RegisterScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -95,13 +96,21 @@ const RegisterScreen = ({navigation}) => {
             style={styles.container}
             behavior="padding"
         >
+            <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
             <TouchableOpacity style={styles.imageContainer} onPress={handleImageChange}>
                 {image ? <ImageBackground resizeMode="cover" source={{uri:image}} style={styles.image} /> : <ImageBackground resizeMode="cover" source={placeholder} style={styles.image} />}
             </TouchableOpacity>
 
             <View style={styles.goBack}>
                 <TouchableOpacity style={styles.goBackTouch} onPress={e=>{navigation.goBack()}}>
-                    <Ionicons name='arrow-back-outline' size={30} color={'white'} />
+                    <Ionicons name='arrow-back-outline' size={40} color={'#8DA0E2'} />
 
                 </TouchableOpacity>
                 <Text style={styles.titleText}>Register</Text>
@@ -171,7 +180,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         backgroundColor:'white',
-        overflow:'hidden'
+        overflow:'hidden',
+
     },
     namesMiniContainer:{
         width:'49%'
@@ -189,7 +199,7 @@ const styles = StyleSheet.create({
     },
     imageContainer:{
         borderRadius:'100%',
-        borderColor:'#0782F9',
+        borderColor:'white',
         borderWidth:2,
         height:150,
         width:150,
@@ -204,68 +214,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         width:'100%',
     },
-    titleText:{
-        fontSize:35,
-        color:'white',
-        alignItems: 'center',
-        justifyContent:'center',
-    },
-    goBackTouch:{
-        padding:25,
-        alignItems: 'flex-start',
-        justifyContent:'flex-start',
-        textAlign:'start',
-    },
-    goBack:{
-        position:"absolute",
-        backgroundColor:'#0782F9',
-        width:300,
-        padding:15,
-        height:300,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        borderRadius:500,
-        top:-120,
-        left:-80,
-        color:'white',
 
-    },
-    roundContainer:{
-        backgroundColor:'#2d4d68',
-        height:500,
-        position:'absolute',
-        bottom:0,
-        width:'130%',
-        borderTopLeftRadius:300,
-        borderTopRightRadius:300,
-        alignItems:'center',
-    },
-    roundContainer2:{
-        backgroundColor:'rgba(45,77,104,0.12)',
-        height:575,
-        position:'absolute',
-        bottom:0,
-        width:'130%',
-        borderTopLeftRadius:300,
-        borderTopRightRadius:300,
-    },
-    roundContainer3:{
-        backgroundColor:'rgba(45,77,104,0.04)',
-        height:650,
-        position:'absolute',
-        bottom:0,
-        width:'130%',
-        borderTopLeftRadius:300,
-        borderTopRightRadius:300,
-    },
-    formContainer:{
-        backgroundColor:'#2d4d68',
-        width:'100%',
-        alignItems: 'center',
-        padding:22,
-        paddingBottom:100
-
-    },
     inputContainer: {
         width: '80%',
 
@@ -277,32 +226,95 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
     },
+
+    titleText:{
+        fontSize:35,
+        color:'#8DA0E2',
+        alignItems: 'center',
+        justifyContent:'center',
+        fontWeight: '700',
+        marginLeft:5,
+    },
+    goBackTouch:{
+        padding:25,
+        alignItems: 'center',
+        justifyContent:'center',
+
+    },
+    goBack:{
+        position:"absolute",
+        backgroundColor:'#CDF4F0',
+        width:300,
+        padding:15,
+        height:300,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        borderRadius:500,
+        top:-120,
+        left:-80,
+        color:'white',
+    },
+    roundContainer:{
+        backgroundColor:'#8da0e2',
+        height:450,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    roundContainer2:{
+        backgroundColor:'rgba(141,160,226,0.35)',
+        height:500,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    roundContainer3:{
+        backgroundColor:'rgba(141,160,226,0.16)',
+        height:550,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    formContainer:{
+        backgroundColor:'#8da0e2',
+        width:'100%',
+        alignItems: 'center',
+        padding:0,
+        paddingBottom:85
+    },
+
     buttonContainer: {
         width: '60%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40,
+        marginTop: 20,
     },
     button: {
-        backgroundColor: '#0782F9',
+        backgroundColor: '#BCF1EB',
         width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
     },
     buttonOutline: {
-        backgroundColor: 'white',
+        backgroundColor: '#8da0e2',
         marginTop: 5,
-        borderColor: '#0782F9',
+        borderColor: '#b8f5e4',
         borderWidth: 2,
     },
     buttonText: {
-        color: 'white',
+        color: '#8DA0E2',
         fontWeight: '700',
         fontSize: 16,
     },
     buttonOutlineText: {
-        color: '#0782F9',
+        color: '#b8f5e4',
         fontWeight: '700',
         fontSize: 16,
     },

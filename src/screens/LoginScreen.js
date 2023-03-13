@@ -6,28 +6,11 @@ import {auth} from "../../firebase"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import Svg, {
-    Circle,
-    Ellipse,
     G,
-    TSpan,
-    TextPath,
     Path,
-    Polygon,
-    Polyline,
-    Line,
     Rect,
-    Use,
-    Image,
-    Symbol,
-    Defs,
-    LinearGradient,
-    RadialGradient,
-    Stop,
-    ClipPath,
-    Pattern,
-    Mask,
 } from 'react-native-svg';
-import { SvgUri } from 'react-native-svg';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
@@ -50,66 +33,17 @@ const LoginScreen = ({navigation}) => {
             style={styles.container}
             behavior="padding"
         >
-            {/*<Svg*/}
-            {/*    width={200} height={200} viewBox="-0.04 0 96 96" xmlns="http://www.w3.org/2000/svg"*/}
-            {/*>*/}
-            {/*    <G*/}
-            {/*        data-name="Group 7"*/}
-            {/*        transform="translate(-111 -696)"*/}
-            {/*        stroke="#2d4d68"*/}
-            {/*        strokeLinejoin="round"*/}
-            {/*        strokeWidth={4}*/}
-            {/*    >*/}
-            {/*        <Path*/}
-            {/*            data-name="Rectangle 54"*/}
-            {/*            fill="#5aade0"*/}
-            {/*            strokeLinecap="round"*/}
-            {/*            d="M181 707h14v36h-14z"*/}
-            {/*        />*/}
-            {/*        <Path*/}
-            {/*            data-name="Path 54"*/}
-            {/*            d="m159 709-36 33v48h72v-49Z"*/}
-            {/*            fill="#5aade0"*/}
-            {/*            strokeLinecap="round"*/}
-            {/*        />*/}
-            {/*        <Path*/}
-            {/*            data-name="Rectangle 55"*/}
-            {/*            fill="#ebf4f7"*/}
-            {/*            strokeLinecap="round"*/}
-            {/*            d="M148 765h22v25h-22z"*/}
-            {/*        />*/}
-            {/*        <Rect*/}
-            {/*            data-name="Rectangle 60"*/}
-            {/*            width={30}*/}
-            {/*            height={10}*/}
-            {/*            rx={5}*/}
-            {/*            transform="translate(144 755)"*/}
-            {/*            fill="#fff"*/}
-            {/*        />*/}
-            {/*        <Rect*/}
-            {/*            data-name="Rectangle 61"*/}
-            {/*            width={22}*/}
-            {/*            height={10}*/}
-            {/*            rx={5}*/}
-            {/*            transform="translate(177 698)"*/}
-            {/*            fill="#fff"*/}
-            {/*        />*/}
-            {/*        <Path*/}
-            {/*            data-name="Path 58"*/}
-            {/*            d="m202 736.858-35.929-35.929a10 10 0 0 0-14.142 0L116 736.858a9.978 9.978 0 0 0-2.878 8.067A5.009 5.009 0 0 0 113 746v20a5 5 0 0 0 10 0v-8a5 5 0 0 0 10 0v-9.858l26-26L187.858 751A10 10 0 0 0 202 736.858Z"*/}
-            {/*            fill="#fff"*/}
-            {/*        />*/}
-            {/*        <Path*/}
-            {/*            data-name="Line 15"*/}
-            {/*            fill="#fff"*/}
-            {/*            strokeLinecap="round"*/}
-            {/*            d="M123 758v-7"*/}
-            {/*        />*/}
-            {/*    </G>*/}
-            {/*</Svg>*/}
+            <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
             <View style={styles.goBack}>
                 <TouchableOpacity style={styles.goBackTouch} onPress={e=>{navigation.goBack()}}>
-                    <Ionicons name='arrow-back-outline' size={30} color={'white'} />
+                    <Ionicons name='arrow-back-outline' size={40} color={'#8DA0E2'} />
 
                 </TouchableOpacity>
                 <Text style={styles.titleText}>Sign In</Text>
@@ -143,12 +77,6 @@ const LoginScreen = ({navigation}) => {
                     >
                         <Text style={styles.buttonText}>Login</Text>
                     </TouchableOpacity>
-                    {/*<TouchableOpacity*/}
-                    {/*    onPress={handleSwitch}*/}
-                    {/*    style={[styles.button, styles.buttonOutline]}*/}
-                    {/*>*/}
-                    {/*    <Text style={styles.buttonOutlineText}>Register</Text>*/}
-                    {/*</TouchableOpacity>*/}
                 </View>
             </View>
         </KeyboardAvoidingView>
@@ -165,66 +93,6 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         overflow:'hidden'
     },
-    titleText:{
-        fontSize:35,
-        color:'white',
-        alignItems: 'center',
-        justifyContent:'center',
-    },
-    goBackTouch:{
-        padding:25,
-        alignItems: 'center',
-        justifyContent:'center',
-
-    },
-    goBack:{
-        position:"absolute",
-        backgroundColor:'#0782F9',
-        width:300,
-        padding:15,
-        height:300,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        borderRadius:500,
-        top:-120,
-        left:-80,
-        color:'white',
-    },
-    roundContainer:{
-        backgroundColor:'#2d4d68',
-        height:425,
-        position:'absolute',
-        bottom:0,
-        width:'130%',
-        borderTopLeftRadius:300,
-        borderTopRightRadius:300,
-    },
-    roundContainer2:{
-        backgroundColor:'rgba(45,77,104,0.12)',
-        height:500,
-        position:'absolute',
-        bottom:0,
-        width:'130%',
-        borderTopLeftRadius:300,
-        borderTopRightRadius:300,
-    },
-    roundContainer3:{
-        backgroundColor:'rgba(45,77,104,0.04)',
-        height:600,
-        position:'absolute',
-        bottom:0,
-        width:'130%',
-        borderTopLeftRadius:300,
-        borderTopRightRadius:300,
-    },
-    formContainer:{
-        backgroundColor:'#2d4d68',
-        width:'100%',
-        alignItems: 'center',
-        padding:22,
-        paddingBottom:100
-
-    },
     inputContainer: {
         width: '80%',
 
@@ -236,32 +104,95 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
     },
+    titleText:{
+        fontSize:35,
+        color:'#8DA0E2',
+        alignItems: 'center',
+        justifyContent:'center',
+        fontWeight:'700',
+        marginLeft:5,
+    },
+    goBackTouch:{
+        padding:25,
+        alignItems: 'center',
+
+        justifyContent:'center',
+
+    },
+    goBack:{
+        position:"absolute",
+        backgroundColor:'#CDF4F0',
+        width:300,
+        padding:15,
+        height:300,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        borderRadius:500,
+        top:-120,
+        left:-80,
+        color:'white',
+    },
+    roundContainer:{
+        backgroundColor:'#8da0e2',
+        height:350,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    roundContainer2:{
+        backgroundColor:'rgba(141,160,226,0.35)',
+        height:400,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    roundContainer3:{
+        backgroundColor:'rgba(141,160,226,0.16)',
+        height:450,
+        position:'absolute',
+        bottom:0,
+        width:'130%',
+        borderTopLeftRadius:300,
+        borderTopRightRadius:300,
+    },
+    formContainer:{
+        backgroundColor:'#8da0e2',
+        width:'100%',
+        alignItems: 'center',
+        padding:0,
+        paddingBottom:85
+    },
+
     buttonContainer: {
         width: '60%',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 40,
+        marginTop: 20,
     },
     button: {
-        backgroundColor: '#0782F9',
+        backgroundColor: '#b8f5e4',
         width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
     },
     buttonOutline: {
-        backgroundColor: 'white',
+        backgroundColor: '#8da0e2',
         marginTop: 5,
-        borderColor: '#0782F9',
+        borderColor: '#b8f5e4',
         borderWidth: 2,
     },
     buttonText: {
-        color: 'white',
+        color: '#7590db',
         fontWeight: '700',
         fontSize: 16,
     },
     buttonOutlineText: {
-        color: '#0782F9',
+        color: '#b8f5e4',
         fontWeight: '700',
         fontSize: 16,
     },

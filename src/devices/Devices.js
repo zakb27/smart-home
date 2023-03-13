@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
         right:0,
         left:0,
         position:"absolute",
-        flex:1,
         alignSelf: "stretch",
         height:500,
         backgroundColor: "white",

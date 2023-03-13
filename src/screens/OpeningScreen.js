@@ -3,29 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, TextInput,Text, TouchableOpacity, View } from 'react-native'
 
 import Svg, {
-    Circle,
-    Ellipse,
     G,
-    TSpan,
-    TextPath,
     Path,
-    Polygon,
-    Polyline,
-    Line,
     Rect,
-    Use,
-    Image,
-    Symbol,
-    Defs,
-    LinearGradient,
-    RadialGradient,
-    Stop,
-    ClipPath,
-    Pattern,
-    Mask,
 } from 'react-native-svg';
-import { SvgUri } from 'react-native-svg';
-
+import { LinearGradient } from 'expo-linear-gradient';
 const OpeningScreen = ({navigation}) => {
 
 
@@ -43,6 +25,14 @@ const OpeningScreen = ({navigation}) => {
             style={styles.container}
             behavior="padding"
         >
+            <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
             <View style={styles.svgContainer}>
             <Svg
                 width={150} height={150} viewBox="-0.04 0 96 96" xmlns="http://www.w3.org/2000/svg"
@@ -50,20 +40,20 @@ const OpeningScreen = ({navigation}) => {
                 <G
                     data-name="Group 7"
                     transform="translate(-111 -696)"
-                    stroke="#2d4d68"
+                    stroke="#8da0e2"
                     strokeLinejoin="round"
                     strokeWidth={4}
                 >
                     <Path
                         data-name="Rectangle 54"
-                        fill="#5aade0"
+                        fill="#cdf4f0"
                         strokeLinecap="round"
                         d="M181 707h14v36h-14z"
                     />
                     <Path
                         data-name="Path 54"
                         d="m159 709-36 33v48h72v-49Z"
-                        fill="#5aade0"
+                        fill="#cdf4f0"
                         strokeLinecap="round"
                     />
                     <Path
@@ -143,7 +133,7 @@ const styles = StyleSheet.create({
     },
     titleText:{
         fontSize:50,
-        color:'#5aade0',
+        color:'#8da0e2',
         alignItems: 'center',
         justifyContent:'center',
         fontFamily:"Kailasa-Bold",
@@ -168,7 +158,7 @@ const styles = StyleSheet.create({
         color:'white',
     },
     roundContainer:{
-        backgroundColor:'#2d4d68',
+        backgroundColor:'#8da0e2',
         height:300,
         position:'absolute',
         bottom:0,
@@ -177,7 +167,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius:300,
     },
     roundContainer2:{
-        backgroundColor:'rgba(45,77,104,0.12)',
+        backgroundColor:'rgba(141,160,226,0.35)',
         height:350,
         position:'absolute',
         bottom:0,
@@ -186,7 +176,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius:300,
     },
     roundContainer3:{
-        backgroundColor:'rgba(45,77,104,0.04)',
+        backgroundColor:'rgba(141,160,226,0.16)',
         height:400,
         position:'absolute',
         bottom:0,
@@ -195,7 +185,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius:300,
     },
     formContainer:{
-        backgroundColor:'#2d4d68',
+        backgroundColor:'#8da0e2',
         width:'100%',
         alignItems: 'center',
         padding:0,
@@ -209,25 +199,25 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     button: {
-        backgroundColor: '#0782F9',
+        backgroundColor: '#b8f5e4',
         width: '100%',
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
     },
     buttonOutline: {
-        backgroundColor: 'white',
+        backgroundColor: '#8da0e2',
         marginTop: 5,
-        borderColor: '#0782F9',
+        borderColor: '#b8f5e4',
         borderWidth: 2,
     },
     buttonText: {
-        color: 'white',
+        color: '#7590db',
         fontWeight: '700',
         fontSize: 16,
     },
     buttonOutlineText: {
-        color: '#0782F9',
+        color: '#b8f5e4',
         fontWeight: '700',
         fontSize: 16,
     },

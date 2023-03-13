@@ -58,13 +58,26 @@ export const getSchedule = async(id)=>{
         console.error(e)
     }
 }
+export const fetchProf = async() =>{
+    try{
+        const email = auth.currentUser?.email
+
+        const docRef = await collection(db,'users',email,'details')
+        const docsSnap = await getDocs(docRef);
+        const objects =[]
+        docsSnap.forEach((doc) => {
+            objects.push({first:doc.data().firstname, last:doc.data().lastname, url: doc.data().url})
+        });
+        return objects;
+
+    }
+    catch(error){
+        console.error(error)
+    }
+}
 
 export const fetchRooms = async() =>{
     try{
-        // const response = await fetch(key+'/getAllRooms');
-        // // console.log(json);
-        // const json = await response.json();
-        // return json.rooms;
         const email = auth.currentUser?.email
 
         const docRef = await collection(db,'users',email,'rooms')
@@ -108,7 +121,7 @@ export const getRegisteredDevices = async() =>{
 
     catch (error) {
         // console.error(error);
-        return json([]);
+        return ([]);
     }
 }
 
@@ -134,7 +147,7 @@ export const getRoomDevices = async(roomID) =>{
     }
     catch (error) {
         // console.error(error);
-        return json([]);
+        return ([]);
     }
 }
 

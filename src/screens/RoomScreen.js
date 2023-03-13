@@ -1,10 +1,13 @@
 import React, { useEffect, useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Button, StyleSheet, SafeAreaView} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
 import {fetchDevices, fetchRooms, getRoomDevices, getSaved} from "../hooks/Database";
+import {LinearGradient} from "expo-linear-gradient";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import GetProductImage from "../components/GetProductImage";
 const RoomScreen = ({route,navigation}) =>{
-    const { roomID } = route.params;
+    const { roomID,roomName } = route.params;
     const [currentSearch,performSearch] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -17,12 +20,28 @@ const RoomScreen = ({route,navigation}) =>{
         });
         getRoomDevices(roomID).then((data)=>{
             performSearch(data)
+
         })
         return test;
     }, [navigation,modalVisible]);
 
     return(
-        <View>
+        <SafeAreaView style={styles.fullView}>
+            <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+            <View style={styles.titleContainer}>
+                <TouchableOpacity style={styles.goBackTouch} onPress={() => navigation.goBack()}>
+                    <Ionicons name='arrow-back-outline' size={40} color={'#8DA0E2'} />
+                </TouchableOpacity>
+                <Text style={styles.mainTitle}>{roomName}</Text>
+            </View>
+
             <ScrollView contentContainerStyle={styles.container}>
                 {currentSearch.map((item)=>{
                     return(
@@ -33,13 +52,13 @@ const RoomScreen = ({route,navigation}) =>{
                                               })
                                           }}
                         >
-                            <Text>{item.name}</Text>
+                            <GetProductImage type ={item.type} />
+                            <Text style={styles.text}>{item.name}</Text>
                         </TouchableOpacity>
                     )
                 })}
             </ScrollView>
-            <Button title="<" onPress={() => navigation.goBack()} />
-        </View>
+        </SafeAreaView>
     )
 
 }
@@ -47,32 +66,56 @@ export default RoomScreen;
 
 
 const styles = StyleSheet.create({
+    fullView:{
+      flex:1,
+
+    },
     container:{
         padding:25,
         flexDirection:'row',
         flexWrap:"wrap",
-        alignItems:'center'
+        alignItems:'center',
+    },
+    titleContainer:{
+        width:'100%',
+        flexDirection:"row",
+
+    },
+    goBackTouch:{
+        paddingLeft:20,
+        alignItems: 'center',
+        justifyContent:'center',
+    },
+    mainTitle:{
+        color:'#8da0e2',
+        fontSize:40,
+
+        display:'flex',
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        fontWeight: '700',
     },
     card: {
         width:150,
         height:150,
-        padding:25,
+        padding:5,
+        paddingBottom:25,
         margin:10,
-        backgroundColor:'white',
+        backgroundColor:'rgba(255,255,255,0.6)',
         borderRadius:8,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5,
-        elevation: 5
+        alignItems: 'center',
+        justifyContent:'flex-end',
+
+
     },
-    text:{
-        color: '#2d4d68',
-        fontSize:12,
-    }
+    text: {
+        paddingTop:10,
+        marginBottom:-10,
+        color: '#8DA0E2',
+        fontWeight: '700',
+        fontSize: 15,
+
+    },
 
 
 })

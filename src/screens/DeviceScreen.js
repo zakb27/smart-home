@@ -41,7 +41,6 @@ const DeviceScreen = ({route,navigation}) =>{
         <View
             style={styles.modalView}
         >
-
             <View style={styles.centeredView} />
                 <Tab.Navigator style={styles.tabView} screenOptions={{
                     swipeEnabled:false,

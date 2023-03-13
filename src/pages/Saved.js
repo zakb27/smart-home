@@ -4,6 +4,8 @@ import {getSaved} from "../hooks/Database";
 import DeviceScreen from "../screens/DeviceScreen";
 import {TransitionPresets} from "@react-navigation/stack";
 import { createStackNavigator } from '@react-navigation/stack';
+import {LinearGradient} from "expo-linear-gradient";
+import GetProductImage from "../components/GetProductImage";
 const Stack = createStackNavigator();
 const SavedMain = ({navigation})=>{
     const [devices,setDevices] = useState([]);
@@ -23,7 +25,16 @@ const SavedMain = ({navigation})=>{
     }, [navigation]);
 
     return(
-        <SafeAreaView>
+        <SafeAreaView style={styles.mainContainer}>
+            <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+            <Text style={styles.mainTitle}>Saved</Text>
             <ScrollView contentContainerStyle={styles.container}>
                 {devices.map((item,index)=>{
                     return(
@@ -34,7 +45,8 @@ const SavedMain = ({navigation})=>{
                                               })
                                           }}
                         >
-                            <Text>{item.name}</Text>
+                            <GetProductImage type ={item.type} />
+                            <Text style={styles.text}>{item.name}</Text>
                         </TouchableOpacity>
                     )
                 })}
@@ -73,6 +85,10 @@ export default Saved;
 
 
 const styles = StyleSheet.create({
+    mainContainer:{
+        flex:1,
+        backgroundColor:'#8da0e2',
+    },
     container:{
         padding:25,
         flexDirection:'row',
@@ -80,26 +96,36 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
     },
+    mainTitle:{
+        color:'#8da0e2',
+        fontSize:40,
+        paddingHorizontal:30,
+        display:'flex',
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        fontWeight: '700',
+        width:'100%',
+    },
     card: {
         width:150,
         height:150,
-        padding:25,
+        padding:5,
+        paddingBottom:25,
         margin:10,
-        backgroundColor:'white',
+        backgroundColor:'rgba(255,255,255,0.6)',
         borderRadius:8,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5,
-        elevation: 5
+        alignItems: 'center',
+        justifyContent:'flex-end',
+
     },
-    text:{
-        color: '#2d4d68',
-        fontSize:12,
-    }
+    text: {
+        paddingTop:10,
+        marginBottom:-10,
+        color: '#8DA0E2',
+        fontWeight: '700',
+        fontSize: 15,
+
+    },
 
 
 })
