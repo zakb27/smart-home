@@ -13,7 +13,7 @@ import {
 import uuid from 'react-native-uuid';
 import {createUserWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
 import {auth,db} from "../../firebase"
-import { getStorage,ref,uploadString,uploadBytes } from "firebase/storage";
+import { getStorage,ref,uploadString,uploadBytes,uploadBytesResumable } from "firebase/storage";
 import {collection, getDocs, doc, addDoc, deleteDoc,} from "firebase/firestore";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from 'expo-image-picker';
@@ -24,6 +24,7 @@ const RegisterScreen = ({navigation}) => {
     const [first, setFirst] = useState('')
     const [last, setLast] = useState('')
     const [image, setImage] = useState(null);
+    const [imageRef,changeRef] = useState('placeholder')
 
     const handleDatabase = async() =>{
         const docRef = await doc(db, "users", email);
@@ -33,24 +34,22 @@ const RegisterScreen = ({navigation}) => {
         await addDoc(thirdRef, {
             'firstname':first,
             'lastname':last,
+            'imageRef':`images/${imageRef}`,
         });
 
 
     }
 
-    const uploadImage = async (uri) => {
-        // const response = await fetch(uri);
-        // const blob = await response.blob();
-        // const ref = getStorage().ref().child("images/" + uri.split("/").pop());
-        // return ref.put(blob);
-
+    const uploadImage = async () => {
         try{
+            const thing = image;
             const storage = getStorage();
-            const response = await fetch(uri)
+            const response = await fetch(thing)
             const blobFile = await response.blob()
-
-            const storageRef = ref(storage, `images/${uuid.v4()}`);
-            uploadBytes(storageRef, blobFile).then((snapshot) => {
+            const newRef = await fetch(uuid.v4());
+            changeRef(newRef)
+            const storageRef = ref(storage, `images/${newRef}`);
+            uploadBytesResumable(storageRef, blobFile).then((snapshot) => {
             });
         }
         catch(e){
@@ -66,10 +65,12 @@ const RegisterScreen = ({navigation}) => {
             quality: 1,
         });
 
+        if(result.assets[0]){
+            await setImage(result.assets[0].uri);
 
-        await setImage(result.assets[0]);
+        }
 
-        await uploadImage(result.assets[0].uri)
+
     }
 
     const handleSignUp = () => {
@@ -83,6 +84,7 @@ const RegisterScreen = ({navigation}) => {
                 const user = userCredentials.user;
                 console.log('Registered with:', user.email);
                 handleDatabase().then(e=>console.log('Database created'))
+                uploadImage().then(e=>console.log('image uploaded'))
             })
             .catch(error => alert(error.message))
     }
@@ -94,9 +96,7 @@ const RegisterScreen = ({navigation}) => {
             behavior="padding"
         >
             <TouchableOpacity style={styles.imageContainer} onPress={handleImageChange}>
-
-                <ImageBackground source={placeholder} resizeMode="cover" style={styles.image} />
-                {image && <ImageBackground source={{ uri: image.uri }} style={{ width: 200, height: 200 }} /> }
+                {image ? <ImageBackground resizeMode="cover" source={{uri:image}} style={styles.image} /> : <ImageBackground resizeMode="cover" source={placeholder} style={styles.image} />}
             </TouchableOpacity>
 
             <View style={styles.goBack}>
@@ -212,9 +212,9 @@ const styles = StyleSheet.create({
     },
     goBackTouch:{
         padding:25,
-        alignItems: 'center',
-        justifyContent:'center',
-
+        alignItems: 'flex-start',
+        justifyContent:'flex-start',
+        textAlign:'start',
     },
     goBack:{
         position:"absolute",
@@ -228,6 +228,7 @@ const styles = StyleSheet.create({
         top:-120,
         left:-80,
         color:'white',
+
     },
     roundContainer:{
         backgroundColor:'#2d4d68',
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     },
     roundContainer2:{
         backgroundColor:'rgba(45,77,104,0.12)',
-        height:600,
+        height:575,
         position:'absolute',
         bottom:0,
         width:'130%',

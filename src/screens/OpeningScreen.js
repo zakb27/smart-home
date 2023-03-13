@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     },
     roundContainer:{
         backgroundColor:'#2d4d68',
-        height:250,
+        height:300,
         position:'absolute',
         bottom:0,
         width:'130%',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     },
     roundContainer2:{
         backgroundColor:'rgba(45,77,104,0.12)',
-        height:300,
+        height:350,
         position:'absolute',
         bottom:0,
         width:'130%',
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     },
     roundContainer3:{
         backgroundColor:'rgba(45,77,104,0.04)',
-        height:350,
+        height:400,
         position:'absolute',
         bottom:0,
         width:'130%',
@@ -199,8 +199,7 @@ const styles = StyleSheet.create({
         width:'100%',
         alignItems: 'center',
         padding:0,
-        paddingBottom:50
-
+        paddingBottom:85
     },
 
     buttonContainer: {
