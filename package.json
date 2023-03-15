@@ -28,8 +28,10 @@
     "expo-dev-client": "~2.0.1",
     "expo-font": "~11.0.1",
     "expo-image-picker": "~14.0.2",
+    "expo-linear-gradient": "~12.0.1",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
+    "express": "^4.18.2",
     "firebase": "^9.15.0",
     "mqtt": "^4.3.7",
     "react": "18.1.0",
@@ -47,8 +49,7 @@
     "react-native-tab-view": "^3.5.0",
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
-    "with-rn-bluetooth-classic": "^1.0.5",
-    "expo-linear-gradient": "~12.0.1"
+    "with-rn-bluetooth-classic": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
