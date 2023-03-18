@@ -685,9 +685,6 @@ const HomeRooms = ({navigation}) =>{
         fetchRooms().then((data)=>{
             setRooms(data)
         })
-        // fetchDevices().then((data)=>{
-        //     setDevices(data)
-        // })
         getRegisteredDevices().then((data)=>{
             setDevices(data)
         })

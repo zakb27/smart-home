@@ -61,9 +61,9 @@ export const getSchedule = async(id)=>{
 export const fetchProf = async() =>{
     try{
         const email = auth.currentUser?.email
-
         const docRef = await collection(db,'users',email,'details')
         const docsSnap = await getDocs(docRef);
+
         const objects =[]
         docsSnap.forEach((doc) => {
             objects.push({first:doc.data().firstname, last:doc.data().lastname, url: doc.data().url})

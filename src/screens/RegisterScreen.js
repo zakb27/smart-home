@@ -25,33 +25,36 @@ const RegisterScreen = ({navigation}) => {
     const [first, setFirst] = useState('')
     const [last, setLast] = useState('')
     const [image, setImage] = useState(null);
-    const [imageRef,changeRef] = useState('placeholder')
+    const [imageRef,changeRef] = useState('placeholder.png')
 
-    const handleDatabase = async() =>{
-        const docRef = await doc(db, "users", email);
-        const thirdRef = await collection(db,'users',email,'details')
-        // const thirdRef = await collection(db,'users',email,'rooms')
-        // const fourthRef = await collection(db,'users',email,'saved')
-        await addDoc(thirdRef, {
-            'firstname':first,
-            'lastname':last,
-            'imageRef':`images/${imageRef}`,
-        });
-
-
-    }
+    // const handleDatabase = async() =>{
+    //
+    //
+    //
+    // }
 
     const uploadImage = async () => {
         try{
-            const thing = image;
             const storage = getStorage();
-            const response = await fetch(thing)
+            const response = await fetch(image)
             const blobFile = await response.blob()
-            const newRef = await fetch(uuid.v4());
-            changeRef(newRef)
-            const storageRef = ref(storage, `images/${newRef}`);
-            uploadBytesResumable(storageRef, blobFile).then((snapshot) => {
+            const newRef = uuid.v4();
+            changeRef(newRef.toString())
+            const storageRef = ref(storage, `images/${newRef.toString()}`);
+            const newFile = new File([blobFile], `images/${newRef.toString()}`, {
+                type: 'image/jpeg',
+            })
+            uploadBytesResumable(storageRef, newFile).then((snapshot) => {
             });
+
+            const item = email.toLowerCase()
+            const thirdRef = await collection(db,'users',item,'details')
+            await addDoc(thirdRef, {
+                'firstname':first,
+                'lastname':last,
+                'url':`images/${newRef.toString()}`,
+            });
+
         }
         catch(e){
             console.error(e);
@@ -63,7 +66,7 @@ const RegisterScreen = ({navigation}) => {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1,
+            quality: 0,
         });
 
         if(result.assets[0]){
@@ -74,7 +77,7 @@ const RegisterScreen = ({navigation}) => {
 
     }
 
-    const handleSignUp = () => {
+    const handleSignUp = async() => {
         // const auth = getAuth();
         if(first===''||last===''){
             alert('Must submit names')
@@ -83,11 +86,14 @@ const RegisterScreen = ({navigation}) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user;
-                console.log('Registered with:', user.email);
-                handleDatabase().then(e=>console.log('Database created'))
+                console.log('Registered with:', user.email.toLowerCase());
+
                 uploadImage().then(e=>console.log('image uploaded'))
+                // handleDatabase().then(e=>console.log('Database created'))
+
             })
             .catch(error => alert(error.message))
+
     }
 
 

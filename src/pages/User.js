@@ -113,13 +113,9 @@ const Display = ({navigation}) =>{
 
     useEffect(() => {
         fetchProf().then((data)=>{
-            // setImage(data)
-            console.log(data[0].url);
             const storage = getStorage();
             // const pathReference = ref(storage, data.url);
             const pathReference = ref(storage, data[0].url);
-            console.log(pathReference);
-
             const test = async () =>{
                 const url = await getDownloadURL(pathReference)
                 setImage(url)
