@@ -1,22 +1,18 @@
 import React,{useEffect,useState} from 'react';
-import { TouchableWithoutFeedback, StyleSheet, TouchableOpacity,ScrollView,View,SafeAreaView } from 'react-native';
-import { Icon, Input, Text } from '@ui-kitten/components';
+import { StyleSheet, TouchableOpacity,ScrollView,SafeAreaView } from 'react-native';
+import { Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceScreen from "../screens/DeviceScreen";
 
-import { createStackNavigator } from '@react-navigation/stack';
-const Stack = createStackNavigator();
-import { TransitionPresets } from '@react-navigation/stack'
-
-import {fetchDevices, getRegisteredDevices} from "../hooks/Database";
-import RoomScreen from "../screens/RoomScreen";
-import AllDeviceScreen from "../screens/AllDeviceScreen";
+import {getRegisteredDevices} from "../hooks/Database";
 import {LinearGradient} from "expo-linear-gradient";
 import GetProductImage from "./GetProductImage";
-const PerformSearchHome = ({route,navigation})=>{
+import Modal from "react-native-modal";
+const PerformSearchHome = (navigation)=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
     const [devices,setDevices] = useState([]);
-
+    const [isModal,openModal] = useState(false);
+    const [currentInfo,changeInfo] = useState([]);
     const [value, setValue] = React.useState('');
 
 
@@ -34,7 +30,7 @@ const PerformSearchHome = ({route,navigation})=>{
             }
         }
 
-    }, [value,navigation]);
+    }, [value,navigation,isModal]);
 
 
     return(
@@ -60,9 +56,8 @@ const PerformSearchHome = ({route,navigation})=>{
                         return(
                             <TouchableOpacity key={index} style={styles.card}
                                               onPress={() => {
-                                                  navigation.navigate('DeviceContainer',{
-                                                      data:item,
-                                                  })
+                                                  changeInfo(item)
+                                                  openModal(true)
                                               }}
                             >
                                 <GetProductImage type ={item.type} />
@@ -71,30 +66,22 @@ const PerformSearchHome = ({route,navigation})=>{
                         )
                     })}
             </ScrollView>
+            <Modal isVisible={isModal}
+                   onSwipeComplete={() => openModal(false)}
+                   swipeDirection="down"
+                   onBackdropPress={() => openModal(false)}
+            >
+                <DeviceScreen data={currentInfo}/>
+            </Modal>
         </SafeAreaView>
     )
 }
 
-const PerformSearch = () =>{
+const PerformSearch = (navigation) =>{
 
 
     return(
-        <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Stack.Screen name="HomeRooms" component={PerformSearchHome}/>
-            <Stack.Screen name="DeviceContainer" component={DeviceScreen}
-                          options={{
-                              headerShown: false,
-                              presentation: 'modal',
-                              cardOverlayEnabled: false,
-                              ...TransitionPresets.ModalPresentationIOS,
-                          }}
-            />
-        </Stack.Navigator>
-
+        <PerformSearchHome navigation={navigation}/>
 
     )
 

@@ -7,9 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {LinearGradient} from "expo-linear-gradient";
 import GetProductImage from "../components/GetProductImage";
 const Stack = createStackNavigator();
+import Modal from "react-native-modal";
 const SavedMain = ({navigation})=>{
     const [devices,setDevices] = useState([]);
 
+    const [isModal,openModal] = useState(false);
+    const [currentInfo,changeInfo] = useState([]);
 
 
     useEffect(() => {
@@ -22,7 +25,7 @@ const SavedMain = ({navigation})=>{
             setDevices(data);
         })
         return test;
-    }, [navigation]);
+    }, [navigation,isModal]);
 
     return(
         <SafeAreaView style={styles.mainContainer}>
@@ -40,9 +43,8 @@ const SavedMain = ({navigation})=>{
                     return(
                         <TouchableOpacity key={index} style={styles.card}
                                           onPress={() => {
-                                              navigation.navigate('DeviceContainer',{
-                                                  data:item,
-                                              })
+                                              changeInfo(item)
+                                              openModal(true)
                                           }}
                         >
                             <GetProductImage type ={item.type} />
@@ -52,30 +54,39 @@ const SavedMain = ({navigation})=>{
                 })}
             </ScrollView>
 
+                <Modal isVisible={isModal}
+                       onSwipeComplete={() => openModal(false)}
+                       swipeDirection="down"
+                       onBackdropPress={() => openModal(false)}
+                >
+                    <DeviceScreen data={currentInfo}/>
+                </Modal>
+
         </SafeAreaView>
 
 
     )
 }
 
-const Saved = ()=>{
+const Saved = ({navigation})=>{
 
     return(
-        <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Stack.Screen name="HomeRooms" component={SavedMain}/>
-            <Stack.Screen name="DeviceContainer" component={DeviceScreen}
-                          options={{
-                              headerShown: false,
-                              presentation: 'modal',
-                              cardOverlayEnabled: false,
-                              ...TransitionPresets.ModalPresentationIOS,
-                          }}
-            />
-        </Stack.Navigator>
+        // <Stack.Navigator
+        //     screenOptions={{
+        //         headerShown: false,
+        //     }}
+        // >
+        //     <Stack.Screen name="HomeRooms" component={SavedMain}/>
+        //     <Stack.Screen name="DeviceContainer" component={DeviceScreen}
+        //                   options={{
+        //                       headerShown: false,
+        //                       presentation: 'modal',
+        //                       cardOverlayEnabled: false,
+        //                       ...TransitionPresets.ModalPresentationIOS,
+        //                   }}
+        //     />
+        // </Stack.Navigator>
+        <SavedMain navigation={navigation} />
 
 
     )

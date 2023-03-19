@@ -6,10 +6,13 @@ import {fetchDevices, fetchRooms, getRoomDevices, getSaved} from "../hooks/Datab
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import GetProductImage from "../components/GetProductImage";
+import Modal from "react-native-modal";
 const RoomScreen = ({route,navigation}) =>{
     const { roomID,roomName } = route.params;
     const [currentSearch,performSearch] = useState([]);
-    const [modalVisible, setModalVisible] = useState(false);
+
+    const [isModal,openModal] = useState(false);
+    const [currentInfo,changeInfo] = useState([]);
 
 
     useEffect(() => {
@@ -23,7 +26,7 @@ const RoomScreen = ({route,navigation}) =>{
 
         })
         return test;
-    }, [navigation,modalVisible]);
+    }, [navigation,isModal]);
 
     return(
         <SafeAreaView style={styles.fullView}>
@@ -47,9 +50,8 @@ const RoomScreen = ({route,navigation}) =>{
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
-                                              navigation.navigate('DeviceContainer',{
-                                                  data:item,
-                                              })
+                                              changeInfo(item)
+                                              openModal(true)
                                           }}
                         >
                             <GetProductImage type ={item.type} />
@@ -58,6 +60,14 @@ const RoomScreen = ({route,navigation}) =>{
                     )
                 })}
             </ScrollView>
+
+            <Modal isVisible={isModal}
+                   onSwipeComplete={() => openModal(false)}
+                   swipeDirection="down"
+                   onBackdropPress={() => openModal(false)}
+            >
+                <DeviceScreen data={currentInfo}/>
+            </Modal>
         </SafeAreaView>
     )
 

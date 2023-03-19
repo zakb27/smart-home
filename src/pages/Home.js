@@ -7,7 +7,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import { TransitionPresets } from '@react-navigation/stack'
 import {fetchRooms, getRegisteredDevices} from "../hooks/Database";
-import {fetchDevices} from "../hooks/Database";
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path,G } from "react-native-svg"
 import DeviceScreen from "../screens/DeviceScreen";
@@ -753,21 +752,6 @@ const Home = ()=>{
             <Stack.Screen name="HomeRooms" component={HomeRooms} />
             <Stack.Screen name="RoomDevice" component={RoomScreen} />
             <Stack.Screen name="AllDevices" component={AllDeviceScreen} />
-            <Stack.Screen name="DeviceContainer" component={DeviceScreen}
-                          options={{
-                              presentation: 'modal',
-                              cardOverlayEnabled: false,
-                              ...TransitionPresets.ModalPresentationIOS,
-                              cardStyle:{
-                                  backgroundColor:"transparent",
-                                  opacity:1,
-                                  width:'100%',
-                                  flex:1,
-                              }
-                          }}
-
-
-            />
         </Stack.Navigator>
 
 

@@ -3,6 +3,8 @@ import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Bu
 import {DeadDoorDevice, DeadLightDevice,DeadTemperatureDevice} from "../devices/DeadDevices";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {createSchedule, performSave} from "../hooks/Database";
+import {LinearGradient} from "expo-linear-gradient";
+import CircularSlider from 'react-native-circular-slider';
 
 const DAYS = [
     {
@@ -105,6 +107,14 @@ const ScheduleScreen = ({route}) =>{
 
     return(
         <View style={styles.modalView}>
+            <LinearGradient colors={['#cdf4f0','#c3d0f3', '#7590db']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
             <View style={styles.buttonContainer}>
                 {DAYS.map((day, index) => (
                     <TouchableOpacity
@@ -188,7 +198,7 @@ const styles = StyleSheet.create({
         position:"absolute",
         flex:1,
         alignSelf: "stretch",
-        height:500,
+        height:600,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 15,

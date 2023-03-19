@@ -1,12 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Button,ScrollView} from 'react-native';
+import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Button,ScrollView,Pressable} from 'react-native';
 import {createSchedule, getSchedule, deleteSchedule} from "../hooks/Database";
 import { createStackNavigator } from '@react-navigation/stack';
 import EditSchedule from "../components/EditSchedule";
 import ScheduleScreen from "./ScheduleScreen";
+import {LinearGradient} from "expo-linear-gradient";
 const Stack = createStackNavigator();
 
-const ViewSchedules= ({route,navigation}) =>{
+const ViewScheduleScreen = ({route,navigation}) =>{
     const [schedules,updateSchedules] = useState([]);
     const data = route.params.data;
     const [updatedData,updateData] = useState('');
@@ -34,21 +35,25 @@ const ViewSchedules= ({route,navigation}) =>{
 
     return(
         <View style={styles.modalView}>
-            <Button  title="To Schedule" onPress={() => navigation.navigate("CreateSchedule",{data:data})} />
+            <LinearGradient colors={['#cdf4f0','#c3d0f3', '#7590db']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
             <ScrollView>
                 {schedules.map((item,index)=> {
                     return (
                         <View style={styles.scheduleView} key={index}>
-                        <TouchableOpacity style={styles.dayButton}
-                                          onPress={() => {
-                                              navigation.navigate('EditSchedule',
-                                                  {
-                                                      ids: item.ids
-                                                  })
-                                          }}
-                        >
-                            <Text>{item.days}{item.startTime}{item.endTime}</Text>
-                        </TouchableOpacity>
+                            <Pressable style={styles.dayButton}
+                                       onPress={() => {
+                                           alert('todo')
+                                       }}
+                            >
+                                <Text>{item.days}{item.startTime}{item.endTime}</Text>
+                            </Pressable>
                             <TouchableOpacity style={styles.removeButton}
                                               onPress={()=>handleRemove(item)}
                             >
@@ -62,34 +67,10 @@ const ViewSchedules= ({route,navigation}) =>{
     )
 }
 
-
-const ViewScheduleScreen = ({route}) =>{
-    const data = route.params.data
-
-
-        return(
-            <Stack.Navigator
-                screenOptions={{
-                    headerShown: false,
-                    styles:{backgroundColor: 'blue'}
-                }}
-            >
-                <Stack.Screen name="ViewSchedules" component={ViewSchedules} initialParams={{ data: data }} />
-                <Stack.Screen name="EditSchedule" component={EditSchedule} />
-
-
-                <Stack.Screen name="CreateSchedule" component={ScheduleScreen} />
-            </Stack.Navigator>
-        )
-}
-
 export default ViewScheduleScreen;
 
 
 const styles = StyleSheet.create({
-    buttonContainer:{
-        flexDirection:'row',
-    },
     scheduleView:{
         flexDirection:"row",
         justifyContent:"space-evenly",
@@ -127,7 +108,7 @@ const styles = StyleSheet.create({
         position:"absolute",
         flex:1,
         alignSelf: "stretch",
-        height:500,
+        height:600,
         backgroundColor: "white",
         padding: 15,
         alignItems: "center",

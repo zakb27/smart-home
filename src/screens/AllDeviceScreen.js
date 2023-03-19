@@ -8,10 +8,12 @@ import { TransitionPresets } from '@react-navigation/stack'
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import GetProductImage from "../components/GetProductImage";
+import Modal from "react-native-modal";
 
 const AllDeviceScreen = ({navigation}) =>{
     const [devices,setDevices] = useState([]);
-
+    const [isModal,openModal] = useState(false);
+    const [currentInfo,changeInfo] = useState([]);
     useEffect(()=>{
         const test =  navigation.addListener('focus', () => {
             getRegisteredDevices().then((data) => {
@@ -23,7 +25,7 @@ const AllDeviceScreen = ({navigation}) =>{
             setDevices(data)
         })
         return test;
-    },[navigation])
+    },[navigation,isModal])
 
     return(
         <SafeAreaView style={styles.fullView}>
@@ -47,9 +49,8 @@ const AllDeviceScreen = ({navigation}) =>{
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
-                                              navigation.navigate('DeviceContainer',{
-                                                  data:item,
-                                              })
+                                              changeInfo(item)
+                                              openModal(true)
                                           }}
                         >
                             <GetProductImage type ={item.type} />
@@ -59,6 +60,13 @@ const AllDeviceScreen = ({navigation}) =>{
                 })}
             </ScrollView>
 
+            <Modal isVisible={isModal}
+                   onSwipeComplete={() => openModal(false)}
+                   swipeDirection="down"
+                   onBackdropPress={() => openModal(false)}
+            >
+                <DeviceScreen data={currentInfo}/>
+            </Modal>
         </SafeAreaView>
     )
 }
@@ -79,7 +87,6 @@ const styles = StyleSheet.create({
     titleContainer:{
         width:'100%',
         flexDirection:"row",
-
     },
     goBackTouch:{
         paddingLeft:20,
