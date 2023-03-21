@@ -4,7 +4,6 @@ import {DeadDoorDevice, DeadLightDevice,DeadTemperatureDevice} from "../devices/
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {createSchedule, performSave} from "../hooks/Database";
 import {LinearGradient} from "expo-linear-gradient";
-import CircularSlider from 'react-native-circular-slider';
 
 const DAYS = [
     {
