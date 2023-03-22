@@ -37,9 +37,6 @@ const DAYS = [
 ];
 
 
-const ios_blue = "#007AFF";
-const themeColor = "#0D1014";
-
 const ScheduleScreen = ({route}) =>{
     const [date, setDate] = useState(new Date(1598051730000));
     const [date2, setDate2] = useState(new Date(1598053001002));

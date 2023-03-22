@@ -14,6 +14,8 @@ import AddRoomScreen from "../screens/AddRoomScreen";
 import AddDeviceScreen from "../screens/AddDeviceScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import {LinearGradient} from "expo-linear-gradient";
+import EditRoomScreen from "../screens/EditRoomScreen";
+import EditDeviceScreen from "../screens/EditDeviceScreen";
 const Stack = createStackNavigator();
 
 
@@ -28,6 +30,7 @@ const AddHome = ({navigation}) =>{
                 bottom:0,
                 right:0,
             }}></LinearGradient>
+            <Text style={styles.mainTitle}>Sync</Text>
             <TouchableOpacity style={styles.card}
                               onPress={() => {
                                   navigation.navigate('AddRoom')
@@ -42,6 +45,20 @@ const AddHome = ({navigation}) =>{
                               }}
             >
                 <Text style={styles.text}>Add Device</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.card}
+                              onPress={() => {
+                                  navigation.navigate('EditRoom')
+                              }}
+            >
+                <Text style={styles.text}>Edit Room</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.card}
+                              onPress={() => {
+                                  navigation.navigate('EditDevice')
+                              }}
+            >
+                <Text style={styles.text}>Edit Device</Text>
             </TouchableOpacity>
         </SafeAreaView>
     )
@@ -58,6 +75,8 @@ const Add = ()=>{
                 <Stack.Screen name="AddHome" component={AddHome} />
                 <Stack.Screen name="AddRoom" component={AddRoomScreen}/>
                 <Stack.Screen name="AddDevice" component={AddDeviceScreen} />
+                <Stack.Screen name="EditRoom" component={EditRoomScreen} />
+                <Stack.Screen name="EditDevice" component={EditDeviceScreen} />
             </Stack.Navigator>
 
 
@@ -77,51 +96,32 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
     },
-    cardConnected:{
-        marginTop:25,
-        width:330,
-        height:100,
-        backgroundColor:'#2d4d68',
-        color:"White",
-        padding:25,
-        borderRadius:10,
-        justifyContent: 'center', alignItems: 'center',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5,
-        elevation: 5
+    mainTitle:{
+        color:'#8da0e2',
+        fontSize:40,
+        paddingHorizontal:30,
+        display:'flex',
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        fontWeight: '700',
+        width:'100%',
     },
-
     card: {
         width:150,
-        height:150,
+        height:180,
         padding:25,
         margin:10,
-        backgroundColor:'white',
+        backgroundColor:'rgba(255,255,255,0.9)',
         borderRadius:8,
         alignItems: 'center',
-        justifyContent:'center',
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 5,
-        elevation: 5
+        justifyContent:'flex-end',
     },
-    text:{
-        color: '#2d4d68',
-        fontSize:20,
-        textAlign:'center'
+    text: {
+        color: '#8DA0E2',
+        fontWeight: '700',
+        fontSize: 15,
     },
-    text2:{
-        color:'white'
-    }
+
 })
 
 

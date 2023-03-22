@@ -75,6 +75,7 @@ const LoginScreen = ({navigation}) => {
                         value={email}
                         onChangeText={text => setEmail(text)}
                         style={styles.input}
+
                     />
                     <Text style={styles.text}>Password:</Text>
                     <TextInput

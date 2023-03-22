@@ -138,7 +138,7 @@ const Display = ({navigation}) =>{
                 bottom:0,
                 right:0,
             }}></LinearGradient>
-            <Text style={styles.mainTitle}>Saved</Text>
+            <Text style={styles.mainTitle}>{first}</Text>
             <View style={styles.profileContainer}>
                 <View style={styles.profilePresser}>
                 <View style={styles.imageContainer}>
@@ -237,7 +237,6 @@ const styles = StyleSheet.create({
 
     profileContainer:{
         width:'100%',
-
         alignItems:'center',
         justifyContent:'flex-start',
         paddingTop:40,
@@ -252,7 +251,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:30,
         paddingVertical:15,
         borderRadius:10,
-        backgroundColor:'rgba(255,255,255,0.5)',
+        backgroundColor:'rgba(255,255,255,0.9)',
     },
     image:{
         borderRadius:'50%',
@@ -262,7 +261,7 @@ const styles = StyleSheet.create({
     changeContainer:{
         height:'30%',
         width:'55%',
-        backgroundColor:'rgba(255,255,255,0.5)',
+        backgroundColor:'rgba(255,255,255,0.9)',
         justifyContent:'center',
         alignItems:'center',
         borderRadius:10,

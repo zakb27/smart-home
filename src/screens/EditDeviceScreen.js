@@ -11,47 +11,14 @@ import {
 } from 'react-native';
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import React,{useEffect} from "react";
-import {auth, db} from "../../firebase";
-import {collection, getDocs} from "firebase/firestore";
-import {fetchDevices} from "../hooks/Database";
+import React from "react";
 
 
-const EditRoomScreen = ({navigation}) =>{
-
-    // useEffect(() => {
-    //     const compareDevices = async() =>{
-    //
-    //         const email = auth.currentUser?.email
-    //         const docRef = await collection(db,'users',email,'devices')
-    //         const roomRef = await collection(db,'users',email,'rooms')
-    //         const docsSnap = await getDocs(docRef);
-    //         const roomsSnap = await getDocs(roomRef)
-    //         const allDevices = await fetchDevices()
-    //         const hew = []
-    //         const fire = []
-    //         docsSnap.forEach(doc=>{
-    //             fire.push(doc.data())
-    //         })
-    //         allDevices.forEach(device=>{
-    //             const found = fire.find(el => el.id === device.id);
-    //             if (!found) hew.push({ label: device.name,value: device.id});
-    //         })
-    //         setItems(hew);
-    //         const tempRooms = []
-    //         roomsSnap.forEach(doc=>{
-    //             tempRooms.push({label:doc.data().name,value:doc.id})
-    //         })
-    //         changeRooms(tempRooms);
-    //     }
-    //     compareDevices().then();
-    // }, [navigation,isEnabled]);
-
+const EditDeviceScreen = ({navigation}) =>{
 
     return(
 
         <SafeAreaView style={styles.container}>
-
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,
                 position:"absolute",
@@ -72,11 +39,9 @@ const EditRoomScreen = ({navigation}) =>{
 
 }
 
-export default EditRoomScreen;
-
 const styles = StyleSheet.create({
     container:{
-       flex:1,
+        flex:1,
     },
     titleContainer:{
         width:'100%',
@@ -97,3 +62,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
 })
+
+
+export default EditDeviceScreen

@@ -78,7 +78,6 @@ export default RoomScreen;
 const styles = StyleSheet.create({
     fullView:{
       flex:1,
-
     },
     container:{
         padding:25,
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
     mainTitle:{
         color:'#8da0e2',
         fontSize:40,
-
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
@@ -111,12 +109,10 @@ const styles = StyleSheet.create({
         padding:5,
         paddingBottom:25,
         margin:10,
-        backgroundColor:'rgba(255,255,255,0.6)',
+        backgroundColor:'rgba(255,255,255,0.9)',
         borderRadius:8,
         alignItems: 'center',
         justifyContent:'flex-end',
-
-
     },
     text: {
         paddingTop:10,
@@ -124,8 +120,5 @@ const styles = StyleSheet.create({
         color: '#8DA0E2',
         fontWeight: '700',
         fontSize: 15,
-
     },
-
-
 })

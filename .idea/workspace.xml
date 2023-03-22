@@ -3,6 +3,19 @@
   <component name="ChangeListManager">
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PerformSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PerformSearch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Add.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Saved.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Saved.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AddRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AddRoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AllDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AllDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RoomScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/ScheduleScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ScheduleScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -123,6 +136,7 @@
       <workItem from="1679239259607" duration="11683000" />
       <workItem from="1679407474887" duration="373000" />
       <workItem from="1679420155443" duration="1230000" />
+      <workItem from="1679496015540" duration="10033000" />
     </task>
     <servers />
   </component>

@@ -45,7 +45,7 @@ const AllDeviceScreen = ({navigation}) =>{
                 <Text style={styles.mainTitle}>All Devices</Text>
             </View>
             <ScrollView contentContainerStyle={styles.container}>
-                {devices.map((item)=>{
+                {devices.map((item,index)=>{
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         padding:5,
         paddingBottom:25,
         margin:10,
-        backgroundColor:'rgba(255,255,255,0.6)',
+        backgroundColor:'rgba(255,255,255,0.9)',
         borderRadius:8,
         alignItems: 'center',
         justifyContent:'flex-end',
