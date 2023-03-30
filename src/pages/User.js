@@ -20,83 +20,9 @@ import {fetchProf, fetchRooms} from "../hooks/Database";
 import { getStorage,ref,uploadString,getDownloadURL,uploadBytesResumable } from "firebase/storage";
 import placeholder from "../assets/placeholder_main.png";
 import {LinearGradient} from "expo-linear-gradient";
-
-const PassChange = ({navigation}) =>{
-    const [value,setValue] = useState('');
-    const handlePassChange = () =>{
-        updatePassword(auth.currentUser,value).then(()=>{
-            console.log('Pass updated')
-            alert('Done')
-            navigation.goBack()
-        }).catch((error)=>{
-            console.log(error)
-            console.log('Error occurred')
-        })
-    }
-    return(
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior="padding"
-        >
-            <View style={styles.inputContainer}>
-                <TextInput
-                    placeholder="Password"
-                    value={value}
-                    onChangeText={text => setValue(text)}
-                    style={styles.input}
-                    secureTextEntry
-                />
-            </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={handlePassChange}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Change Password</Text>
-                </TouchableOpacity>
-            </View>
-            <Button title="Go back" onPress={() => navigation.goBack()} />
-        </KeyboardAvoidingView>)
-}
-
-const EmailChange = ({navigation}) =>{
-    const [value,setValue] = useState('');
-    const handleEmailChange = () =>{
-        updateEmail(auth.currentUser,value).then(()=>{
-            console.log('Email updated')
-            alert('Done')
-            navigation.goBack()
-        }).catch((error)=>{
-            console.log(error)
-            console.log(auth.currentUser)
-            console.log('Error occurred')
-        })
-    }
-    return(
-        <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-    >
-        <View style={styles.inputContainer}>
-            <TextInput
-                placeholder="Email"
-                value={value}
-                onChangeText={text => setValue(text)}
-                style={styles.input}
-            />
-        </View>
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity
-                onPress={handleEmailChange}
-                style={styles.button}
-            >
-                <Text style={styles.buttonText}>Change Email</Text>
-            </TouchableOpacity>
-        </View>
-            <Button title="Go back" onPress={() => navigation.goBack()} />
-        </KeyboardAvoidingView>)
-}
-
+import Ionicons from "react-native-vector-icons/Ionicons";
+import ChangeEmailScreen from "../screens/ChangeEmailScreen";
+import ChangePassScreen from "../screens/ChangePassScreen";
 
 const Display = ({navigation}) =>{
     const [image, setImage] = useState(null);
@@ -138,7 +64,9 @@ const Display = ({navigation}) =>{
                 bottom:0,
                 right:0,
             }}></LinearGradient>
-            <Text style={styles.mainTitle}>{first}</Text>
+            <View style={styles.titleContainer}>
+                <Text style={styles.mainTitle}>{first}</Text>
+            </View>
             <View style={styles.profileContainer}>
                 <View style={styles.profilePresser}>
                 <View style={styles.imageContainer}>
@@ -190,8 +118,8 @@ const UserMain = ()=>{
             }}
         >
             <Stack.Screen name="Home" component={Display} />
-            <Stack.Screen name="Email" component={EmailChange} />
-            <Stack.Screen name="Password" component={PassChange} />
+            <Stack.Screen name="Email" component={ChangeEmailScreen} />
+            <Stack.Screen name="Password" component={ChangePassScreen} />
         </Stack.Navigator>
 
 
@@ -202,10 +130,21 @@ export {UserMain};
 
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1,
+    },
     userContainer: {
         flex: 1,
         alignItems: 'center',
-
+    },
+    titleContainer:{
+        width:'100%',
+        flexDirection:"row",
+    },
+    goBackTouch:{
+        paddingLeft:20,
+        alignItems: 'center',
+        justifyContent:'center',
     },
     mainTitle:{
         color:'#8da0e2',
@@ -215,7 +154,6 @@ const styles = StyleSheet.create({
         justifyContent:'flex-start',
         alignItems:'flex-start',
         fontWeight: '700',
-        width:'100%',
     },
 
     detailsContainer:{

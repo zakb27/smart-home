@@ -2,7 +2,7 @@ import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 // import {key} from '../../assets/key'
 import key from '../assets/key'
-import {addDoc, collection, deleteDoc, doc, getDoc, getDocs} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs,setDoc} from "firebase/firestore";
 import {auth, db} from "../../firebase";
 
 
@@ -96,6 +96,44 @@ export const fetchRooms = async() =>{
         return (rooms.rooms);
     }
 }
+
+
+export const updateFirebaseEmail = async(data)=>{
+    try{
+        const roomRef = await collection(db,'users',data.oldEmail,'rooms')
+        const roomDocs = await getDocs(roomRef);
+        const deviceRef = await collection(db,'users',data.oldEmail,'devices')
+        const deviceDocs = await getDocs(deviceRef);
+        const savedRef = await collection(db,'users',data.oldEmail,'saved')
+        const savedDocs = await getDocs(savedRef);
+        const detailRef = await collection(db,'users',data.oldEmail,'details')
+        const detailDocs = await getDocs(detailRef);
+
+        for (const doc of roomDocs.docs) {
+            const newDocRef = collection(db,'users',data.newEmail,'rooms');
+            await setDoc(newDocRef, doc.data());
+        }
+        for (const doc of deviceDocs.docs) {
+            const newDocRef = collection(db,'users',data.newEmail,'devices');
+            await setDoc(newDocRef, doc.data());
+        }
+        for (const doc of savedDocs.docs) {
+            const newDocRef = collection(db,'users',data.newEmail,'saved');
+            await setDoc(newDocRef, doc.data());
+        }
+        for (const doc of detailDocs.docs) {
+            const newDocRef = collection(db,'users',data.newEmail,'details');
+            await setDoc(newDocRef, doc.data());
+        }
+        await deleteDoc(doc(db, "users", data.oldEmail));
+        return false
+    }
+    catch (e){
+        console.error(e);
+        return true
+    }
+}
+
 
 export const getRegisteredDevices = async() =>{
     try{
