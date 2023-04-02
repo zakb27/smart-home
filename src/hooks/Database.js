@@ -162,6 +162,30 @@ export const updateFirebaseEmail = async(data)=>{
     }
 }
 
+export const deletePromptDevice = async(data)=>{
+
+    try{
+        const email = auth.currentUser?.email
+
+        const docRef = await collection(db,'users',email,'devices')
+        const docsSnap = await getDocs(docRef);
+        let fire = '';
+        docsSnap.forEach(doc=>{
+            if(doc.data().id.toString()===data.toString()){
+                fire=doc.id
+            }
+        })
+        await deleteDoc(doc(db,'users',email,'devices',fire));
+
+        await updateDoc(cityRef, {
+            capital: deleteField()
+        });
+    }
+    catch(e){
+        console.log(e)
+    }
+
+}
 
 export const getRegisteredDevices = async() =>{
     try{

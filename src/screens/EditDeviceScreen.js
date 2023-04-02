@@ -7,32 +7,32 @@ import {
     SafeAreaView,
     Button,
     TouchableOpacity,
-    StyleSheet
+    StyleSheet, Pressable
 } from 'react-native';
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, {useEffect, useState} from "react";
 import Modal from "react-native-modal";
-import {fetchRooms, getRegisteredDevices} from "../hooks/Database";
+import {deletePromptDevice, fetchRooms, getRegisteredDevices} from "../hooks/Database";
 
 
 const EditDeviceScreen = ({navigation}) =>{
 
     const [devices,setDevices] = useState([]);
-    const [isModal,openModal] = useState(false);
     const [currentInfo,changeInfo] = useState([]);
+    const [updatedData,updateData] = useState('');
+
+    const handleRemove = async(data) =>{
+        await deletePromptDevice(data.id);
+        updateData('Done');
+    }
+
 
     useEffect(()=>{
-
-        const compareDevices = async() =>{
-            getRegisteredDevices().then((data)=>{
-                console.log(data);
-                setDevices(data)
-            })
-        }
-        compareDevices().then();
-
-    },[navigation,isModal])
+        getRegisteredDevices().then((data)=>{
+            setDevices(data)
+        })
+    },[navigation,updatedData])
 
     return(
 
@@ -55,43 +55,24 @@ const EditDeviceScreen = ({navigation}) =>{
             <ScrollView contentContainerStyle={styles.touchableContainer}>
                 {devices.map((item,index)=>{
                     return(
-                        <TouchableOpacity key={index} style={styles.touchableItem}
-                                          onPress={() => {
-                                              changeInfo(item)
-                                              openModal(true)
-                                          }}
-                        >
-                            <Text style={styles.text}>{item.name}</Text>
-                        </TouchableOpacity>
+                        <View style={styles.scheduleView} key={index}>
+                            <Pressable style={styles.dayButton}
+                                       onPress={() => {
+                                           alert('todo')
+                                       }}
+                            >
+                                <Text>{item.name}</Text>
+                            </Pressable>
+                            <TouchableOpacity style={styles.removeButton}
+                                              onPress={()=>handleRemove(item)}
+                            >
+                                <Text>X</Text>
+                            </TouchableOpacity>
+                        </View>
                     )
                 })}
             </ScrollView>
 
-
-            <Modal isVisible={isModal}
-                   onSwipeComplete={() => openModal(false)}
-                   swipeDirection="down"
-                   onBackdropPress={() => openModal(false)}
-            >
-                <View style={styles.modalView}>
-                    <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
-                        flex:1,
-                        position:"absolute",
-                        top:0,
-                        left:0,
-                        bottom:0,
-                        borderRadius: 20,
-                        right:0,
-                    }}></LinearGradient>
-                    <Text>Change name</Text>
-                    <Text>{currentInfo.name}</Text>
-                    <Text>Check devices off</Text>
-                    <TouchableOpacity>
-                        <Text>Submit changes</Text>
-                    </TouchableOpacity>
-
-                </View>
-            </Modal>
 
 
         </SafeAreaView>
@@ -106,6 +87,37 @@ const styles = StyleSheet.create({
     titleContainer:{
         width:'100%',
         flexDirection:"row",
+
+    },
+    scheduleView:{
+        flexDirection:"row",
+        justifyContent:"space-evenly",
+        width:300,
+        height:50,
+        borderColor:"black",
+        borderWidth:1,
+        borderRadius:5,
+        overflow:'hidden',
+        marginVertical:5,
+    },
+    removeButton:{
+        backgroundColor:"#e63946",
+        borderLeftColor:"black",
+        borderLeftWidth:1,
+        width:45,
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    dayButton:{
+        flex:1,
+        textAlign:'center',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
+        font:'black',
+        backgroundColor:'rgba(168,218,220,0)',
+
 
     },
     goBackTouch:{
