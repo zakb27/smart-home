@@ -190,11 +190,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
-    touchableContainer:{
-        flexDirection:'column',
-        alignItems:'center',
-        justifyContent:'center'
-    },
+
     titleContainer:{
         width:'100%',
         flexDirection:"row",
@@ -212,6 +208,12 @@ const styles = StyleSheet.create({
         justifyContent:'flex-start',
         alignItems:'flex-start',
         fontWeight: '700',
+    },
+
+    touchableContainer:{
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center'
     },
     touchableItem:{
         backgroundColor:'#f4f3f4',

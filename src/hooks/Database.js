@@ -75,7 +75,35 @@ export const fetchProf = async() =>{
         console.error(error)
     }
 }
+export const getOtherDevices = async(items) =>{
 
+    try{
+        console.log(items);
+        const email = auth.currentUser?.email
+        const docRef = await collection(db,'users',email,'devices')
+        const docsSnap = await getDocs(docRef);
+        const fire = []
+        docsSnap.forEach(doc=>{
+            if(!items.includes(doc.data().id)) {
+                fire.push(doc.data().id)
+            }
+        })
+
+        const response = await fetch(key+'/getPromptDevices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(fire)
+        });
+        return await response.json();
+    }
+    catch(e){
+        // console.error(e);
+        return ({});
+    }
+
+}
 export const fetchRooms = async() =>{
     try{
         const email = auth.currentUser?.email
@@ -84,7 +112,7 @@ export const fetchRooms = async() =>{
         const docsSnap = await getDocs(docRef);
         const objects =[]
         docsSnap.forEach((doc) => {
-            objects.push({id: doc.id, name: doc.data().name, type: doc.data().type})
+            objects.push({id: doc.id, name: doc.data().name, type: doc.data().type,devices:doc.data().devices})
         });
 
 

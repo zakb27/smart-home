@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hooks/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/Database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +130,7 @@
       <workItem from="1679496015540" duration="10033000" />
       <workItem from="1679668968335" duration="1180000" />
       <workItem from="1680169308480" duration="14097000" />
+      <workItem from="1680432347895" duration="8135000" />
     </task>
     <servers />
   </component>
