@@ -37,6 +37,7 @@ const AddRoomScreen = ({navigation})=>{
 
         await addDoc(docRef, {
             id: value.value,
+            rooms:selectedRooms,
         });
 
         for (const item of selectedRooms) {
@@ -75,7 +76,7 @@ const AddRoomScreen = ({navigation})=>{
             changeRooms(tempRooms);
         }
         compareDevices().then();
-    }, [navigation,isEnabled]);
+    }, [navigation,open]);
 
 
     const toggleSwitch = (key) => {
@@ -125,9 +126,17 @@ const AddRoomScreen = ({navigation})=>{
             </ScrollView>
 
             <Modal isVisible={open}
-                   onSwipeComplete={() => setOpen(false)}
+                   onSwipeComplete={() => {
+                       setOpen(false)
+                       setSelectedRooms([])
+                   }
+            }
                    swipeDirection="down"
-                   onBackdropPress={() => setOpen(false)}
+                   onBackdropPress={() => {
+                       setOpen(false)
+                       setSelectedRooms([])
+                   }
+            }
             >
 
                 <View style={styles.modalView}>

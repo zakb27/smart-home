@@ -2,7 +2,7 @@ import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 // import {key} from '../../assets/key'
 import key from '../assets/key'
-import {addDoc, collection, deleteDoc, doc, getDoc, getDocs,setDoc} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc, getDocs,setDoc,updateDoc,arrayUnion,arrayRemove} from "firebase/firestore";
 import {auth, db} from "../../firebase";
 
 
@@ -170,16 +170,23 @@ export const deletePromptDevice = async(data)=>{
         const docRef = await collection(db,'users',email,'devices')
         const docsSnap = await getDocs(docRef);
         let fire = '';
+        let updateRooms = []
         docsSnap.forEach(doc=>{
             if(doc.data().id.toString()===data.toString()){
                 fire=doc.id
+                updateRooms = doc.data().rooms
             }
         })
+
         await deleteDoc(doc(db,'users',email,'devices',fire));
 
-        await updateDoc(cityRef, {
-            capital: deleteField()
-        });
+        for(let i=0;i<updateRooms.length;i++){
+            await updateDoc(doc(db,'users',email,'rooms',updateRooms[i].toString()), {
+                devices: arrayRemove(data)
+            });
+
+
+        }
     }
     catch(e){
         console.log(e)
