@@ -25,16 +25,17 @@ const DeviceScreen = (info) =>{
         }
     }
 
-
-    return(
-        <View
-            style={styles.modalView}
-        >
+    if(data.type==='light' || data.type==='temp'){
+        return(
+            <View
+                style={styles.modalView}
+            >
 
                 <Tab.Navigator style={styles.tabView} screenOptions={{
                     swipeEnabled:false,
                     tabBarStyle:{
                         backgroundColor:'#cdf4f0',
+
                     },
                 }}>
                     <Tab.Screen name="Device" component={RenderSwitch} />
@@ -42,18 +43,56 @@ const DeviceScreen = (info) =>{
                     <Tab.Screen name="Create" component={ScheduleScreen} initialParams={{data: data}} />
                 </Tab.Navigator>
 
-        </View>
-    )
+            </View>
+        )
+    }
+
+    else{
+        return(
+            <View
+                style={styles.modalView}
+            >
+
+                <Tab.Navigator style={styles.tabView} screenOptions={{
+                    swipeEnabled:false,
+                    tabBarStyle: { backgroundColor: '#cdf4f0' },
+                    tabBarActiveTintColor: '#cdf4f0',
+                    tabBarInactiveTintColor: '#cdf4f0',
+                    tabBarLabelStyle: { fontSize: 14 },
+                    tabBarIndicatorStyle: { backgroundColor: '#cdf4f0' },
+                    tabBarShowLabel: false,
+                }}>
+                    <Tab.Screen name="Device" component={RenderSwitch} />
+                </Tab.Navigator>
+
+            </View>
+        )
+    }
+
+
 }
 
 export default DeviceScreen;
 
 const styles = StyleSheet.create({
+    normalView:{
+
+        // marginBottom:84,
+        position:"absolute",
+        alignSelf: "stretch",
+        alignItems: "center",
+
+        bottom:-20,
+        right:0,
+        left:0,
+        borderRadius: 20,
+        // borderBottomLeftRadius:0,
+        // borderBottomRightRadius:0,
+    },
     tabView: {
         height:600,
         // marginBottom:84,
         position:"absolute",
-
         bottom:0,
         right:0,
         left:0,

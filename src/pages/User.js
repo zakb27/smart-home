@@ -23,6 +23,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ChangeEmailScreen from "../screens/ChangeEmailScreen";
 import ChangePassScreen from "../screens/ChangePassScreen";
+import AddDoorCodeScreen from "../screens/AddDoorCodeScreen";
 
 const Display = ({navigation}) =>{
     const [image, setImage] = useState(null);
@@ -120,6 +121,7 @@ const UserMain = ()=>{
             <Stack.Screen name="Home" component={Display} />
             <Stack.Screen name="Email" component={ChangeEmailScreen} />
             <Stack.Screen name="Password" component={ChangePassScreen} />
+            <Stack.Screen name="Door" component={AddDoorCodeScreen} />
         </Stack.Navigator>
 
 

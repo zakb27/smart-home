@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useRef} from 'react';
-import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet,ImageBackground, SafeAreaView, StatusBar,} from 'react-native';
-import {sendInfo, checkSaved, performSave} from "../hooks/Database";
+import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet,Modal, SafeAreaView, StatusBar,} from 'react-native';
+import {sendInfo, checkSaved, performSave, checkPin} from "../hooks/Database";
 import Icon from "react-native-vector-icons/Ionicons"
 import { RadialSlider } from 'react-native-radial-slider';
 import Slider from '@react-native-community/slider';
@@ -125,11 +125,11 @@ const LightDevice = ({data}) =>{
                 maximumTrackTintColor="#e9c46a"
             />
 
-            <TouchableOpacity
-                onPress={() => alert('dfgdfg')}
-            >
-                <Text>sdfsdfsdf</Text>
-            </TouchableOpacity>
+            {/*<TouchableOpacity*/}
+            {/*    onPress={() => alert('dfgdfg')}*/}
+            {/*>*/}
+            {/*    <Text>sdfsdfsdf</Text>*/}
+            {/*</TouchableOpacity>*/}
 
         </View>
     )
@@ -234,6 +234,7 @@ const DoorDevice = ({data}) =>{
     const [showCompletedButton, setShowCompletedButton] = useState(false)
     const [isSaved,changeSaved] = useState(false);
 
+
     useEffect(() => {
         if (enteredPin.length > 0) {
             setShowRemoveButton(true)
@@ -245,9 +246,6 @@ const DoorDevice = ({data}) =>{
         } else {
             setShowCompletedButton(false)
         }
-        if(enteredPin==='4422'){
-            alert('correct');
-        }
     }, [enteredPin])
 
 
@@ -256,6 +254,21 @@ const DoorDevice = ({data}) =>{
             changeSaved(!isSaved)
         })
     }
+    const handlePin = (pin) =>{
+
+        checkPin(pin).then((res)=>{
+            console.log(res)
+            if(res){
+                console.log('problem?')
+                // openDoor(true)
+                // setCountdown(10)
+            }
+        })
+
+    }
+
+
+
 
     useEffect(()=>{
         checkSaved(data.id).then((data)=>{
@@ -266,45 +279,74 @@ const DoorDevice = ({data}) =>{
     return(
 
         <View style={styles.modalView}>
-            <Text>{data.name}</Text>
-            <Button onPress={handleSave} title={isSaved.toString()} />
+            <LinearGradient colors={['#cdf4f0','#c3d0f3', '#7590db']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+
+
+
+
+
+            <View style={styles.titleContainer}>
+                <TouchableOpacity onPress={handleSave} style={styles.goBackTouch}>
+                    {isSaved ?
+                        <Ionicons name={'bookmark'} size={35} color={'#7590db'} />
+                        :
+                        <Ionicons name={"bookmark-outline"} size={35} color={'#7590db'} />
+                    }
+                </TouchableOpacity>
+            </View>
             <StatusBar barStyle="light-content" />
             <View
-                style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
+                style={styles.doorStyle}>
                 <PinView
-                    inputSize={36}
+                    inputSize={46}
                     ref={pinView}
                     pinLength={4}
                     buttonSize={70}
                     onValueChange={value => setEnteredPin(value)}
+                    buttonAreaStyle={{
+                        marginHorizontal: 30,
+                    }}
                     buttonViewStyle={{
                         borderWidth: 1,
-                        borderColor: "#201d50",
-                        backgroundColor:'#364386'
+                        borderColor: "#8DA0E2",
+                        backgroundColor:'rgba(141,160,226,0.6)',
                     }}
                     activeOpacity={0.6}
 
                     inputViewEmptyStyle={{
                         backgroundColor: "transparent",
                         borderWidth: 1,
-                        borderColor: "#8f3636",
+                        borderColor: "rgba(0,0,0,0.10)",
+                        marginHorizontal: 10,
+
                     }}
                     inputViewFilledStyle={{
-                        backgroundColor: "#c95555",
+                        backgroundColor: "#8DA0E2",
+                        marginHorizontal: 10,
                     }}
                     buttonTextStyle={{
-                        color: "#66bdcc",
+                        color: "#131313",
                     }}
                     onButtonPress={key => {
                         if (key === "custom_left") {
                             pinView.current.clear()
                         }
                         if (key === "custom_right") {
-                            alert("Entered Pin: " + enteredPin)
+                            // alert("Entered Pin: " + enteredPin)
+                            handlePin(enteredPin)
+                            // setEnteredPin('')
+                            // pinView.current.clear()
                         }
                     }}
-                    customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={36} color={"#364386"} /> : undefined}
-                    customRightButton={showCompletedButton ? <Icon name={"pizza"} size={36} color={"#364386"} /> : undefined}
+                    customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={46} color={"#131313"} /> : undefined}
+                    customRightButton={showCompletedButton ? <Icon name={"checkmark-circle"} size={46} color={"#131313"} /> : undefined}
                 />
             </View>
         </View>
@@ -343,6 +385,13 @@ const OtherDevice = ({data}) =>{
 
 
 const styles = StyleSheet.create({
+    doorStyle:{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop:-100,
+
+    },
     titleContainer:{
         width:'100%',
         flexDirection:"row",
@@ -352,6 +401,7 @@ const styles = StyleSheet.create({
         padding:10,
         alignItems: 'flex-end',
         justifyContent:'flex-end',
+
     },
 
     buttonContainer:{
@@ -384,7 +434,29 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         padding: 15,
         alignItems: "center",
-    }
+    },
+    blackOverlay:{
+        flex:1,
+        top:0,
+        bottom:0,
+        right:0,
+        left:0,
+        position:"absolute",
+        alignSelf: "stretch",
+        backgroundColor:'#ffffff'
+    },
+    overlay: {
+
+        height:500,
+        width:500,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+    },
+    countdown: {
+        fontSize: 40,
+        color: "white",
+    },
 });
 
 

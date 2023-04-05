@@ -19,6 +19,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from 'expo-image-picker';
 import placeholder from '../assets/placeholder_main.png'
 import {LinearGradient} from "expo-linear-gradient";
+import Modal from "react-native-modal";
+import DeviceScreen from "./DeviceScreen";
+import Pincode from "../components/Pincode";
 const RegisterScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -26,12 +29,9 @@ const RegisterScreen = ({navigation}) => {
     const [last, setLast] = useState('')
     const [image, setImage] = useState(null);
     const [imageRef,changeRef] = useState('placeholder.png')
+    const [pin,changePin] = useState('')
+    const [isModal,openModal] = useState(false);
 
-    // const handleDatabase = async() =>{
-    //
-    //
-    //
-    // }
 
     const uploadImage = async () => {
         try{
@@ -53,6 +53,7 @@ const RegisterScreen = ({navigation}) => {
                 'firstname':first,
                 'lastname':last,
                 'url':`images/${newRef.toString()}`,
+                'pin':pin,
             });
 
         }
@@ -79,9 +80,14 @@ const RegisterScreen = ({navigation}) => {
 
     const handleSignUp = async() => {
         // const auth = getAuth();
+        console.log(pin);
         if(first===''||last===''){
             alert('Must submit names')
             return('Must submit first and last name')
+        }
+        if(pin===''){
+            alert('Must submit door code')
+            return('Must submit door code')
         }
         createUserWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
@@ -123,8 +129,24 @@ const RegisterScreen = ({navigation}) => {
             </View>
             <View style={styles.roundContainer3}></View>
             <View style={styles.roundContainer2}></View>
-            <View style={styles.roundContainer}>
+            <View style={styles.roundContainer}></View>
 
+            <Modal isVisible={isModal}
+                   onSwipeComplete={() => openModal(false)}
+                   swipeDirection="down"
+                   onBackdropPress={() => openModal(false)}
+            >
+                <Pincode openModal={openModal} setPin={changePin} />
+            </Modal>
+
+
+            <View style={styles.doorButtonContainer}>
+                <TouchableOpacity
+                    onPress={e=>openModal(true)}
+                    style={styles.button}
+                >
+                    <Text style={styles.buttonText}>Set Door Code</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
@@ -188,6 +210,9 @@ const styles = StyleSheet.create({
         backgroundColor:'white',
         overflow:'hidden',
 
+    },
+    doorButtonContainer:{
+        marginTop:30,
     },
     namesMiniContainer:{
         width:'49%'

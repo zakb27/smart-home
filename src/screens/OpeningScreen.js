@@ -92,7 +92,6 @@ const OpeningScreen = ({navigation}) => {
                 </G>
             </Svg>
                 <Text style={[styles.titleText]}>Homerino</Text>
-                <Text style={styles.subTitle}>A smart solution</Text>
             </View>
             <View style={styles.roundContainer3}></View>
             <View style={styles.roundContainer2}></View>

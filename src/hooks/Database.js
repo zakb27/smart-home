@@ -2,7 +2,8 @@ import rooms from '../utils/rooms.json'
 import devices from '../utils/devices.json'
 // import {key} from '../../assets/key'
 import key from '../assets/key'
-import {addDoc, collection, deleteDoc, doc, getDoc, getDocs,setDoc,updateDoc,arrayUnion,arrayRemove} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, doc, getDoc,
+    getDocs,setDoc,updateDoc,arrayUnion,arrayRemove,query,where} from "firebase/firestore";
 import {auth, db} from "../../firebase";
 
 
@@ -194,6 +195,91 @@ export const deletePromptDevice = async(data)=>{
 
 }
 
+export const deleteRoom = async(id) =>{
+    try{
+        const email = auth.currentUser?.email
+
+        const docRef = await doc(db,'users',email,'rooms',id.toString());
+        const docSnap = await getDoc(docRef)
+        const devices = docSnap.data().devices
+        console.log(devices);
+
+        if(devices>0){
+            console.log('here')
+            const queryRef = query(
+                collection(db, "users", email, "devices"),
+                where("id", "in", devices)
+            );
+            const querySnap = await getDocs(queryRef);
+            querySnap.forEach((doc) => {
+                updateDoc(doc.ref, { rooms: arrayRemove(id.toString()) });
+            });
+        }
+        await deleteDoc(docRef)
+    }
+    catch(e){
+        console.error(e);
+    }
+}
+
+export const updateRoom = async(name,devices,id,removeDevices) =>{
+    try{
+        const email = auth.currentUser?.email
+        if (devices.length>0) {
+            console.log('here')
+
+            const queryRef = query(
+                collection(db, "users", email, "devices"),
+                where("id", "in", devices)
+            );
+
+            const querySnap = await getDocs(queryRef);
+            querySnap.forEach((doc) => {
+                updateDoc(doc.ref, {rooms: arrayUnion(id.toString())});
+            });
+        }
+        if(removeDevices.length>0){
+            console.log('here2')
+            const queryRef = query(
+                collection(db, "users", email, "devices"),
+                where("id", "in", removeDevices)
+            );
+            const querySnap = await getDocs(queryRef);
+            querySnap.forEach((doc) => {
+                updateDoc(doc.ref, {rooms: arrayRemove(id.toString())});
+            });
+        }
+
+        await updateDoc(doc(db,'users',email,'rooms',id), {
+            devices: devices,
+            name:name,
+        });
+    }
+    catch(e){
+        // console.error(e)
+    }
+}
+
+
+export const getPromptDevice = async(id) =>{
+    try{
+        console.log(id);
+        const item = [id]
+        const response = await fetch(key+'/getPromptDevices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(item)
+        });
+        return await response.json();
+    }
+    catch(e){
+        console.error(error);
+        return ([]);
+    }
+}
+
 export const getRegisteredDevices = async() =>{
     try{
         const email = auth.currentUser?.email
@@ -245,6 +331,26 @@ export const getRoomDevices = async(roomID) =>{
     catch (error) {
         // console.error(error);
         return ([]);
+    }
+}
+
+export const checkPin = async (pin)=>{
+    try{
+        const email = auth.currentUser?.email
+        const docRef = await collection(db,'users',email,'details')
+
+        const docsSnap = await getDocs(docRef);
+        let correct = false
+        docsSnap.forEach((doc) => {
+            if (doc.data().pin.toString()===pin.toString()){
+                correct=true
+            }
+        });
+        return correct;
+    }
+    catch(e){
+        console.error(e);
+        return false;
     }
 }
 

@@ -14,9 +14,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, {useEffect, useState} from "react";
 import {auth, db} from "../../firebase";
 import {collection, getDocs} from "firebase/firestore";
-import {fetchDevices, fetchRooms, getOtherDevices, getRoomDevices} from "../hooks/Database";
+import {fetchDevices, fetchRooms, getOtherDevices, getPromptDevice, getRoomDevices,updateRoom,deleteRoom} from "../hooks/Database";
 import Modal from "react-native-modal";
 import DropDownPicker from "react-native-dropdown-picker";
+import { Dropdown } from 'react-native-element-dropdown';
 
 
 const EditRoomScreen = ({navigation}) =>{
@@ -30,16 +31,54 @@ const EditRoomScreen = ({navigation}) =>{
     const [name,setName] = useState('')
     const [connectedDevices,changeConnected] = useState([])
     const [selectedDevices,changeSelectedDevices] = useState([])
-    const handleNameChange = () =>{
+    const [isFocus, setIsFocus] = useState(false);
+    const [removeDevices,changeRemoveDevices] = useState([])
 
+    const [currentRoomID,changeRoomID] = useState('');
+
+    const handleSubmit = async() =>{
+        await updateRoom(name,selectedDevices,currentRoomID,removeDevices).then(() =>{
+            console.log('updated room')
+            setOpen(false)
+            setName('')
+            setItems([])
+            setValue({})
+            setValue2([])
+            setIsEnabled({})
+            setDropOpen(false)
+            changeConnected([])
+            changeSelectedDevices([])
+            changeRemoveDevices([])
+            changeRoomID('')
+        })
     }
 
+    const handleDelete = () =>{
+        deleteRoom(currentRoomID).then(() =>{
+            console.log('deleted room')
+            setOpen(false)
+            setName('')
+            setItems([])
+            setValue({})
+            setValue2([])
+            setIsEnabled({})
+            setDropOpen(false)
+            changeConnected([])
+            changeSelectedDevices([])
+            changeRemoveDevices([])
+            changeRoomID('')
+        })
+    }
 
     const toggleSwitch = (key) => {
         if (selectedDevices.includes(key)) {
             changeSelectedDevices(selectedDevices.filter((d) => d !== key));
+            changeRemoveDevices([...removeDevices, key])
+
         } else {
             changeSelectedDevices([...selectedDevices, key]);
+            changeRemoveDevices(removeDevices.filter((d) => d !== key));
+
         }
 
         setIsEnabled((prevState) => ({
@@ -57,17 +96,26 @@ const EditRoomScreen = ({navigation}) =>{
             res.forEach((thing)=>{
                 setItems(old=>[...old,{label:thing.name,value:thing.id}])
             })
-            console.log(res)
+
         })
 
     }
 
     const getDevices = (id)=>{
+        changeRoomID(id)
             getRoomDevices(id).then((data)=>{
                 changeConnected(data)
             })
     }
 
+    const addNewDevice = (id)=>{
+        const newData = items.filter(obj => obj !== id);
+        setItems(newData)
+        getPromptDevice(id.value).then((data)=>{
+            changeConnected(old=>[...old,data[0]])
+            changeSelectedDevices(old=>[...old,data[0].id])
+        })
+    }
 
     useEffect(() => {
         const compareDevices = async() =>{
@@ -119,27 +167,18 @@ const EditRoomScreen = ({navigation}) =>{
 
 
             <Modal isVisible={open}
-                   onSwipeComplete={() => {
-
-                       setOpen(false)
-                       setName('')
-                       setItems([])
-                       setValue({})
-                       setValue2([])
-                       setDropOpen(false)
-                       changeConnected([])
-                       changeSelectedDevices([])
-                   }}
-                   swipeDirection="down"
                    onBackdropPress={() => {
                        setOpen(false)
                        setName('')
                        setItems([])
                        setValue({})
                        setValue2([])
+                       setIsEnabled({})
                        setDropOpen(false)
                        changeConnected([])
                        changeSelectedDevices([])
+                       changeRemoveDevices([])
+                       changeRoomID('')
                    }}
             >
                 <View style={styles.modalView}>
@@ -158,7 +197,6 @@ const EditRoomScreen = ({navigation}) =>{
                         style={styles.textInput}
                         placeholderTextColor={'#C4CBFD'}
                     />
-
                     <View style={styles.scrollLimiter}>
                     <ScrollView>
                         {connectedDevices.map((item,index)=>{
@@ -180,19 +218,31 @@ const EditRoomScreen = ({navigation}) =>{
                     </ScrollView>
                     </View>
 
-                    <DropDownPicker
-                        open={dropOpen}
+                    <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        data={items}
+                        maxHeight={200}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Add item' : '...'}
                         value={value2}
-                        items={items}
-                        setOpen={setDropOpen}
-                        setValue={setValue2}
-                        setItems={setItems}
-                        style={styles.dropDown}
-                        dropDownMaxHeight={300}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                            // setValue2(item.value);
+                            addNewDevice(item)
+                            setIsFocus(false);
+                        }}
                     />
 
-                    <TouchableOpacity>
+                    <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
                         <Text>Submit changes</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.removeButton} onPress={handleDelete}>
+                        <Text>Delete room</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -209,6 +259,17 @@ export default EditRoomScreen;
 const styles = StyleSheet.create({
     container:{
        flex:1,
+    },
+    submit:{
+        padding:10,
+        backgroundColor:'#84c043',
+        borderRadius:10,
+    },
+    removeButton:{
+        padding:10,
+        backgroundColor:'#c04343',
+        borderRadius:10,
+
     },
     titleContainer:{
         width:'100%',
@@ -251,16 +312,46 @@ const styles = StyleSheet.create({
         padding: 15,
         alignItems: "center",
     },
-    dropDown:{
-        backgroundColor:'rgba(0,0,0,0)',
-        borderWidth:1,
-        borderColor:'rgba(0,0,0,0.13)',
-        marginBottom:30,
-        color: '#7590db',
-        fontWeight: '700',
-        fontSize: 16,
-    },
+    // dropDown:{
+    //     backgroundColor:'rgba(0,0,0,0)',
+    //     borderWidth:1,
+    //     borderColor:'rgba(0,0,0,0.13)',
+    //     marginBottom:30,
+    //     color: '#7590db',
+    //     fontWeight: '700',
+    //     fontSize: 16,
+    // },
     scrollLimiter:{
         height:200,
-    }
+    },
+    dropdown: {
+        width:300,
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+    },
+    icon: {
+        marginRight: 5,
+    },
+    label: {
+        position: 'absolute',
+        backgroundColor: 'white',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+    },
 })
