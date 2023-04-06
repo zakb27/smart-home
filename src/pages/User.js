@@ -151,11 +151,12 @@ const styles = StyleSheet.create({
     mainTitle:{
         color:'#8da0e2',
         fontSize:40,
-        paddingHorizontal:30,
+        paddingHorizontal:25,
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
-        fontWeight: '700',
+        fontWeight: '500',
+        width:'100%',
     },
 
     detailsContainer:{

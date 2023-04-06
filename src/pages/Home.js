@@ -6,11 +6,12 @@ import AllDeviceScreen from "../screens/AllDeviceScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 const Stack = createStackNavigator();
 import { TransitionPresets } from '@react-navigation/stack'
-import {fetchRooms, getRegisteredDevices} from "../hooks/Database";
+import {fetchRooms, getRegisteredDevices, sendInfo} from "../hooks/Database";
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path,G } from "react-native-svg"
 import DeviceScreen from "../screens/DeviceScreen";
 import GetRoomImage from '../components/GetRoomImage'
+import Ionicons from "react-native-vector-icons/Ionicons";
 const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
     const [appIsReady, setAppIsReady] = useState(false);
@@ -40,18 +41,11 @@ const HomeRooms = ({navigation}) =>{
             }}></LinearGradient>
 
             <Text style={styles.mainTitle}>Home</Text>
-            <TouchableOpacity  style={styles.cardConnected}
-                              onPress={() =>{
-                                  navigation.navigate('AllDevices')
-                              }}
-            >
-                <Text style={styles.text2}>
-                    {currentDevices.length} devices connected
-                </Text>
-            </TouchableOpacity>
+
 
             <ScrollView contentContainerStyle={styles.container}>
                 {currentRooms.map((item)=>{
+                    console.log(item)
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}
                                           onPress={() => {
@@ -62,8 +56,26 @@ const HomeRooms = ({navigation}) =>{
                                                   })
                                           }}
                         >
+                            <View style={{ aspectRatio: 1,
+                                height:45,
+                                position:"absolute",
+                                top:10,
+                                left:10,
+                            }}>
                             <GetRoomImage type={item.type} />
+                            </View>
+                            <TouchableOpacity style={styles.on} onPress={() => {
+                                navigation.navigate('RoomDevice',
+                                    {
+                                        roomID:item.id,
+                                        roomName:item.name,
+                                    })
+                            }}>
+                                <Ionicons name={'open-outline'} size={17} color={'#1e1d1d'} />
+                            </TouchableOpacity>
                             <Text style={styles.text}>{item.name}</Text>
+                            <Text style={styles.textsmaller}>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</Text>
+                            {item.devices&&(<Text style={styles.textTiny}>{item.devices.length} devices synced</Text>)}
                         </TouchableOpacity>
                     )
                 })}
@@ -87,7 +99,6 @@ const Home = ()=>{
         >
             <Stack.Screen name="HomeRooms" component={HomeRooms} />
             <Stack.Screen name="RoomDevice" component={RoomScreen} />
-            <Stack.Screen name="AllDevices" component={AllDeviceScreen} />
         </Stack.Navigator>
 
 
@@ -111,50 +122,64 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
-        fontWeight: '700',
+        fontWeight: '500',
         width:'100%',
     },
 
     container:{
-        padding:25,
-        minHeight:300,
-
+        paddingVertical:25,
+        paddingHorizontal:5,
+        marginHorizontal:5,
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
-        justifyContent:'center'
-    },
-    cardConnected:{
-        marginTop:25,
-        width:330,
-        height:100,
-        // backgroundColor:'rgba(255,255,255,0.7)',
-        backgroundColor:'rgba(255,255,255,0.9)',
-        color:"White",
-        padding:25,
-        borderRadius:10,
-        justifyContent: 'center', alignItems: 'center',
-        elevation: 5
+        justifyContent:'flex-start',
     },
 
     card: {
-        width:150,
-        height:180,
-        padding:25,
-        margin:10,
-        backgroundColor:'rgba(255,255,255,0.9)',
-        borderRadius:8,
-        alignItems: 'center',
+        width:165,
+        height:125,
+        padding:5,
+        paddingBottom:25,
+        margin:8,
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:18,
+        alignItems: 'flex-start',
         justifyContent:'flex-end',
     },
-    text: {
-        color: '#8DA0E2',
-        fontWeight: '700',
-        fontSize: 15,
+    on:{
+        borderRadius:150,
+        padding:7,
+        display:'flex',
+        alignItems:"center",
+        justifyContent:'center',
+        position:"absolute",
+        top:7,
+        right:7,
+        backgroundColor:'#f5f5f5'
     },
-    text2:{
-        color: '#8DA0E2',
-        fontWeight: '700',
-        fontSize: 15,
-    }
+    text: {
+        marginBottom:5,
+        marginLeft:5,
+        color: '#1e1d1d',
+        fontWeight: '400',
+        fontSize: 13,
+
+    },
+    textsmaller:{
+        // marginBottom:15,
+        marginLeft:5,
+        color: '#494848',
+        fontWeight: '400',
+        fontSize: 10,
+    },
+    textTiny:{
+        position:'absolute',
+        bottom:10,
+        left:5,
+        marginLeft:5,
+        color: '#737272',
+        fontWeight: '400',
+        fontSize: 9,
+    },
 })

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 
     },
     input: {
-        backgroundColor: '#C4CBFD',
+        backgroundColor: '#ffffff',
         paddingHorizontal: 15,
         paddingVertical: 10,
         borderRadius: 10,
@@ -125,14 +125,14 @@ const styles = StyleSheet.create({
         color:'#CDF4F0',
         marginLeft:5,
         marginTop:5,
-        fontWeight:'600',
+        fontWeight:'500',
     },
     titleText:{
         fontSize:35,
         color:'#8DA0E2',
         alignItems: 'center',
         justifyContent:'center',
-        fontWeight:'700',
+        fontWeight:'500',
         marginLeft:5,
     },
     goBackTouch:{

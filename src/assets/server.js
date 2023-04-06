@@ -22,10 +22,31 @@ app.post('/getPromptDevices',function(req, res) {
     allDevices.forEach(device => {
         const found = items.find(el => el === device.id);
         if (found) newJson.push(device);
-
     });
     res.json(newJson);
 });
+
+
+app.get('/getHouseTemp', function(req, res) {
+    try{
+        const allDevices = devices.devices;
+        let avg = 0
+        let count =0
+        allDevices.forEach(device => {
+            if(device.type==='temp'){
+                count++
+                avg = avg+device.value
+            }
+        });
+        const final = avg/count
+        res.json(final);
+    }
+    catch(e){
+        res.json(0)
+    }
+
+});
+
 app.post('/deleteSchedules',function(req,res) {
     const newSchedule = schedule;
     const ids = req.body.ids;
@@ -157,7 +178,6 @@ app.post('/updateDevice',function(req,res){
     allDevices.devices.forEach(device=>{
         if(device.id===id){
             device.value=req.body.value;
-            device.on=req.body.on;
         }
     });
     console.log('Accepted');
@@ -178,12 +198,9 @@ app.post('/updateDoor',function(req,res){
     const allDevices=devices;
     const hold = devices;
     const id = req.body.id;
-    const value = req.body.value
-    console.log(id);
-    console.log(value)
     allDevices.devices.forEach(device=>{
-        if(device.id===id && device.value===value){
-            device.on=true;
+        if(device.id===id){
+            device.value=1;
         }
     });
 
@@ -202,8 +219,8 @@ app.post('/updateDoor',function(req,res){
     setTimeout(() => {
 
         allDevices.devices.forEach(device=>{
-            if(device.id===id && device.value===value){
-                device.on=false;
+            if(device.id===id){
+                device.value=0;
             }
         });
         // Revert the JSON data to the original data
@@ -231,7 +248,6 @@ const updateDevice = (existingSchedule) =>{
     allDevices.devices.forEach(device=>{
         if(device.id===existingSchedule.id){
             device.value=existingSchedule.value;
-            device.on=true;
         }
     });
     fs.writeFile('./devices.json', JSON.stringify(allDevices), function(err) {

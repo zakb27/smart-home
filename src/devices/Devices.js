@@ -18,7 +18,6 @@ const LightDevice = ({data}) =>{
         const info = {
             id: data.id,
             value:percent,
-            on:true,
         }
         sendInfo(info).then(response => {
 
@@ -154,7 +153,6 @@ const TemperatureDevice = ({data}) =>{
     useEffect(() => {
         const info = {
             id: data.id,
-            on: true,
             value:speed
         }
         sendInfo(info).then(response => {
@@ -196,9 +194,9 @@ const TemperatureDevice = ({data}) =>{
                           linearGradient={
                               [ { offset: '0%', color:'#8275bd' }, { offset: '100%', color: '#7590db' }]
                           }
-                          sliderTrackColor={'#e6efe9'}
+                          sliderTrackColor={'#ffffff'}
                           thumbColor={'#7590db'}
-                          lineColor={'#e6efe9'}
+                          lineColor={'#ffffff'}
                           radius={125}
                           subTitleStyle={
                               {fontSize: 20}

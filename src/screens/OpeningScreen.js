@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
       flex:1,
       alignItems:'center',
         justifyContent:'center',
-        marginTop:-200,
+        marginTop:0,
     },
     titleText:{
         fontSize:50,
@@ -142,19 +142,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center',
 
-    },
-    goBack:{
-        position:"absolute",
-        backgroundColor:'#0782F9',
-        width:300,
-        padding:15,
-        height:300,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        borderRadius:500,
-        top:-120,
-        left:-80,
-        color:'white',
     },
     roundContainer:{
         backgroundColor:'#8da0e2',
@@ -192,10 +179,11 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        width: '60%',
+        width: '80%',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20,
+
     },
     button: {
         backgroundColor: '#b8f5e4',

@@ -167,7 +167,7 @@ const RegisterScreen = ({navigation}) => {
                 />
                 <View style={styles.namesContainer}>
                     <View style={styles.namesMiniContainer}>
-                <Text style={styles.introInput}>Firstname:</Text>
+                <Text style={styles.introInput}>First name:</Text>
                 <TextInput
                     placeholder="Type here..."
                     value={first}
@@ -176,7 +176,7 @@ const RegisterScreen = ({navigation}) => {
                 />
                     </View>
                     <View style={styles.namesMiniContainer}>
-                <Text style={styles.introInput}>Lastname:</Text>
+                <Text style={styles.introInput}>Last name:</Text>
                 <TextInput
                     placeholder="Type here..."
                     value={last}
@@ -263,7 +263,7 @@ const styles = StyleSheet.create({
         color:'#8DA0E2',
         alignItems: 'center',
         justifyContent:'center',
-        fontWeight: '700',
+        fontWeight: '500',
         marginLeft:5,
     },
     goBackTouch:{

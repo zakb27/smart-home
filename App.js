@@ -53,7 +53,7 @@ const Main = () =>{
                     tabBarIcon: ({focused,color,size})=>{
                         let iconName;
                         size=27
-                        if(route.name==='Home'){
+                        if(route.name==='Rooms'){
                             iconName=focused?'home'
                                 : 'home-outline';
                         }
@@ -66,7 +66,7 @@ const Main = () =>{
                         }
                         else if (route.name === 'Add') {
                             iconName = focused ? 'add' : 'add-outline';
-                            size=40;
+                            // size=40;
                         }
                         else if (route.name === 'User') {
                             iconName = focused ? 'person' : 'person-outline';
@@ -79,17 +79,17 @@ const Main = () =>{
                     tabBarActiveTintColor: '#cdf4f0',
                     tabBarInactiveTintColor: '#cdf4f0',
                     headerShown:false,
-                    tabBarShowLabel: false,
+                    // tabBarShowLabel: false,
                     tabBarStyle: { height: 75,
                         backgroundColor: '#8da0e2',
                         borderTopWidth:0,
                     },
                 })}
                 >
-                    <Tabs.Screen name={"Home"} component={Home} tabBarShowLabel={false} />
-                    <Tabs.Screen name={"Search"} component={Search} />
-                    <Tabs.Screen name={"Add"} component={Add} />
                     <Tabs.Screen name={"Favourites"} component={Saved} />
+                    <Tabs.Screen name={"Rooms"} component={Home} tabBarShowLabel={false} />
+                    <Tabs.Screen name={"Search"} component={Search} />
+                    {/*<Tabs.Screen name={"Add"} component={Add} />*/}
                     <Tabs.Screen name={"User"} component={UserMain} />
                 </Tabs.Navigator>
             </NavigationContainer>

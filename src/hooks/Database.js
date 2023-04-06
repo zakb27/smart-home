@@ -334,6 +334,23 @@ export const getRoomDevices = async(roomID) =>{
     }
 }
 
+export const getAvgTemp = async()=>{
+    try{
+        console.log('here?')
+        const response = await fetch(key+'/getHouseTemp', {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return await response.json()
+    }
+    catch(e){
+        return(0)
+    }
+
+}
+
 export const checkPin = async (pin)=>{
     try{
         const email = auth.currentUser?.email
