@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback} from 'react-native';
-import {DoorDevice, LightDevice,TemperatureDevice} from "../devices/Devices";
+import {DishDevice, DoorDevice, LightDevice, SpeakerDevice, TemperatureDevice, WashingDevice} from "../devices/Devices";
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ViewScheduleScreen from "./ViewScheduleScreen";
@@ -18,8 +18,14 @@ const DeviceScreen = (info) =>{
                 return <LightDevice data={data} />
             case "temp":
                 return <TemperatureDevice data={data} />
+            case "speaker":
+                return <SpeakerDevice data={data} />
             case "door":
                 return <DoorDevice data={data} />
+            case "washer":
+                return <WashingDevice data={data} />
+            case "dishwasher":
+                return <WashingDevice data={data} />
             default:
                 return <Text>Error</Text>
         }
@@ -34,7 +40,7 @@ const DeviceScreen = (info) =>{
                 <Tab.Navigator style={styles.tabView} screenOptions={{
                     swipeEnabled:false,
                     tabBarStyle:{
-                        backgroundColor:'#cdf4f0',
+                        backgroundColor:'#cbeef0',
 
                     },
                 }}>
@@ -55,11 +61,9 @@ const DeviceScreen = (info) =>{
 
                 <Tab.Navigator style={styles.tabView} screenOptions={{
                     swipeEnabled:false,
-                    tabBarStyle: { backgroundColor: '#cdf4f0' },
-                    tabBarActiveTintColor: '#cdf4f0',
-                    tabBarInactiveTintColor: '#cdf4f0',
-                    tabBarLabelStyle: { fontSize: 14 },
-                    tabBarIndicatorStyle: { backgroundColor: '#cdf4f0' },
+                    borderWidth: 0,
+                    tabBarStyle: { backgroundColor: '#cbeef0',borderWidth: 0, zIndex:0, },
+                    tabBarIndicatorStyle: { backgroundColor: '#cbeef0' },
                     tabBarShowLabel: false,
                 }}>
                     <Tab.Screen name="Device" component={RenderSwitch} />

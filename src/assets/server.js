@@ -15,8 +15,33 @@ app.get('/getAllRooms', function(req, res) {
     res.json(rooms);
 });
 
+app.post('/updateWash',function(req, res) {
+
+    const {id, temp, length} = req.body;
+    const allDevices = devices;
+    allDevices.devices.forEach(device => {
+        if (device.id === id) {
+            device.value = temp;
+            device.time = length
+        }
+    });
+    fs.writeFile('./devices.json', JSON.stringify(allDevices), function (err) {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error updating rooms data');
+        } else {
+            devices.devices = allDevices.devices;
+            res.send('Rooms data updated successfully');
+        }
+
+    });
+});
+
 app.post('/getPromptDevices',function(req, res) {
     const items = req.body;
+    if(items==={}){
+        res.json([])
+    }
     const newJson = []
     const allDevices = devices.devices;
     allDevices.forEach(device => {
@@ -135,7 +160,6 @@ app.post('/createSchedule',function (req, res) {
 
     const start = starter;
     const end = ender;
-    console.log(req.body);
     for (const day of days) {
         const daySchedule = schedules[day] || {};
         for (const existingSchedule of Object.values(daySchedule)) {
@@ -193,14 +217,49 @@ app.post('/updateDevice',function(req,res){
     });
 });
 
-app.post('/updateDoor',function(req,res){
+app.post('/getMinutes',function(req,res){
 
     const allDevices=devices;
+    const id = req.body.id;
+    const currentTime = new Date()
+    let newTime=0
+    let minutes=0
+    allDevices.devices.forEach(device=>{
+        if(device.id===id && device.value>0){
+            newTime = new Date(device.startTime)
+            const seconds = Math.abs(currentTime.getTime() - newTime.getTime())/1000;
+            minutes = seconds/60
+        }
+    });
+
+    res.json(minutes)
+});
+
+app.post('/getSeconds',function(req,res){
+
+    const allDevices=devices;
+    const id = req.body.id;
+    const currentTime = new Date()
+    let newTime=0
+    let seconds=0
+    allDevices.devices.forEach(device=>{
+        if(device.id===id && device.value>0){
+            newTime = new Date(device.startTime)
+            seconds = Math.abs(currentTime.getTime() - newTime.getTime())/1000;
+        }
+    });
+    res.json(seconds)
+});
+
+app.post('/updateDoor',function(req,res){
+    const allDevices=devices;
     const hold = devices;
+    const time =  new Date();
     const id = req.body.id;
     allDevices.devices.forEach(device=>{
         if(device.id===id){
             device.value=1;
+            device.startTime = time
         }
     });
 
@@ -243,6 +302,8 @@ app.get('/getAllDevices', function(req, res) {
     res.json(devices);
 });
 
+
+
 const updateDevice = (existingSchedule) =>{
     const allDevices = devices;
     allDevices.devices.forEach(device=>{
@@ -260,7 +321,32 @@ const updateDevice = (existingSchedule) =>{
         }
     });
 }
+app.get('/getMachine', function(req, res) {
+    const allDevices=devices;
+    let element=''
+    allDevices.devices.forEach(device=>{
+        if((device.type==='washer'||device.type==='dishwasher')&&device.time>0){
+            element=(device)
+        }
+    });
+    res.json(element)
+});
 
+const runMachines = () =>{
+    const allDevices=devices;
+    allDevices.devices.forEach(device=>{
+        if(device.type==='washer'||device.type==='dishwasher'&&device.time>0){
+            device.time=device.time-1;
+        }
+    });
+    fs.writeFile('./devices.json', JSON.stringify(allDevices), function(err) {
+        if (err) {
+            console.error(err);
+        } else {
+            devices.devices = allDevices.devices;
+        }
+    });
+}
 const scheduleDevice = () =>{
     const date = new Date();
     const options = { weekday: "long" };
@@ -275,10 +361,12 @@ const scheduleDevice = () =>{
 
         }
     }
+    runMachines();
+
 
 }
 
-setInterval(scheduleDevice,30000);
+setInterval(scheduleDevice,60000);
 
 app.listen(3000);
 console.log('App Server is listening on port 3000');

@@ -6838,6 +6838,11 @@
   "resolved" "https://registry.npmjs.org/react-native-pin-view/-/react-native-pin-view-3.0.3.tgz"
   "version" "3.0.3"
 
+"react-native-popup-menu@^0.16.1":
+  "integrity" "sha512-xRS7mRh0exwu7Iw8PPVHdM11d13A/KzYjy0/fZx3zVtxISxPkNaDGayau6oa7HqO3Nj0oS9ulFCYjcQfG6vahA=="
+  "resolved" "https://registry.npmjs.org/react-native-popup-menu/-/react-native-popup-menu-0.16.1.tgz"
+  "version" "0.16.1"
+
 "react-native-radial-slider@^0.0.4":
   "integrity" "sha512-GnPgu+b/4Z+c1j3d1ONnYefvOOjtKTYpX4zzQ/rF8EPsBlCkwzXYiGC/U07Au25QA8874j+SJnMEanyO7vAjCw=="
   "resolved" "https://registry.npmjs.org/react-native-radial-slider/-/react-native-radial-slider-0.0.4.tgz"

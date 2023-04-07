@@ -17,6 +17,7 @@ import {auth} from "./firebase"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider} from '@ui-kitten/components';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const Authenticator = () =>{
     const config = {
@@ -80,7 +81,8 @@ const Main = () =>{
                     tabBarInactiveTintColor: '#cdf4f0',
                     headerShown:false,
                     // tabBarShowLabel: false,
-                    tabBarStyle: { height: 75,
+                    tabBarStyle: { height: 80,
+                        paddingTop:3,
                         backgroundColor: '#8da0e2',
                         borderTopWidth:0,
                     },
@@ -125,7 +127,9 @@ const App = ()=> {
     else{
         return(
             <ApplicationProvider {...eva} theme={eva.light}>
+                <MenuProvider>
                 <Main />
+                </MenuProvider>
             </ApplicationProvider>
             )
     }

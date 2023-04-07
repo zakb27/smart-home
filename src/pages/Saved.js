@@ -1,15 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {getSaved, getAvgTemp, getRegisteredDevices, sendInfo} from "../hooks/Database";
+import {getSaved, getAvgTemp, getRegisteredDevices, sendInfo, getMachineProgress} from "../hooks/Database";
 import DeviceScreen from "../screens/DeviceScreen";
 import {TransitionPresets} from "@react-navigation/stack";
 import { createStackNavigator } from '@react-navigation/stack';
 import {LinearGradient} from "expo-linear-gradient";
 import GetProductImage from "../components/GetProductImage";
 const Stack = createStackNavigator();
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+} from 'react-native-popup-menu';
 import Modal from "react-native-modal";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AllDeviceScreen from "../screens/AllDeviceScreen";
+import AddRoomScreen from "../screens/AddRoomScreen";
+import AddDeviceScreen from "../screens/AddDeviceScreen";
+import EditRoomScreen from "../screens/EditRoomScreen";
+import EditDeviceScreen from "../screens/EditDeviceScreen";
+import {Dropdown} from "react-native-element-dropdown";
 const SavedMain = ({navigation})=>{
     const [devices,setDevices] = useState([]);
     const [registered,setRegistered] = useState([]);
@@ -17,7 +28,7 @@ const SavedMain = ({navigation})=>{
     const [currentInfo,changeInfo] = useState([]);
     const [avgTemp,changeTemp] = useState('')
     const [reRender,changeRender] = useState(false)
-
+    const [time,changeTime] = useState(null)
     useEffect(() => {
         const test =  navigation.addListener('focus', () => {
             getSaved().then((data) => {
@@ -28,6 +39,11 @@ const SavedMain = ({navigation})=>{
             })
             getRegisteredDevices().then((data)=>{
                 setRegistered(data)
+            })
+            getMachineProgress().then((data)=>{
+                if(data){
+                    changeTime(data)
+                }
             })
         });
         getSaved().then((data) => {
@@ -52,7 +68,20 @@ const SavedMain = ({navigation})=>{
                 bottom:0,
                 right:0,
             }}></LinearGradient>
-            <Text style={styles.mainTitle}>Favourites</Text>
+            <View style={styles.titleContainer}>
+                <Text style={styles.mainTitle}>Favourites</Text>
+
+            <Menu onSelect={value => navigation.navigate(`${value}`)}>
+                <MenuTrigger customStyles={triggerStyles} children={<Ionicons  name={'add'} size={50} color={'#8DA0E2'} />} />
+                <MenuOptions customStyles={optionsStyles}>
+                    <MenuOption value={'AddRoom'} text='Add Room' customStyles={optionsStyles} />
+                    <MenuOption value={'AddDevice'} text='Add Device' customStyles={optionsStyles} />
+                    <MenuOption value={'EditRoom'} text='Edit Room' customStyles={optionsStyles} />
+                    <MenuOption value={'EditDevice'} text='Edit Device' customStyles={optionsStyles} />
+                </MenuOptions>
+            </Menu>
+            </View>
+
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.avgCard}>
                     <View style={{ aspectRatio: 1,
@@ -70,23 +99,25 @@ const SavedMain = ({navigation})=>{
                     <Text style={styles.wish}>My home</Text>
                     <Text style={styles.subwish}>Average Temperature</Text>
                 </View>
-
-                <View style={styles.avgCard}>
-                    <View style={{ aspectRatio: 1,
-                        height:45,
-                        position:"absolute",
-                        top:10,
-                        left:10,
-                    }}>
-                        <GetProductImage type ={'washer'} />
-                    </View>
-                    <View style={styles.avgTemp}>
-                        <Text style={styles.bigTemp}>167</Text>
-                        <Text style={styles.degree}>Mins</Text>
-                    </View>
-                    <Text style={styles.wish}>Wash</Text>
-                    <Text style={styles.subwish}>Time left for wash</Text>
-                </View>
+                {time &&
+                    (<View style={styles.avgCard}>
+                        <View style={{
+                            aspectRatio: 1,
+                            height: 45,
+                            position: "absolute",
+                            top: 10,
+                            left: 10,
+                        }}>
+                            <GetProductImage type={time.type}/>
+                        </View>
+                        <View style={styles.avgTemp}>
+                            <Text style={styles.bigTemp}>{time.time}</Text>
+                            <Text style={styles.degree}>Mins</Text>
+                        </View>
+                        <Text style={styles.wish}>Washing</Text>
+                        <Text style={styles.subwish}>Reminder</Text>
+                    </View>)
+                }
 
 
                 <TouchableOpacity  style={styles.cardConnected}
@@ -148,14 +179,25 @@ const SavedMain = ({navigation})=>{
                             else{
                                 ifOn='Off'
                             }
-                            icon='open-outline'
                             break
                         case('washer'):
                             thing="Washing machine"
+                            if(item.time>0){
+                                ifOn=item.time.toString()+ ' mins left at ' +item.value.toString() +'°C'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
                             icon='open-outline'
                             break
                         case('dishwasher'):
                             thing="Dish Washer"
+                            if(item.time>0){
+                                ifOn=item.time.toString()+ ' mins left at '+ item.value.toString() +'°C'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
                             icon='open-outline'
                             break
                         default:
@@ -237,6 +279,10 @@ const Saved = ({navigation})=>{
         >
             <Stack.Screen name="HomeRooms" component={SavedMain}/>
             <Stack.Screen name="AllDevices" component={AllDeviceScreen} />
+            <Stack.Screen name="AddRoom" component={AddRoomScreen}/>
+            <Stack.Screen name="AddDevice" component={AddDeviceScreen} />
+            <Stack.Screen name="EditRoom" component={EditRoomScreen} />
+            <Stack.Screen name="EditDevice" component={EditDeviceScreen} />
         </Stack.Navigator>
         // <SavedMain navigation={navigation} />
 
@@ -261,6 +307,12 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'flex-start',
     },
+    titleContainer:{
+        justifyContent:'space-between',
+        alignItems:'center',
+        width:'100%',
+        flexDirection:"row",
+    },
     mainTitle:{
         color:'#8da0e2',
         fontSize:40,
@@ -269,14 +321,14 @@ const styles = StyleSheet.create({
         justifyContent:'flex-start',
         alignItems:'flex-start',
         fontWeight: '500',
-        width:'100%',
     },
     card: {
         width:165,
         height:115,
         padding:5,
         paddingBottom:25,
-        margin:8,
+        marginHorizontal:10,
+        marginVertical:5,
         backgroundColor:'rgba(255,255,255,1)',
         borderRadius:18,
         alignItems: 'flex-start',
@@ -351,8 +403,8 @@ const styles = StyleSheet.create({
         backgroundColor:'rgba(0,0,0,0.4)',
         width:165,
         height:125,
-        marginLeft:8,
-        margin:8,
+        marginHorizontal:10,
+        marginVertical:5,
         borderRadius:18,
         marginBottom:25,
     },
@@ -387,3 +439,53 @@ const styles = StyleSheet.create({
         left:10,
     }
 })
+
+
+
+const optionsStyles = {
+    optionsContainer: {
+        marginTop:50,
+        marginRight:60,
+        borderRadius:25,
+        backgroundColor: 'rgba(255,255,255,1)',
+        padding: 5,
+    },
+    optionsWrapper: {
+        backgroundColor: 'rgba(255,255,255,0.0)',
+    },
+    optionWrapper: {
+        backgroundColor: 'rgba(255,255,255,0.0)',
+        margin: 10,
+    },
+    optionTouchable: {
+        underlayColor: 'rgba(255,255,255,0.0)',
+    },
+    optionText: {
+        color: '#8da0e2',
+        fontWeight: '600',
+        fontSize: 16,
+    },
+};
+
+const triggerStyles = {
+
+    triggerOuterWrapper: {
+        padding: 5,
+        marginRight:25,
+        marginTop:-10,
+        width:50,
+        height:50,
+    },
+    triggerWrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:50,
+        height:50,
+    },
+    triggerTouchable: {
+        style : {
+            width:0,
+            height:0,
+        },
+    },
+};

@@ -13,6 +13,7 @@ const RoomScreen = ({route,navigation}) =>{
 
     const [isModal,openModal] = useState(false);
     const [currentInfo,changeInfo] = useState([]);
+    const [reRender,changeRender] = useState(false)
 
 
     useEffect(() => {
@@ -26,7 +27,7 @@ const RoomScreen = ({route,navigation}) =>{
 
         })
         return test;
-    }, [navigation,isModal]);
+    }, [navigation,isModal,reRender]);
 
     return(
         <SafeAreaView style={styles.fullView}>
@@ -84,15 +85,26 @@ const RoomScreen = ({route,navigation}) =>{
                             else{
                                 ifOn='Off'
                             }
-                            icon='open-outline'
                             break
                         case('washer'):
                             thing="Washing machine"
                             icon='open-outline'
+                            if(item.time>0){
+                                ifOn=item.time.toString()+ ' mins left at '+ item.value.toString() +'°C'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
                             break
                         case('dishwasher'):
                             thing="Dish Washer"
                             icon='open-outline'
+                            if(item.time>0){
+                                ifOn=item.time.toString()+ ' mins left at '+ item.value.toString() +'°C'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
                             break
                         default:
                             thing='other'
@@ -201,7 +213,8 @@ const styles = StyleSheet.create({
         height:115,
         padding:5,
         paddingBottom:25,
-        margin:8,
+        marginHorizontal:10,
+        marginVertical:5,
         backgroundColor:'rgba(255,255,255,1)',
         borderRadius:18,
         alignItems: 'flex-start',

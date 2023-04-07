@@ -222,6 +222,7 @@ export const deleteRoom = async(id) =>{
     }
 }
 
+
 export const updateRoom = async(name,devices,id,removeDevices) =>{
     try{
         const email = auth.currentUser?.email
@@ -260,6 +261,38 @@ export const updateRoom = async(name,devices,id,removeDevices) =>{
     }
 }
 
+export const getMachineProgress = async() => {
+    try{
+        const response = await fetch(key+'/getMachine', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return await response.json();
+    }
+    catch(e){
+        console.error(e)
+        return('Error occurred')
+    }
+}
+
+export const updateWasher = async(id,temp,length) =>{
+    try{
+        const response = await fetch(key+'/updateWash', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id,temp,length})
+        });
+        return await response.json();
+    }
+    catch(e){
+        console.error(e)
+        return('Error occurred')
+    }
+}
 
 export const getPromptDevice = async(id) =>{
     try{
@@ -336,7 +369,6 @@ export const getRoomDevices = async(roomID) =>{
 
 export const getAvgTemp = async()=>{
     try{
-        console.log('here?')
         const response = await fetch(key+'/getHouseTemp', {
             method: 'get',
             headers: {
@@ -363,11 +395,63 @@ export const checkPin = async (pin)=>{
                 correct=true
             }
         });
+
+
         return correct;
     }
     catch(e){
         console.error(e);
         return false;
+    }
+}
+export const getMachineTime = async(id) =>{
+    try{
+        const temp = {id}
+        const response = await fetch(key+'/getMinutes', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(temp)
+        });
+        return await response.json();
+    }
+    catch(e){
+    }
+}
+export const getDoorTime = async(id) =>{
+    try{
+        const temp = {id}
+        const response = await fetch(key+'/getSeconds', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(temp)
+        });
+        return await response.json();
+    }
+    catch(e){
+    }
+}
+
+export const updateDoor = async (id)=>{
+    try{
+        console.log(id);
+        const temp = {id}
+        fetch(key+'/updateDoor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(temp)
+        });
+        return ('issue');
+
+    }
+    catch(e){
+        console.error(e);
+        return ('woops');
     }
 }
 

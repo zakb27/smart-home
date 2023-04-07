@@ -16,7 +16,6 @@ import {auth, db} from "../../firebase";
 import {collection, getDocs} from "firebase/firestore";
 import {fetchDevices, fetchRooms, getOtherDevices, getPromptDevice, getRoomDevices,updateRoom,deleteRoom} from "../hooks/Database";
 import Modal from "react-native-modal";
-import DropDownPicker from "react-native-dropdown-picker";
 import { Dropdown } from 'react-native-element-dropdown';
 
 

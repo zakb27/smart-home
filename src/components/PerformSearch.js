@@ -8,13 +8,14 @@ import {getRegisteredDevices, sendInfo} from "../hooks/Database";
 import {LinearGradient} from "expo-linear-gradient";
 import GetProductImage from "./GetProductImage";
 import Modal from "react-native-modal";
-const PerformSearchHome = (navigation)=>{
+import {Menu, MenuOption, MenuOptions, MenuTrigger} from "react-native-popup-menu";
+const PerformSearchHome = ({navigation})=>{
     const [currentSearch,performSearch] = useState([{name:''}]);
     const [devices,setDevices] = useState([]);
     const [isModal,openModal] = useState(false);
     const [currentInfo,changeInfo] = useState([]);
     const [value, setValue] = React.useState('');
-
+    const [reRender,changeRender] = useState(false)
 
 
     useEffect(() => {
@@ -30,7 +31,7 @@ const PerformSearchHome = (navigation)=>{
             }
         }
 
-    }, [value,navigation,isModal]);
+    }, [value,navigation,isModal,reRender]);
 
 
     return(
@@ -43,7 +44,20 @@ const PerformSearchHome = (navigation)=>{
                 bottom:0,
                 right:0,
             }}></LinearGradient>
-            <Text style={styles.mainTitle}>Search</Text>
+
+            <View style={styles.titleContainer}>
+                <Text style={styles.mainTitle}>Search</Text>
+
+                <Menu onSelect={value => navigation.navigate(`${value}`)}>
+                    <MenuTrigger customStyles={triggerStyles} children={<Ionicons  name={'add'} size={50} color={'#8DA0E2'} />} />
+                    <MenuOptions customStyles={optionsStyles}>
+                        <MenuOption value={'AddRoom'} text='Add Room' customStyles={optionsStyles} />
+                        <MenuOption value={'AddDevice'} text='Add Device' customStyles={optionsStyles} />
+                        <MenuOption value={'EditRoom'} text='Edit Room' customStyles={optionsStyles} />
+                        <MenuOption value={'EditDevice'} text='Edit Device' customStyles={optionsStyles} />
+                    </MenuOptions>
+                </Menu>
+            </View>
             <Input
                 value = {value}
                 style={styles.searchBar}
@@ -90,15 +104,26 @@ const PerformSearchHome = (navigation)=>{
                             else{
                                 ifOn='Off'
                             }
-                            icon='open-outline'
                             break
                         case('washer'):
                             thing="Washing machine"
                             icon='open-outline'
+                            if(item.time>0){
+                                ifOn=item.time.toString()+ ' mins left at '+ item.value.toString() +'°C'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
                             break
                         case('dishwasher'):
                             thing="Dish Washer"
                             icon='open-outline'
+                            if(item.time>0){
+                                ifOn=item.time.toString()+ ' mins left at '+ item.value.toString() +'°C'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
                             break
                         default:
                             thing='other'
@@ -185,8 +210,11 @@ const styles = StyleSheet.create({
         alignItems:'center'
     },
     searchBar:{
+        marginTop:15,
+        borderRadius:20,
         width:'90%',
         backgroundColor:'rgba(255,255,255,0.9)',
+        marginBottom:5,
     },
     container:{
         paddingVertical:25,
@@ -197,23 +225,28 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'flex-start',
     },
+    titleContainer:{
+        justifyContent:'space-between',
+        alignItems:'center',
+        width:'100%',
+        flexDirection:"row",
+    },
     mainTitle:{
         color:'#8da0e2',
         fontSize:40,
         paddingHorizontal:25,
-
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
         fontWeight: '500',
-        width:'100%',
     },
     card: {
         width:165,
         height:115,
         padding:5,
         paddingBottom:25,
-        margin:8,
+        marginHorizontal:10,
+        marginVertical:7,
         backgroundColor:'rgba(255,255,255,1)',
         borderRadius:18,
         alignItems: 'flex-start',
@@ -269,3 +302,52 @@ const styles = StyleSheet.create({
 
 
 })
+
+
+const optionsStyles = {
+    optionsContainer: {
+        marginTop:50,
+        marginRight:60,
+        borderRadius:25,
+        backgroundColor: 'rgba(255,255,255,1)',
+        padding: 5,
+    },
+    optionsWrapper: {
+        backgroundColor: 'rgba(255,255,255,0.0)',
+    },
+    optionWrapper: {
+        backgroundColor: 'rgba(255,255,255,0.0)',
+        margin: 10,
+    },
+    optionTouchable: {
+        underlayColor: 'rgba(255,255,255,0.0)',
+    },
+    optionText: {
+        color: '#8da0e2',
+        fontWeight: '600',
+        fontSize: 16,
+    },
+};
+
+const triggerStyles = {
+
+    triggerOuterWrapper: {
+        padding: 5,
+        marginRight:25,
+        marginTop:-10,
+        width:50,
+        height:50,
+    },
+    triggerWrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width:50,
+        height:50,
+    },
+    triggerTouchable: {
+        style : {
+            width:0,
+            height:0,
+        },
+    },
+};

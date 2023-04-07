@@ -1,13 +1,14 @@
-import React, { useEffect, useState,useRef} from 'react';
+import React, { useEffect, useState,useRef,useMemo} from 'react';
 import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet,Modal, SafeAreaView, StatusBar,} from 'react-native';
-import {sendInfo, checkSaved, performSave, checkPin} from "../hooks/Database";
+import {sendInfo, checkSaved, performSave, checkPin, updateDoor, getDoorTime,updateWasher} from "../hooks/Database";
 import Icon from "react-native-vector-icons/Ionicons"
 import { RadialSlider } from 'react-native-radial-slider';
 import Slider from '@react-native-community/slider';
 import PinView from 'react-native-pin-view';
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Svg, {Path} from "react-native-svg";
+import Svg, {G, Path} from "react-native-svg";
+import GetProductImage from "../components/GetProductImage";
 const LightDevice = ({data}) =>{
     const [percent,changePercent] = useState(data.value)
     const [isSaved,changeSaved] = useState(false)
@@ -134,6 +135,7 @@ const LightDevice = ({data}) =>{
     )
 }
 const TemperatureDevice = ({data}) =>{
+
     const [speed, setSpeed] = useState(data.value);
     const [isSaved,changeSaved] = useState(false);
 
@@ -150,7 +152,8 @@ const TemperatureDevice = ({data}) =>{
         })
     },[])
 
-    useEffect(() => {
+    useMemo(() => {
+        console.log(speed)
         const info = {
             id: data.id,
             value:speed
@@ -182,11 +185,6 @@ const TemperatureDevice = ({data}) =>{
                 </TouchableOpacity>
             </View>
 
-
-
-
-
-
             <RadialSlider value={speed}
                           subTitle={"Temperature"}
                           unit={'\u2103'}
@@ -217,11 +215,154 @@ const TemperatureDevice = ({data}) =>{
 
 const WashingDevice = ({data}) =>{
 
+    const [speed, setSpeed] = useState(data.value);
+    const [speed2, setSpeed2] = useState(0);
+    const [isSaved,changeSaved] = useState(false);
+    const [wash,openWash] = useState(false);
+    const [time,changeTime] = useState(0);
+
+    const handleSave = () =>{
+        performSave(data.id).then((data)=>{
+            changeSaved(!isSaved)
+        })
+    }
+
+    useEffect(()=>{
+        checkSaved(data.id).then((data)=>{
+            changeSaved(data.exists)
+        })
+    },[])
+
+    const handleStart = async()=>{
+        if(speed2===0){
+            return '';
+        }
+        updateWasher(data.id,speed,speed2).then(()=>{
+            console.log('Started wash')
+            openWash(true)
+            changeTime(speed2)
+        })
+
+    }
+
+    useEffect(() => {
+        let timer;
+        if (time > 0) {
+            timer = setTimeout(() => changeTime(time - 1), 60000);
+        }
+        return () => clearTimeout(timer);
+    }, [wash, time]);
+
+    useEffect(() => {
+        if (time === 0) {
+            // perform any action you want when the countdown is over
+            openWash(false);
+        }
+    }, [time]);
+
+    useEffect(()=>{
+        if(data.time>0){
+            openWash(true);
+            changeTime(data.time)
+        }
+    },[])
+
 
     return(
 
-        <View>
-            <Text>This is the machine of {data.name}</Text>
+        <View style={styles.modalView}>
+            <LinearGradient colors={['#cdf4f0','#c3d0f3', '#7590db']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+            <View style={styles.titleContainer}>
+                <TouchableOpacity onPress={handleSave} style={styles.goBackTouch}>
+                    {isSaved ?
+                        <Ionicons name={'bookmark'} size={35} color={'#7590db'} />
+                        :
+                        <Ionicons name={"bookmark-outline"} size={35} color={'#7590db'} />
+                    }
+                </TouchableOpacity>
+            </View>
+            <View style={{ aspectRatio: 1,
+                marginTop:-40,
+                height:200,
+            }}>
+            <GetProductImage type={data.type} />
+            </View>
+
+            {wash?
+                (
+                        <View style={styles.underWash}>
+                            <Ionicons name="water" size={100} color={'#4a92b9'} />
+                            <Text style={styles.counter}>{time} Mins</Text>
+                        </View>
+                )
+                :
+                (
+                    <>
+                    <View style={styles.tempView}>
+                        <RadialSlider value={speed}
+                                      subTitle={"Temperature"}
+                                      variant={'radial-circle-slider'}
+                                      unit={'\u2103'}
+                                      min={20} max={80} onChange={setSpeed}
+                                      linearGradient={
+                                          [ { offset: '0%', color:'#7acae7' }, { offset: '100%', color: '#4a92b9' }]
+                                      }
+                                      step={10}
+                                      sliderTrackColor={'#ffffff'}
+                                      thumbColor={'#7acae7'}
+                                      lineColor={'#ffffff'}
+                                      radius={75}
+                                      subTitleStyle={
+                                          {fontSize: 12}
+                                      }
+                                      valueStyle={{
+                                          fontSize:20,
+                                      }}
+                                      sliderWidth={15}
+                                      thumbBorderWidth={10}
+                                      thumbRadius={15}
+                                      isHideLines={true}
+                                      isHideTailText={true}
+                                      isHideButtons={true}
+                        />
+                        <RadialSlider value={speed2}
+                                      subTitle={"Length"}
+                                      variant={'radial-circle-slider'}
+                                      unit={'mins'}
+                                      min={0} max={180} onChange={setSpeed2}
+                                      linearGradient={
+                                          [ { offset: '0%', color:'#7acae7' }, { offset: '100%', color: '#4a92b9' }]
+                                      }
+                                      step={5}
+                                      sliderTrackColor={'#ffffff'}
+                                      thumbColor={'#7acae7'}
+                                      lineColor={'#ffffff'}
+                                      radius={75}
+                                      subTitleStyle={
+                                          {fontSize: 12}
+                                      }
+                                      valueStyle={{
+                                          fontSize:20,
+                                      }}
+                                      sliderWidth={15}
+                                      thumbBorderWidth={10}
+                                      thumbRadius={15}
+                                      isHideLines={true}
+                        />
+                    </View>
+                <TouchableOpacity onPress={handleStart}>
+                <Ionicons name={"power"} size={75} color={'#ffffff'} />
+                </TouchableOpacity>
+                </>
+                )
+            }
         </View>
     )
 }
@@ -231,7 +372,8 @@ const DoorDevice = ({data}) =>{
     const [enteredPin, setEnteredPin] = useState("")
     const [showCompletedButton, setShowCompletedButton] = useState(false)
     const [isSaved,changeSaved] = useState(false);
-
+    const [door,openDoor] = useState(false);
+    const [time,changeTime] = useState(0);
 
     useEffect(() => {
         if (enteredPin.length > 0) {
@@ -247,6 +389,31 @@ const DoorDevice = ({data}) =>{
     }, [enteredPin])
 
 
+    useEffect(() => {
+        let timer;
+        if (time > 0) {
+            timer = setTimeout(() => changeTime(time - 1), 1000);
+        }
+        return () => clearTimeout(timer);
+    }, [door, time]);
+
+    useEffect(() => {
+        if (time === 0) {
+            // perform any action you want when the countdown is over
+            openDoor(false);
+        }
+    }, [time]);
+
+    useEffect(()=>{
+        getDoorTime(data.id).then((res)=>{
+            console.log(res);
+            if(res>0){
+                openDoor(true)
+                changeTime(Math.round(res))
+            }
+        })
+    },[])
+
     const handleSave = () =>{
         performSave(data.id).then((data)=>{
             changeSaved(!isSaved)
@@ -255,11 +422,11 @@ const DoorDevice = ({data}) =>{
     const handlePin = (pin) =>{
 
         checkPin(pin).then((res)=>{
-            console.log(res)
             if(res){
-                console.log('problem?')
-                // openDoor(true)
-                // setCountdown(10)
+                updateDoor(data.id).then((yo)=>{
+                    openDoor(true)
+                    changeTime(10)
+                })
             }
         })
 
@@ -293,9 +460,9 @@ const DoorDevice = ({data}) =>{
             <View style={styles.titleContainer}>
                 <TouchableOpacity onPress={handleSave} style={styles.goBackTouch}>
                     {isSaved ?
-                        <Ionicons name={'bookmark'} size={35} color={'#7590db'} />
+                        <Ionicons name={'bookmark'} size={35} color={!door?"#7590db": "rgba(0,0,0,0.05)"} />
                         :
-                        <Ionicons name={"bookmark-outline"} size={35} color={'#7590db'} />
+                        <Ionicons name={"bookmark-outline"} size={35} color={!door?"#7590db": "rgba(0,0,0,0.05)"} />
                     }
                 </TouchableOpacity>
             </View>
@@ -313,8 +480,8 @@ const DoorDevice = ({data}) =>{
                     }}
                     buttonViewStyle={{
                         borderWidth: 1,
-                        borderColor: "#8DA0E2",
-                        backgroundColor:'rgba(141,160,226,0.6)',
+                        borderColor: !door?"#8DA0E2": "rgba(0,0,0,0.05)",
+                        backgroundColor:!door?"#8DA0E2": "rgba(0,0,0,0.05)",
                     }}
                     activeOpacity={0.6}
 
@@ -326,11 +493,11 @@ const DoorDevice = ({data}) =>{
 
                     }}
                     inputViewFilledStyle={{
-                        backgroundColor: "#8DA0E2",
+                        backgroundColor: !door?"#8DA0E2": "rgba(0,0,0,0.05)",
                         marginHorizontal: 10,
                     }}
                     buttonTextStyle={{
-                        color: "#131313",
+                        color: !door?"#000000": "rgba(178,174,174,0.05)",
                     }}
                     onButtonPress={key => {
                         if (key === "custom_left") {
@@ -343,31 +510,132 @@ const DoorDevice = ({data}) =>{
                             // pinView.current.clear()
                         }
                     }}
-                    customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={46} color={"#131313"} /> : undefined}
-                    customRightButton={showCompletedButton ? <Icon name={"checkmark-circle"} size={46} color={"#131313"} /> : undefined}
+                    customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={46} color={!door?"#131313": "rgba(178,174,174,0.1)"} /> : undefined}
+                    customRightButton={showCompletedButton ? <Icon name={"checkmark-circle"} size={46} color={!door?"#131313": "rgba(178,174,174,0.1)"} /> : undefined}
                 />
             </View>
-        </View>
-    )
-}
-
-const DishDevice = ({data}) =>{
-
-
-    return(
-
-        <View>
-            <Text>This is the dishwasher of {data.name}</Text>
+            {door&&
+                (
+                    <View style={styles.blockDoor}>
+                        <View style={styles.darkenDoor}>
+                            <Ionicons name="lock-open" size={100} color={'#2f7539'} />
+                        <Text style={styles.counter}>{time}s</Text>
+                        </View>
+                    </View>
+                )
+            }
         </View>
     )
 }
 
 
 const SpeakerDevice = ({data}) =>{
+    const [percent,changePercent] = useState(data.value)
+    const [isSaved,changeSaved] = useState(false)
+    const [play,changePlay] = useState(false)
+
+
+    const handleSend =() => {
+        const info = {
+            id: data.id,
+            value:percent,
+        }
+        sendInfo(info).then(response => {
+
+        });
+    }
+    const handleSave = () =>{
+        performSave(data.id).then((data)=>{
+            changeSaved(!isSaved)
+        })
+    }
+
+    useEffect(()=>{
+        checkSaved(data.id).then((item)=>{
+            changeSaved(item.exists)
+        })
+    },[])
+
+
     return(
 
-        <View>
-            <Text>This is the speaker of {data.name}</Text>
+        <View style={styles.modalView}>
+            <LinearGradient colors={['#cdf4f0','#c3d0f3', '#7590db']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+            <View style={styles.titleContainer}>
+                <TouchableOpacity onPress={handleSave} style={styles.goBackTouch}>
+                    {isSaved ?
+                        <Ionicons name={'bookmark'} size={35} color={'#7590db'} />
+                        :
+                        <Ionicons name={"bookmark-outline"} size={35} color={'#7590db'} />
+                    }
+                </TouchableOpacity>
+            </View>
+            <View style={{ aspectRatio: 1,
+                height:200,
+            }}>
+                <Svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={'100%'}
+                    height={'100%'}
+                    aria-hidden="true"
+                    className="iconify iconify--twemoji"
+                    viewBox="0 0 36 36"
+                >
+                    <Path
+                        fill="#8899A6"
+                        d="M2 10s-2 0-2 2v12c0 2 2 2 2 2h6l8 8s1 1 2 1h1s1 0 1-1V2s0-1-1-1h-1c-1 0-2 1-2 1l-8 8H2z"
+                    />
+                    <Path
+                        fill="#CCD6DD"
+                        d="m8 26 8 8s1 1 2 1h1s1 0 1-1V2s0-1-1-1h-1c-1 0-2 1-2 1l-8 8v16z"
+                    />
+                    <Path
+                        fill={percent>77?"#8899A6":"rgba(255,255,255,0)"}
+                        d="M29 32.019a.945.945 0 0 1-.615-1.666c3.603-3.071 5.668-7.551 5.668-12.29s-2.066-9.219-5.669-12.29a.947.947 0 0 1 1.229-1.44 18.017 18.017 0 0 1 6.333 13.73 18.016 18.016 0 0 1-6.332 13.729.944.944 0 0 1-.614.227z"
+                    />
+                    <Path
+                        fill={percent>44?"#8899A6":"rgba(255,255,255,0)"}
+                        d="M26.27 28.959a.927.927 0 0 1-.592-1.645 12.04 12.04 0 0 0 4.394-9.315 12.05 12.05 0 0 0-4.311-9.245.929.929 0 0 1 1.196-1.422 13.905 13.905 0 0 1 4.973 10.667c0 4.172-1.848 8.089-5.069 10.746a.918.918 0 0 1-.591.214z"
+                    />
+                    <Path
+                        fill={percent>10?"#8899A6":"rgba(255,255,255,0)"}
+                        d="M23.709 25.959a.998.998 0 0 1-.636-1.772A7.98 7.98 0 0 0 26 18a7.968 7.968 0 0 0-2.988-6.236 1 1 0 1 1 1.254-1.558A9.96 9.96 0 0 1 28 18a9.972 9.972 0 0 1-3.657 7.731.99.99 0 0 1-.634.228z"
+                    />
+                </Svg>
+            </View>
+
+
+
+
+                <View style={styles.player}>
+                    <TouchableOpacity style={styles.playIcon}>
+                        <Ionicons name={'play-back'} size={50} color={'#ffffff'} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.playIcon} onPress={e=>changePlay(!play)}>
+                        {!play?<Ionicons name={'play'} size={60} color={'#ffffff'} />:<Ionicons name={'pause'} size={60} color={'#ffffff'} />}
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.playIcon}>
+                        <Ionicons name={'play-forward'} size={50} color={'#ffffff'} />
+                    </TouchableOpacity>
+                </View>
+            <Slider
+                style={{width: 200, height: 60}}
+                minimumValue={0}
+                value={percent}
+                onValueChange={changePercent}
+                maximumValue={100}
+                onSlidingComplete={handleSend}
+                minimumTrackTintColor="#8899A6"
+                maximumTrackTintColor="#434950FF"
+            />
+
         </View>
     )
 }
@@ -383,6 +651,33 @@ const OtherDevice = ({data}) =>{
 
 
 const styles = StyleSheet.create({
+    blockDoor:{
+        flex:1,
+        position:"absolute",
+        padding:15,
+        // left:0,
+        // right:0,
+        width:'100%',
+        height:'100%',
+
+        alignItems:"center",
+        justifyContent:"center"
+
+    },
+    darkenDoor:{
+
+        marginTop:60,
+        height:450,
+        width:350,
+        borderRadius:25,
+        alignItems:"center",
+        justifyContent:"center"
+    },
+    counter:{
+        color:'black',
+        fontSize:50,
+    },
+
     doorStyle:{
         flex: 1,
         justifyContent: "center",
@@ -451,12 +746,33 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "rgba(0, 0, 0, 0.7)",
     },
-    countdown: {
-        fontSize: 40,
-        color: "white",
+    player:{
+        marginTop:50,
+        display:"flex",
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"center",
     },
+    playIcon:{
+        marginHorizontal:20,
+    },
+    tempView:{
+        display:'flex',
+        justifyContent:'center',
+        flexDirection:"row",
+        margin:0,
+    },
+    lengthView:{
+        marginTop:-10,
+    },
+    underWash:{
+        marginTop:50,
+        display:'flex',
+        justifyContent:'center',
+        alignItems:"center",
+    }
 });
 
 
-export {LightDevice,TemperatureDevice,OtherDevice,DishDevice,DoorDevice,SpeakerDevice,WashingDevice}
+export {LightDevice,TemperatureDevice,OtherDevice,DoorDevice,SpeakerDevice,WashingDevice}
 
