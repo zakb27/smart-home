@@ -44,7 +44,7 @@ const DeviceScreen = (info) =>{
 
                     },
                 }}>
-                    <Tab.Screen name="Device" component={RenderSwitch} />
+                    <Tab.Screen name="Device" component={RenderSwitch}  />
                     <Tab.Screen name="Schedule" component={ViewScheduleScreen} initialParams={{data: data}} />
                     <Tab.Screen name="Create" component={ScheduleScreen} initialParams={{data: data}} />
                 </Tab.Navigator>

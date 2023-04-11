@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-import {fetchDevices} from "../hooks/Database";
+import {fetchDevices, sendInfo} from "../hooks/Database";
 import {addDoc, collection, getDocs,doc, updateDoc, arrayUnion} from "firebase/firestore";
 import {auth, db} from "../../firebase";
 import {LinearGradient} from "expo-linear-gradient";
@@ -19,6 +19,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import GetProductImage from "../components/GetProductImage";
 import Modal from "react-native-modal";
 import DeviceScreen from "./DeviceScreen";
+import GetRoomImage from "../components/GetRoomImage";
 
 
 
@@ -47,7 +48,8 @@ const AddRoomScreen = ({navigation})=>{
                 devices: arrayUnion(value.value)
             });
         }
-        // setValue2(value2+1);
+        setOpen(false)
+        setSelectedRooms([])
     }
 
 
@@ -66,12 +68,12 @@ const AddRoomScreen = ({navigation})=>{
             })
             allDevices.forEach(device=>{
                 const found = fire.find(el => el.id === device.id);
-                if (!found) hew.push({ label: device.name,value: device.id});
+                if (!found) hew.push({ label: device.name,value: device.id,type:device.type});
             })
             setItems(hew);
             const tempRooms = []
             roomsSnap.forEach(doc=>{
-                tempRooms.push({label:doc.data().name,value:doc.id})
+                tempRooms.push({label:doc.data().name,value:doc.id,type:doc.data().type})
             })
             changeRooms(tempRooms);
         }
@@ -112,26 +114,69 @@ const AddRoomScreen = ({navigation})=>{
             </View>
             <ScrollView contentContainerStyle={styles.touchableContainer}>
                 {items.map((item,index)=>{
+                    let thing='Other'
+                    switch(item.type){
+                        case('temp'):
+                            thing="Set Temperature"
+                            break
+                        case('light'):
+                            thing="Light"
+                            break
+                        case('door'):
+                            thing="Door Control"
+                            break
+                        case('speaker'):
+                            thing="Speaker"
+                            break
+                        case('washer'):
+                            thing="Washing machine"
+                            break
+                        case('dishwasher'):
+                            thing="Dish Washer"
+                            break
+                        default:
+                            thing='other'
+                            break
+                    }
                     return(
-                        <TouchableOpacity key={index} style={styles.touchableItem}
+                        <TouchableOpacity key={index} style={styles.card}
                                           onPress={() => {
                                               setValue(item)
                                               setOpen(true)
                                           }}
                         >
-                            <Text style={styles.text}>{item.label}</Text>
+                            <View style={{ aspectRatio: 1,
+                                height:35,
+                                position:"absolute",
+                                left:10,
+
+                            }}>
+                                <GetProductImage type ={item.type} />
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.text}>{item.label}</Text>
+                                <Text style={styles.textsmaller}>{thing}</Text>
+                            </View>
+                            <View style={{
+                                position:"absolute",
+                                right:2,
+                                top:2,
+                            }}>
+                            <Ionicons name={'add'} size={25} color={'#1e1d1d'} />
+                            </View>
                         </TouchableOpacity>
+
                     )
                 })}
             </ScrollView>
 
             <Modal isVisible={open}
-                   onSwipeComplete={() => {
-                       setOpen(false)
-                       setSelectedRooms([])
-                   }
-            }
-                   swipeDirection="down"
+            //        onSwipeComplete={() => {
+            //            setOpen(false)
+            //            setSelectedRooms([])
+            //        }
+            // }
+            //        swipeDirection="down"
                    onBackdropPress={() => {
                        setOpen(false)
                        setSelectedRooms([])
@@ -149,27 +194,37 @@ const AddRoomScreen = ({navigation})=>{
                         borderRadius: 20,
                         right:0,
                     }}></LinearGradient>
-
+                    <Text style={styles.title2}>Select rooms to sync</Text>
+                    <View style={styles.scrollLimiter}>
                     <ScrollView>
                         {rooms.map((item,index)=>{
                             return(
                                 <TouchableOpacity key={index}                         style={[
-                                    styles.touchableItem,
+                                    styles.card2,
                                     {
                                         backgroundColor: isEnabled[item.value]
-                                            ? "#8a7c15"
-                                            : "#f4f3f4",
+                                            ? "#52d32b"
+                                            : "#ffffff",
                                     },
                                 ]}
                                                   onPress={() => toggleSwitch(item.value)}
                                 >
-                                    <Text style={styles.text}>{item.label}</Text>
+                                    <View style={{ aspectRatio: 1,
+                                        height:30,
+                                        position:"absolute",
+                                        left:7,
+                                    }}>
+                                        <GetRoomImage type={item.type} />
+                                    </View>
+                                    <Text style={[styles.text,{position:"absolute",
+                                        left:50,}]}>{item.label}</Text>
                                 </TouchableOpacity>
                             )
                         })}
                     </ScrollView>
-                    <TouchableOpacity onPress={addDevice}>
-                        <Text>Add Device</Text>
+                    </View>
+                    <TouchableOpacity onPress={addDevice} style={styles.button}>
+                        <Text style={styles.buttonText}>Add Device</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -185,6 +240,9 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
     },
+    scrollLimiter:{
+        height:375,
+    },
     modalView: {
         paddingTop:50,
         position:"absolute",
@@ -199,7 +257,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
 
-
+    title2:{
+        color:'#8da0e2',
+        fontSize:23,
+        display:'flex',
+        marginTop:-10,
+        marginBottom:10,
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        fontWeight: '700',
+    },
     titleContainer:{
         width:'100%',
         flexDirection:"row",
@@ -224,14 +291,75 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    touchableItem:{
-        backgroundColor:'#f4f3f4',
-        width:100,
-        height:50,
+    card: {
+        width:265,
+        height:60,
+        padding:5,
+        margin:3,
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:18,
+        flexDirection:"row",
+        alignItems: 'center',
+        justifyContent:'space-evenly',
     },
-    text:{
-        color:'black'
-    }
+
+    card2: {
+        width:225,
+        height:40,
+        padding:5,
+        margin:3,
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:9,
+        flexDirection:"row",
+        alignItems: 'center',
+        justifyContent:'space-evenly',
+    },
+
+    text: {
+        color: '#1e1d1d',
+        fontWeight: '400',
+        fontSize: 13,
+
+    },
+    textsmaller:{
+        // marginBottom:15,
+        color: '#494848',
+        fontWeight: '400',
+        fontSize: 10,
+    },
+    textTiny:{
+        position:'absolute',
+        bottom:10,
+        left:5,
+        marginLeft:5,
+        color: '#737272',
+        fontWeight: '400',
+        fontSize: 9,
+    },
+    textView:{
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        marginLeft:0,
+        position:'absolute',
+        left:60,
+    },
+    button: {
+        backgroundColor: 'rgba(255,255,255,1)',
+        width: '80%',
+        height:50,
+        padding: 15,
+        margin:30,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent:'center',
+        textAlign:'right',
+
+    },
+    buttonText: {
+        color: '#8DA0E2',
+        fontWeight: '700',
+        fontSize: 16,
+    },
 })
 
 

@@ -14,6 +14,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, {useEffect, useState} from "react";
 import Modal from "react-native-modal";
 import {deletePromptDevice, fetchRooms, getRegisteredDevices} from "../hooks/Database";
+import GetProductImage from "../components/GetProductImage";
 
 
 const EditDeviceScreen = ({navigation}) =>{
@@ -54,22 +55,57 @@ const EditDeviceScreen = ({navigation}) =>{
 
             <ScrollView contentContainerStyle={styles.touchableContainer}>
                 {devices.map((item,index)=>{
+                    let thing='Other'
+                    switch(item.type){
+                        case('temp'):
+                            thing="Set Temperature"
+                            break
+                        case('light'):
+                            thing="Light"
+                            break
+                        case('door'):
+                            thing="Door Control"
+                            break
+                        case('speaker'):
+                            thing="Speaker"
+                            break
+                        case('washer'):
+                            thing="Washing machine"
+                            break
+                        case('dishwasher'):
+                            thing="Dish Washer"
+                            break
+                        default:
+                            thing='other'
+                            break
+                    }
                     return(
-                        <View style={styles.scheduleView} key={index}>
-                            <Pressable style={styles.dayButton}
-                                       onPress={() => {
-                                           alert('todo')
-                                       }}
-                            >
-                                <Text>{item.name}</Text>
-                            </Pressable>
+                        <TouchableOpacity key={index} style={styles.card}
+                                          onPress={() => {
+                                          }}
+                        >
+                            <View style={{ aspectRatio: 1,
+                                height:35,
+                                position:"absolute",
+                                left:10,
+
+                            }}>
+                                <GetProductImage type ={item.type} />
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.text}>{item.name}</Text>
+                                <Text style={styles.textsmaller}>{thing}</Text>
+                            </View>
                             <TouchableOpacity style={styles.removeButton}
                                               onPress={()=>handleRemove(item)}
                             >
-                                <Text>X</Text>
+                                <Ionicons name={'trash-outline'} size={25} color={'#cc3737'} />
+
                             </TouchableOpacity>
-                        </View>
+                        </TouchableOpacity>
+
                     )
+
                 })}
             </ScrollView>
 
@@ -89,22 +125,11 @@ const styles = StyleSheet.create({
         flexDirection:"row",
 
     },
-    scheduleView:{
-        flexDirection:"row",
-        justifyContent:"space-evenly",
-        width:300,
-        height:50,
-        borderColor:"black",
-        borderWidth:1,
-        borderRadius:5,
-        overflow:'hidden',
-        marginVertical:5,
-    },
     removeButton:{
-        backgroundColor:"#e63946",
-        borderLeftColor:"black",
-        borderLeftWidth:1,
+        position:"absolute",
+        right:0,
         width:45,
+        height:'100%',
         alignItems:"center",
         justifyContent:"center"
     },
@@ -117,7 +142,6 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         font:'black',
         backgroundColor:'rgba(168,218,220,0)',
-
 
     },
     goBackTouch:{
@@ -138,24 +162,51 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    touchableItem:{
-        backgroundColor:'#f4f3f4',
-        width:100,
-        height:50,
+    card: {
+        width:265,
+        height:60,
+        margin:3,
+        // borderBottomWidth:'1',
+        // borderBottomColor:'black',
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:7,
+        flexDirection:"row",
+        alignItems: 'center',
+        justifyContent:'space-evenly',
+
+
     },
-    modalView: {
-        paddingTop:50,
-        position:"absolute",
-        alignSelf: "stretch",
-        bottom:-20,
-        right:-20,
-        left:-20,
-        height:600,
-        borderRadius:'20',
-        backgroundColor: "white",
-        padding: 15,
-        alignItems: "center",
+    text: {
+        color: '#1e1d1d',
+        fontWeight: '400',
+        fontSize: 13,
+        textAlign:'left',
+
     },
+    textsmaller:{
+        // marginBottom:15,
+        color: '#494848',
+        fontWeight: '400',
+        fontSize: 10,
+    },
+    textTiny:{
+        position:'absolute',
+        left:5,
+        marginLeft:5,
+        color: '#737272',
+        fontWeight: '400',
+        fontSize: 9,
+        textAlign:'left',
+
+    },
+    textView:{
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        marginLeft:0,
+        position:'absolute',
+        left:60,
+    }
+
 })
 
 

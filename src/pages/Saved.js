@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View,RefreshControl} from 'react-native';
 import {getSaved, getAvgTemp, getRegisteredDevices, sendInfo, getMachineProgress} from "../hooks/Database";
 import DeviceScreen from "../screens/DeviceScreen";
 import {TransitionPresets} from "@react-navigation/stack";
@@ -29,6 +29,17 @@ const SavedMain = ({navigation})=>{
     const [avgTemp,changeTemp] = useState('')
     const [reRender,changeRender] = useState(false)
     const [time,changeTime] = useState(null)
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
+
+
     useEffect(() => {
         const test =  navigation.addListener('focus', () => {
             getSaved().then((data) => {
@@ -82,7 +93,9 @@ const SavedMain = ({navigation})=>{
             </Menu>
             </View>
 
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}         refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 <View style={styles.avgCard}>
                     <View style={{ aspectRatio: 1,
                         height:45,

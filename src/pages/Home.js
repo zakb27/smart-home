@@ -1,5 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    TextInput,
+    SafeAreaView,
+    TouchableOpacity,
+    Button,
+    StyleSheet,
+    RefreshControl
+} from 'react-native';
 
 import RoomScreen from "../screens/RoomScreen";
 import AllDeviceScreen from "../screens/AllDeviceScreen";
@@ -21,6 +32,16 @@ const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
     const [appIsReady, setAppIsReady] = useState(false);
     const [currentDevices,setDevices] = useState('')
+
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     useEffect(()=>{
         const test =  navigation.addListener('focus', () => {
@@ -69,7 +90,9 @@ const HomeRooms = ({navigation}) =>{
             </View>
 
 
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container} refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 {currentRooms.map((item)=>{
                     return(
                         <TouchableOpacity key={item.id} style={styles.card}

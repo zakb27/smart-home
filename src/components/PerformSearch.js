@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, View, RefreshControl} from 'react-native';
 import { Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceScreen from "../screens/DeviceScreen";
@@ -17,6 +17,14 @@ const PerformSearchHome = ({navigation})=>{
     const [value, setValue] = React.useState('');
     const [reRender,changeRender] = useState(false)
 
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     useEffect(() => {
         performSearch([])
@@ -65,7 +73,9 @@ const PerformSearchHome = ({navigation})=>{
                 accessoryLeft={<Ionicons name={'search'} size={20} />}
                 onChangeText={nextValue => setValue(nextValue)}
             />
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container} refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 {devices.map((item,index)=>{
                     let thing='Other'
                     let ifOn=''

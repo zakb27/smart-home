@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Button, StyleSheet, SafeAreaView} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Button, StyleSheet, SafeAreaView, RefreshControl} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
 import {fetchDevices, fetchRooms, getRoomDevices, getSaved, sendInfo} from "../hooks/Database";
@@ -14,7 +14,14 @@ const RoomScreen = ({route,navigation}) =>{
     const [isModal,openModal] = useState(false);
     const [currentInfo,changeInfo] = useState([]);
     const [reRender,changeRender] = useState(false)
+    const [refreshing, setRefreshing] = React.useState(false);
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
 
     useEffect(() => {
         const test =  navigation.addListener('focus', () => {
@@ -46,7 +53,9 @@ const RoomScreen = ({route,navigation}) =>{
                 <Text style={styles.mainTitle}>{roomName}</Text>
             </View>
 
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container} refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 {currentSearch.map((item,index)=>{
                     let thing='Other'
                     let ifOn=''

@@ -152,7 +152,8 @@ const TemperatureDevice = ({data}) =>{
         })
     },[])
 
-    useMemo(() => {
+
+    const handleUpdate = () =>{
         console.log(speed)
         const info = {
             id: data.id,
@@ -160,8 +161,7 @@ const TemperatureDevice = ({data}) =>{
         }
         sendInfo(info).then(response => {
         });
-    }, [speed]);
-
+    }
 
 
     return(
@@ -206,6 +206,10 @@ const TemperatureDevice = ({data}) =>{
                           thumbBorderWidth={10}
                           thumbRadius={20}
             />
+
+            <TouchableOpacity onPress={handleUpdate}>
+                <Ionicons name={"power"} size={75} color={'#ffffff'} />
+            </TouchableOpacity>
 
 
 

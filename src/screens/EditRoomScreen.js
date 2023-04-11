@@ -17,6 +17,8 @@ import {collection, getDocs} from "firebase/firestore";
 import {fetchDevices, fetchRooms, getOtherDevices, getPromptDevice, getRoomDevices,updateRoom,deleteRoom} from "../hooks/Database";
 import Modal from "react-native-modal";
 import { Dropdown } from 'react-native-element-dropdown';
+import GetRoomImage from "../components/GetRoomImage";
+import GetProductImage from "../components/GetProductImage";
 
 
 const EditRoomScreen = ({navigation}) =>{
@@ -149,7 +151,7 @@ const EditRoomScreen = ({navigation}) =>{
             <ScrollView contentContainerStyle={styles.touchableContainer}>
                 {rooms.map((item,index)=>{
                     return(
-                        <TouchableOpacity key={index} style={styles.touchableItem}
+                        <TouchableOpacity key={index} style={styles.card2}
                                           onPress={() => {
                                               setValue(item)
                                               setName(item.name)
@@ -158,7 +160,24 @@ const EditRoomScreen = ({navigation}) =>{
                                               getDevices(item.id)
                                           }}
                         >
-                            <Text style={styles.text}>{item.name}</Text>
+                            <View style={{ aspectRatio: 1,
+                                height:35,
+                                position:"absolute",
+                                left:10,
+                            }}>
+                                <GetRoomImage type={item.type} />
+                            </View>
+                            <View style={styles.textView}>
+                                <Text style={styles.text}>{item.name}</Text>
+                                <Text style={styles.textsmaller}>Edit Room</Text>
+                            </View>
+                            <View style={{
+                                position:"absolute",
+                                right:2,
+                                top:2,
+                            }}>
+                                <Ionicons name={'add'} size={25} color={'#1e1d1d'} />
+                            </View>
                         </TouchableOpacity>
                     )
                 })}
@@ -200,18 +219,35 @@ const EditRoomScreen = ({navigation}) =>{
                     <ScrollView>
                         {connectedDevices.map((item,index)=>{
                             return(
-                                <TouchableOpacity key={index}                         style={[
-                                    styles.touchableItem,
-                                    {
-                                        backgroundColor: isEnabled[item.id]
-                                            ? "#e74c4c"
-                                            : "#71cc1d",
-                                    },
-                                ]}
-                                                  onPress={() => toggleSwitch(item.id)}
-                                >
-                                    <Text style={styles.text}>{item.name}</Text>
-                                </TouchableOpacity>
+                            <TouchableOpacity key={index} style={[
+                                styles.card,
+                                {
+                                    backgroundColor: isEnabled[item.id]
+                                        ? "#da2c38"
+                                        : "#29bf12",
+                                },
+                            ]}
+                                              onPress={() => toggleSwitch(item.id)}
+                            >
+                                <View style={{ aspectRatio: 1,
+                                    height:30,
+                                    position:"absolute",
+                                    left:7,
+                                }}>
+                                    <GetProductImage type={item.type} />
+                                </View>
+                                <Text style={[styles.text,{position:"absolute",
+                                    left:50,}]}>{item.name}</Text>
+                                <View style={{
+                                    position:"absolute",
+                                    right:4,
+                                    top:4,
+                                }}>
+                                    <Ionicons name={'create-outline'} size={15} color={'#1e1d1d'} />
+                                </View>
+                            </TouchableOpacity>
+
+
                             )
                         })}
                     </ScrollView>
@@ -261,12 +297,12 @@ const styles = StyleSheet.create({
     },
     submit:{
         padding:10,
-        backgroundColor:'#84c043',
+        backgroundColor:'#29bf12',
         borderRadius:10,
     },
     removeButton:{
         padding:10,
-        backgroundColor:'#c04343',
+        backgroundColor:'#da2c38',
         borderRadius:10,
 
     },
@@ -289,6 +325,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     touchableContainer:{
+        marginTop:25,
         flexDirection:'column',
         alignItems:'center',
         justifyContent:'center'
@@ -311,15 +348,57 @@ const styles = StyleSheet.create({
         padding: 15,
         alignItems: "center",
     },
-    // dropDown:{
-    //     backgroundColor:'rgba(0,0,0,0)',
-    //     borderWidth:1,
-    //     borderColor:'rgba(0,0,0,0.13)',
-    //     marginBottom:30,
-    //     color: '#7590db',
-    //     fontWeight: '700',
-    //     fontSize: 16,
-    // },
+    card2: {
+        width:265,
+        height:60,
+        padding:5,
+        margin:3,
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:18,
+        flexDirection:"row",
+        alignItems: 'center',
+        justifyContent:'space-evenly',
+    },
+    card: {
+        width:225,
+        height:40,
+        padding:5,
+        margin:3,
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:9,
+        flexDirection:"row",
+        alignItems: 'center',
+        justifyContent:'space-evenly',
+    },
+
+    text: {
+        color: '#1e1d1d',
+        fontWeight: '400',
+        fontSize: 13,
+
+    },
+    textsmaller:{
+        // marginBottom:15,
+        color: '#494848',
+        fontWeight: '400',
+        fontSize: 10,
+    },
+    textTiny:{
+        position:'absolute',
+        bottom:10,
+        left:5,
+        marginLeft:5,
+        color: '#737272',
+        fontWeight: '400',
+        fontSize: 9,
+    },
+    textView:{
+        justifyContent:'flex-start',
+        alignItems:'flex-start',
+        marginLeft:0,
+        position:'absolute',
+        left:60,
+    },
     scrollLimiter:{
         height:200,
     },

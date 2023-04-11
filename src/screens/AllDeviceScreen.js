@@ -1,5 +1,16 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, Image, ScrollView, TextInput, SafeAreaView, TouchableOpacity,Button,StyleSheet} from 'react-native';
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    TextInput,
+    SafeAreaView,
+    TouchableOpacity,
+    Button,
+    StyleSheet,
+    RefreshControl
+} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
 import {fetchDevices, getRegisteredDevices, getSaved, sendInfo} from "../hooks/Database";
@@ -15,6 +26,16 @@ const AllDeviceScreen = ({navigation}) =>{
     const [isModal,openModal] = useState(false);
     const [currentInfo,changeInfo] = useState([]);
     const [reRender,changeRender] = useState(false)
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
+
     useEffect(()=>{
         const test =  navigation.addListener('focus', () => {
             getRegisteredDevices().then((data) => {
@@ -45,7 +66,9 @@ const AllDeviceScreen = ({navigation}) =>{
                 </TouchableOpacity>
                 <Text style={styles.mainTitle}>All Devices</Text>
             </View>
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container} refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }>
                 {devices.map((item,index)=>{
                     let thing='Other'
                     let ifOn=''
