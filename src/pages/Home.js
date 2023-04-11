@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     Button,
     StyleSheet,
-    RefreshControl
+    RefreshControl, ActivityIndicator
 } from 'react-native';
 
 import RoomScreen from "../screens/RoomScreen";
@@ -28,10 +28,12 @@ import AddDeviceScreen from "../screens/AddDeviceScreen";
 import EditRoomScreen from "../screens/EditRoomScreen";
 import EditDeviceScreen from "../screens/EditDeviceScreen";
 import {Menu, MenuOption, MenuOptions, MenuTrigger} from "react-native-popup-menu";
+import GetProductImage from "../components/GetProductImage";
 const HomeRooms = ({navigation}) =>{
     const [currentRooms,setRooms] = useState([])
     const [appIsReady, setAppIsReady] = useState(false);
     const [currentDevices,setDevices] = useState('')
+    const [ind,showInd] = useState(true)
 
 
     const [refreshing, setRefreshing] = React.useState(false);
@@ -50,6 +52,7 @@ const HomeRooms = ({navigation}) =>{
             })
             getRegisteredDevices().then((data)=>{
                 setDevices(data)
+                showInd(false)
             })
         });
         fetchRooms().then((data)=>{
@@ -57,7 +60,9 @@ const HomeRooms = ({navigation}) =>{
         })
         getRegisteredDevices().then((data)=>{
             setDevices(data)
+            showInd(false)
         })
+
         return test
     },[navigation])
 
@@ -89,45 +94,52 @@ const HomeRooms = ({navigation}) =>{
                 </Menu>
             </View>
 
-
-            <ScrollView contentContainerStyle={styles.container} refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            }>
-                {currentRooms.map((item)=>{
-                    return(
-                        <TouchableOpacity key={item.id} style={styles.card}
-                                          onPress={() => {
-                                              navigation.navigate('RoomDevice',
-                                                  {
-                                                      roomID:item.id,
-                                                      roomName:item.name,
-                                                  })
-                                          }}
-                        >
-                            <View style={{ aspectRatio: 1,
-                                height:45,
-                                position:"absolute",
-                                top:10,
-                                left:10,
-                            }}>
-                            <GetRoomImage type={item.type} />
-                            </View>
-                            <TouchableOpacity style={styles.on} onPress={() => {
-                                navigation.navigate('RoomDevice',
-                                    {
-                                        roomID:item.id,
-                                        roomName:item.name,
-                                    })
-                            }}>
-                                <Ionicons name={'open-outline'} size={17} color={'#1e1d1d'} />
+            {!ind
+                ?
+                <>
+                <ScrollView contentContainerStyle={styles.container} refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }>
+                    {currentRooms.map((item)=>{
+                        return(
+                            <TouchableOpacity key={item.id} style={styles.card}
+                                              onPress={() => {
+                                                  navigation.navigate('RoomDevice',
+                                                      {
+                                                          roomID:item.id,
+                                                          roomName:item.name,
+                                                      })
+                                              }}
+                            >
+                                <View style={{ aspectRatio: 1,
+                                    height:45,
+                                    position:"absolute",
+                                    top:10,
+                                    left:10,
+                                }}>
+                                    <GetRoomImage type={item.type} />
+                                </View>
+                                <TouchableOpacity style={styles.on} onPress={() => {
+                                    navigation.navigate('RoomDevice',
+                                        {
+                                            roomID:item.id,
+                                            roomName:item.name,
+                                        })
+                                }}>
+                                    <Ionicons name={'open-outline'} size={17} color={'#1e1d1d'} />
+                                </TouchableOpacity>
+                                <Text style={styles.text}>{item.name}</Text>
+                                <Text style={styles.textsmaller}>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</Text>
+                                {item.devices&&(<Text style={styles.textTiny}>{item.devices.length} devices synced</Text>)}
                             </TouchableOpacity>
-                            <Text style={styles.text}>{item.name}</Text>
-                            <Text style={styles.textsmaller}>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</Text>
-                            {item.devices&&(<Text style={styles.textTiny}>{item.devices.length} devices synced</Text>)}
-                        </TouchableOpacity>
-                    )
-                })}
-            </ScrollView>
+                        )
+                    })}
+                </ScrollView>
+                </>
+                :
+                <ActivityIndicator size="large" color="#8DA0E2" />
+
+            }
 
         </SafeAreaView>
 
@@ -163,10 +175,10 @@ export default Home;
 
 const styles = StyleSheet.create({
     overall:{
-        alignItems:"center",
-        justifyContent:'center',
-        backgroundColor:'#8da0e2',
         flex:1,
+        alignItems:"center",
+        backgroundColor:'#8da0e2',
+
     },
     titleContainer:{
         justifyContent:'space-between',

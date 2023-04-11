@@ -8,7 +8,7 @@ import {
     SafeAreaView,
     Button,
     StyleSheet,
-    TouchableOpacity, KeyboardAvoidingView, ImageBackground
+    TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import {auth} from "../../firebase";
 import {signOut,updateEmail,updatePassword} from "firebase/auth";
@@ -29,6 +29,7 @@ const Display = ({navigation}) =>{
     const [image, setImage] = useState(null);
     const [first, setFirst] = useState(null);
     const [last, setLast] = useState(null);
+    const [ind,showInd] = useState(true)
     const handleSignOut = () => {
         signOut(auth)
             .then(() => {
@@ -48,13 +49,15 @@ const Display = ({navigation}) =>{
                 setImage(url)
                 setFirst(data[0].first)
                 setLast(data[0].last)
+                showInd(false)
             }
             test();
 
+
         })
+
+
     }, []);
-
-
     return(
         <SafeAreaView style={styles.userContainer}>
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
@@ -66,47 +69,53 @@ const Display = ({navigation}) =>{
                 right:0,
             }}></LinearGradient>
             <View style={styles.titleContainer}>
-                <Text style={styles.mainTitle}>{first}</Text>
+                <Text style={styles.mainTitle}>User</Text>
             </View>
-            <View style={styles.profileContainer}>
-                <View style={styles.profilePresser}>
-                <View style={styles.imageContainer}>
-                    {image && <Image resizeMode="cover" source={{uri:image}} style={styles.image} />}
-                </View>
-                <View style={styles.detailsContainer}>
-                    <View style={styles.nameContainer}>
-                        {first && <Text style={styles.name}>{first}</Text>}
-                        {last && <Text style={styles.name}>{last}</Text>}
+            {!ind
+                ?
+                <>
+                    <View style={styles.profileContainer}>
+                        <View style={styles.profilePresser}>
+                            <View style={styles.imageContainer}>
+                                {image && <Image resizeMode="cover" source={{uri:image}} style={styles.image} />}
+                            </View>
+                            <View style={styles.detailsContainer}>
+                                <View style={styles.nameContainer}>
+                                    {first && <Text style={styles.name}>{first}</Text>}
+                                    {last && <Text style={styles.name}>{last}</Text>}
+                                </View>
+                                <Text>{auth.currentUser?.email}</Text>
+                            </View>
+                        </View>
                     </View>
-                    <Text>{auth.currentUser?.email}</Text>
-                </View>
-                </View>
-            </View>
-            <View style={styles.changeContainer}>
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate("Email")}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Change Email</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={()=>navigation.navigate("Password")}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Change Password</Text>
-                </TouchableOpacity>
+                    <View style={styles.changeContainer}>
+                        <TouchableOpacity
+                            onPress={()=>navigation.navigate("Email")}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonText}>Change Email</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={()=>navigation.navigate("Password")}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonText}>Change Password</Text>
+                        </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={handleSignOut}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Sign out</Text>
-                </TouchableOpacity>
-            </View>
+                        <TouchableOpacity
+                            onPress={handleSignOut}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonText}>Sign out</Text>
+                        </TouchableOpacity>
+                    </View>
+                </>
+                    :
+                    <ActivityIndicator size="large" color="#8DA0E2" />
+            }
+
 
         </SafeAreaView>
-
-
     )
 }
 

@@ -27,6 +27,7 @@ const PerformSearchHome = ({navigation})=>{
     }, []);
 
     useEffect(() => {
+        console.log('here!@')
         performSearch([])
         getRegisteredDevices().then((data)=>{
             setDevices(data)
@@ -76,7 +77,7 @@ const PerformSearchHome = ({navigation})=>{
             <ScrollView contentContainerStyle={styles.container} refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }>
-                {devices.map((item,index)=>{
+                {currentSearch.map((item,index)=>{
                     let thing='Other'
                     let ifOn=''
                     let icon='power'
@@ -140,7 +141,7 @@ const PerformSearchHome = ({navigation})=>{
                             break
                     }
                     return(
-                        <TouchableOpacity key={item.id} style={styles.card}
+                        <TouchableOpacity key={index} style={styles.card}
                                           onPress={() => {
                                               changeInfo(item)
                                               openModal(true)

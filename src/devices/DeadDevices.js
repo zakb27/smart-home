@@ -13,14 +13,33 @@ const DeadLightDevice = (schedule) =>{
     return(
 
         <View>
-            <Slider
-                style={{width: 200, height: 40}}
-                minimumValue={0}
-                value={percent}
-                onValueChange={changePercent}
-                maximumValue={100}
-                minimumTrackTintColor="#f4a261"
-                maximumTrackTintColor="#e9c46a"
+            <RadialSlider value={percent}
+                          subTitle={""}
+                          variant={'radial-circle-slider'}
+                          unit={'%'}
+                          min={0} max={100}
+                          onChange={e=> {changePercent(e)}}
+                          linearGradient={
+                              [ { offset: '0%', color:'#f4a261' }, { offset: '100%', color: '#e9c46a' }]
+                          }
+                          step={1}
+                          sliderTrackColor={'#ffffff'}
+                          thumbColor={'#e9c46a'}
+                          lineColor={'#ffffff'}
+                          radius={75}
+                          subTitleStyle={
+                              {fontSize: 12}
+                          }
+                          valueStyle={{
+                              fontSize:20,
+                          }}
+                          sliderWidth={15}
+                          thumbBorderWidth={10}
+                          thumbRadius={15}
+                          isHideValue={true}
+                          isHideLines={true}
+                          isHideTailText={true}
+                          isHideButtons={true}
             />
         </View>
     )
@@ -35,115 +54,15 @@ const DeadTemperatureDevice = (schedule) =>{
                           subTitle={"Temperature"}
                           unit={'\u2103'}
                           min={14} max={25} onChange={setSpeed}
+                          linearGradient={
+                              [ { offset: '0%', color:'#8275bd' }, { offset: '100%', color: '#7590db' }]
+                          }
+                          sliderTrackColor={'#ffffff'}
+                          thumbColor={'#7590db'}
+                          lineColor={'#ffffff'}
+                          isHideButtons={true}
             />
 
-        </View>
-    )
-}
-
-const DeadWashingDevice = (schedule) =>{
-    return(
-
-        <View>
-            <Text>This is the machine of {data.name}</Text>
-        </View>
-    )
-}
-const DeadDoorDevice = () =>{
-    const pinView = useRef(null)
-    const [showRemoveButton, setShowRemoveButton] = useState(false)
-    const [enteredPin, setEnteredPin] = useState("")
-    const [showCompletedButton, setShowCompletedButton] = useState(false)
-
-    useEffect(() => {
-        if (enteredPin.length > 0) {
-            setShowRemoveButton(true)
-        } else {
-            setShowRemoveButton(false)
-        }
-        if (enteredPin.length === 4) {
-            setShowCompletedButton(true)
-        } else {
-            setShowCompletedButton(false)
-        }
-        if(enteredPin==='4422'){
-            alert('correct');
-        }
-    }, [enteredPin])
-
-
-    return(
-
-        <View style={styles.modalView}>
-            <StatusBar barStyle="light-content" />
-            <View
-                style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
-                <PinView
-                    inputSize={36}
-                    ref={pinView}
-                    pinLength={4}
-                    buttonSize={70}
-                    onValueChange={value => setEnteredPin(value)}
-                    buttonViewStyle={{
-                        borderWidth: 1,
-                        borderColor: "#201d50",
-                        backgroundColor:'#364386'
-                    }}
-                    activeOpacity={0.6}
-
-                    inputViewEmptyStyle={{
-                        backgroundColor: "transparent",
-                        borderWidth: 1,
-                        borderColor: "#8f3636",
-                    }}
-                    inputViewFilledStyle={{
-                        backgroundColor: "#c95555",
-                    }}
-                    buttonTextStyle={{
-                        color: "#66bdcc",
-                    }}
-                    onButtonPress={key => {
-                        if (key === "custom_left") {
-                            pinView.current.clear()
-                        }
-                        if (key === "custom_right") {
-                            alert("Entered Pin: " + enteredPin)
-                        }
-                    }}
-                    customLeftButton={showRemoveButton ? <Icon name={"ios-backspace"} size={36} color={"#364386"} /> : undefined}
-                    customRightButton={showCompletedButton ? <Icon name={"pizza"} size={36} color={"#364386"} /> : undefined}
-                />
-            </View>
-        </View>
-    )
-}
-
-const DeadDishDevice = (schedule) =>{
-
-
-    return(
-
-        <View>
-            <Text>This is the dishwasher of {data.name}</Text>
-        </View>
-    )
-}
-
-
-const DeadSpeakerDevice = (schedule) =>{
-    return(
-
-        <View>
-            <Text>This is the speaker of {data.name}</Text>
-        </View>
-    )
-}
-
-const DeadOtherDevice = (schedule) =>{
-    return(
-
-        <View>
-            <Text>This is the other of {data.name}</Text>
         </View>
     )
 }
@@ -172,5 +91,5 @@ const styles = StyleSheet.create({
 });
 
 
-export {DeadLightDevice,DeadTemperatureDevice,DeadOtherDevice,DeadDishDevice,DeadDoorDevice,DeadSpeakerDevice,DeadWashingDevice}
+export {DeadLightDevice,DeadTemperatureDevice}
 

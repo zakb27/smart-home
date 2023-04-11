@@ -273,7 +273,7 @@ export const getMachineProgress = async() => {
     }
     catch(e){
         console.error(e)
-        return('Error occurred')
+        return(0)
     }
 }
 
@@ -499,22 +499,28 @@ export const performSave = async(id) =>{
 }
 
 export const getSaved = async() =>{
-    const email = auth.currentUser?.email
+    try{
+        const email = auth.currentUser?.email
 
-    const docRef = await collection(db,'users',email,'saved')
-    const docsSnap = await getDocs(docRef);
-    const objects =[]
-    docsSnap.forEach((doc) => {
-        objects.push(doc.data().id)
-    });
-    const response = await fetch(key+'/getPromptDevices', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(objects)
-    });
-    return await response.json();
+        const docRef = await collection(db,'users',email,'saved')
+        const docsSnap = await getDocs(docRef);
+        const objects =[]
+        docsSnap.forEach((doc) => {
+            objects.push(doc.data().id)
+        });
+        const response = await fetch(key+'/getPromptDevices', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(objects)
+        });
+        return await response.json();
+    }
+    catch(e){
+        console.error(e)
+        return([])
+    }
 
 }
 

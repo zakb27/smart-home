@@ -172,11 +172,18 @@ const EditRoomScreen = ({navigation}) =>{
                                 <Text style={styles.textsmaller}>Edit Room</Text>
                             </View>
                             <View style={{
+                                height:'100%',
                                 position:"absolute",
-                                right:2,
-                                top:2,
+                                right:10,
+                                paddingLeft:15,
+                                display:'flex',
+                                alignItems:'center',
+                                justifyContent:'center',
+                                // top:2,
+                                borderLeftWidth:1,
+                                borderLeftColor:'black',
                             }}>
-                                <Ionicons name={'add'} size={25} color={'#1e1d1d'} />
+                                <Ionicons name={'exit-outline'} size={25} color={'#1e1d1d'} />
                             </View>
                         </TouchableOpacity>
                     )
@@ -209,23 +216,32 @@ const EditRoomScreen = ({navigation}) =>{
                         borderRadius: 20,
                         right:0,
                     }}></LinearGradient>
+                    <View style={styles.editTitle}>
                     <TextInput
                         placeholder="Choose name... " onChangeText={setName}
                         value={name}
                         style={styles.textInput}
                         placeholderTextColor={'#C4CBFD'}
                     />
+                        <View style={{
+                            position:"absolute",
+                            right:4,
+                            top:4,
+                        }}>
+                            <Ionicons name={'pencil'} size={20} color={'#1e1d1d'} />
+                        </View>
+                    </View>
                     <View style={styles.scrollLimiter}>
                     <ScrollView>
                         {connectedDevices.map((item,index)=>{
                             return(
                             <TouchableOpacity key={index} style={[
                                 styles.card,
-                                {
-                                    backgroundColor: isEnabled[item.id]
-                                        ? "#da2c38"
-                                        : "#29bf12",
-                                },
+                                // {
+                                //     backgroundColor: isEnabled[item.id]
+                                //         ? "#da2c38"
+                                //         : "#29bf12",
+                                // },
                             ]}
                                               onPress={() => toggleSwitch(item.id)}
                             >
@@ -238,13 +254,25 @@ const EditRoomScreen = ({navigation}) =>{
                                 </View>
                                 <Text style={[styles.text,{position:"absolute",
                                     left:50,}]}>{item.name}</Text>
-                                <View style={{
-                                    position:"absolute",
-                                    right:4,
-                                    top:4,
-                                }}>
-                                    <Ionicons name={'create-outline'} size={15} color={'#1e1d1d'} />
-                                </View>
+
+
+                                {!isEnabled[item.id]
+                                    ?
+                                    <View style={{
+                                        position:"absolute",
+                                        right:4,
+                                    }}>
+                                        <Ionicons name={'checkmark-outline'} size={25} color={"#29bf12"} />
+                                    </View>
+                                    :
+                                    <View style={{
+                                        position:"absolute",
+                                        right:4,
+                                    }}>
+                                        <Ionicons name={'close-outline'} size={25} color={"#da2c38"} />
+                                    </View>
+                                }
+
                             </TouchableOpacity>
 
 
@@ -272,15 +300,17 @@ const EditRoomScreen = ({navigation}) =>{
                             setIsFocus(false);
                         }}
                     />
-
+                    <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.submit} onPress={handleSubmit}>
-                        <Text>Submit changes</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.removeButton} onPress={handleDelete}>
-                        <Text>Delete room</Text>
+                        <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity>
 
+                    </View>
+                    <TouchableOpacity style={styles.removeButton} onPress={handleDelete}>
+                        <Text style={styles.buttonText2}>Delete</Text>
+                    </TouchableOpacity>
                 </View>
+
             </Modal>
 
 
@@ -295,16 +325,64 @@ const styles = StyleSheet.create({
     container:{
        flex:1,
     },
-    submit:{
+    editTitle:{
+        marginTop:-20,
         padding:10,
-        backgroundColor:'#29bf12',
-        borderRadius:10,
+        paddingHorizontal:30,
+    },
+    textInput:{
+        color:'#000000',
+        fontSize:35,
+        fontWeight: '400',
+    },
+    buttonContainer:{
+        marginTop:50,
+       display:'flex',
+       flexDirection:'row',
+        alignItems:'center',
+    },
+    submit:{
+        padding:15,
+        width:150,
+        backgroundColor:'rgba(41,191,18,0)',
+        borderRadius:7,
+        borderColor: "#3b3b3b",
+        borderWidth: 2,
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
+
     },
     removeButton:{
-        padding:10,
-        backgroundColor:'#da2c38',
-        borderRadius:10,
+        position:'absolute',
+        top:0,
+        right:0,
+        padding:0,
+        height:50,
+        width:60,
+        backgroundColor:'rgba(41,191,18,0)',
+        borderRadius:7,
+        borderColor: "#da2c38",
+        borderWidth: 2,
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
 
+
+    },
+    buttonText: {
+        color: '#3b3b3b',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+    buttonText2: {
+        color: '#da2c38',
+        fontWeight: '700',
+        fontSize: 12,
     },
     titleContainer:{
         width:'100%',
@@ -354,7 +432,7 @@ const styles = StyleSheet.create({
         padding:5,
         margin:3,
         backgroundColor:'rgba(255,255,255,1)',
-        borderRadius:18,
+        borderRadius:7,
         flexDirection:"row",
         alignItems: 'center',
         justifyContent:'space-evenly',
@@ -365,7 +443,7 @@ const styles = StyleSheet.create({
         padding:5,
         margin:3,
         backgroundColor:'rgba(255,255,255,1)',
-        borderRadius:9,
+        borderRadius:7,
         flexDirection:"row",
         alignItems: 'center',
         justifyContent:'space-evenly',
@@ -401,14 +479,16 @@ const styles = StyleSheet.create({
     },
     scrollLimiter:{
         height:200,
+        marginTop:25,
     },
     dropdown: {
-        width:300,
-        height: 50,
+        width:225,
+        height: 40,
         borderColor: 'gray',
         borderWidth: 0.5,
         borderRadius: 8,
-        paddingHorizontal: 8,
+        padding:15,
+
     },
     icon: {
         marginRight: 5,
@@ -423,13 +503,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     placeholderStyle: {
-        fontSize: 16,
+        fontSize: 14,
     },
     selectedTextStyle: {
-        fontSize: 16,
+        fontSize: 14,
     },
     inputSearchStyle: {
         height: 40,
-        fontSize: 16,
+        fontSize: 14,
     },
 })

@@ -48,21 +48,65 @@ const LoginScreen = ({navigation}) => {
                 <Text style={styles.titleText}>Sign In</Text>
             </View>
 
-            {/*<Modal*/}
-            {/*    animationType="slide"*/}
-            {/*    transparent={true}*/}
-            {/*    visible={modalVisible}*/}
-            {/*    onRequestClose={() => {*/}
-            {/*        setModalVisible(!modalVisible);*/}
-            {/*    }}>*/}
-
-            {/*    <Text>Hello World!</Text>*/}
-            {/*    <Pressable*/}
-            {/*        onPress={() => setModalVisible(!modalVisible)}>*/}
-            {/*        <Text style={styles.textStyle}>Hide Modal</Text>*/}
-            {/*    </Pressable>*/}
-
-            {/*</Modal>*/}
+            <View style={styles.svgContainer}>
+                <Svg
+                    width={150} height={150} viewBox="-0.04 0 96 96" xmlns="http://www.w3.org/2000/svg"
+                >
+                    <G
+                        data-name="Group 7"
+                        transform="translate(-111 -696)"
+                        stroke="#8da0e2"
+                        strokeLinejoin="round"
+                        strokeWidth={4}
+                    >
+                        <Path
+                            data-name="Rectangle 54"
+                            fill="#cdf4f0"
+                            strokeLinecap="round"
+                            d="M181 707h14v36h-14z"
+                        />
+                        <Path
+                            data-name="Path 54"
+                            d="m159 709-36 33v48h72v-49Z"
+                            fill="#cdf4f0"
+                            strokeLinecap="round"
+                        />
+                        <Path
+                            data-name="Rectangle 55"
+                            fill="#ebf4f7"
+                            strokeLinecap="round"
+                            d="M148 765h22v25h-22z"
+                        />
+                        <Rect
+                            data-name="Rectangle 60"
+                            width={30}
+                            height={10}
+                            rx={5}
+                            transform="translate(144 755)"
+                            fill="#fff"
+                        />
+                        <Rect
+                            data-name="Rectangle 61"
+                            width={22}
+                            height={10}
+                            rx={5}
+                            transform="translate(177 698)"
+                            fill="#fff"
+                        />
+                        <Path
+                            data-name="Path 58"
+                            d="m202 736.858-35.929-35.929a10 10 0 0 0-14.142 0L116 736.858a9.978 9.978 0 0 0-2.878 8.067A5.009 5.009 0 0 0 113 746v20a5 5 0 0 0 10 0v-8a5 5 0 0 0 10 0v-9.858l26-26L187.858 751A10 10 0 0 0 202 736.858Z"
+                            fill="#fff"
+                        />
+                        <Path
+                            data-name="Line 15"
+                            fill="#fff"
+                            strokeLinecap="round"
+                            d="M123 758v-7"
+                        />
+                    </G>
+                </Svg>
+            </View>
 
             <View style={styles.roundContainer3}></View>
             <View style={styles.roundContainer2}></View>
@@ -109,6 +153,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor:'white',
         overflow:'hidden'
+    },
+    svgContainer:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop:0,
     },
     inputContainer: {
         width: '80%',

@@ -32,7 +32,7 @@ const DAYS = [
     },
     {
         key: "Saturday",
-        label: "Su",
+        label: "Sa",
     }
 ];
 
@@ -61,7 +61,9 @@ const ScheduleScreen = ({route}) =>{
     }
 
     const handleSubmit = () =>{
+        if(selectedDays.length===0){
 
+        }
         const start = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
         const end = `${date2.getHours().toString().padStart(2, '0')}:${date2.getMinutes().toString().padStart(2, '0')}`;
         const sender = {
@@ -72,9 +74,9 @@ const ScheduleScreen = ({route}) =>{
             "days":selectedDays,
         }
         console.log(sender);
-        createSchedule(sender).then((data)=>{
-            console.log(data);
-        })
+        // createSchedule(sender).then((data)=>{
+        //     console.log(data);
+        // })
     }
 
     const toggleSwitch = (key) => {
@@ -130,27 +132,37 @@ const ScheduleScreen = ({route}) =>{
                 ))}
 
             </View>
+            <View style={styles.rightSide}>
+                <Text style={styles.titleText}>Create Schedule</Text>
             <View style={styles.timeView}>
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={'time'}
-                    is24Hour={true}
-                    onChange={onChange}
-                />
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date2}
-                    mode={'time'}
-                    is24Hour={true}
-                    onChange={onChange2}
-                />
+                <View style={styles.startTime}>
+                    <Text style={styles.timeText}>Start time: </Text>
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={'time'}
+                        is24Hour
+                        onChange={onChange}
+                    />
+                </View>
+                <View style={styles.startTime}>
+                    <Text style={styles.timeText}>End time: </Text>
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date2}
+                        mode={'time'}
+                        is24Hour={true}
+                        onChange={onChange2}
+                    />
+                </View>
+
             </View>
             {RenderSwitch()}
 
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text>Submit</Text>
+            <TouchableOpacity onPress={handleSubmit} style={styles.submit}>
+                <Text style={styles.buttonText}>Submit</Text>
             </TouchableOpacity>
+            </View>
 
         </View>
 
@@ -161,28 +173,56 @@ export default ScheduleScreen;
 
 
 const styles = StyleSheet.create({
+    startTime:{
+      backgroundColor:'#eeeeef',
+      width:'80%',
+      height:55,
+        borderRadius:8,
+      padding:10,
+      flexDirection:"row",
+        alignItems:'center',
+        justifyContent:'space-evenly',
+        margin:5,
+    },
+    timeText:{
+        color:'black',
+    },
+    titleText:{
+        color:'#333333',
+        fontSize:27,
+        fontWeight: '500',
+    },
+    rightSide:{
+        width:'80%',
+       display:"flex",
+       flexDirection:"column",
+       alignItems:'center',
+       justifyContent:'center',
+    },
     buttonContainer:{
-        flexDirection:'row',
+        flexDirection:'column',
+        // position:'absolute',
+        // left:10,
+        // top:100
     },
     timeView:{
-        flexDirection:'row',
+        flexDirection:'column',
         justifyContent:'space-evenly',
-        padding:20,
     },
     dayButton:{
-        margin:2,
-        borderRadius:'50',
-        padding: 5,
-        borderWidth:1,
-        flex:1,
+        borderRadius:50,
+        // padding: 15,
+        marginVertical:5,
+        marginHorizontal:0,
+        // borderWidth:1,
         textAlign:'center',
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
         justifyContent:'center',
         borderColor:'blue',
-        width:32,
-        height:32,
+        width:50,
+        height:50,
         font:'black',
 
     },
@@ -198,6 +238,28 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         borderRadius: 20,
         padding: 15,
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:'center',
         alignItems: "center",
-    }
+    },
+    submit:{
+        padding:15,
+        width:150,
+        backgroundColor:'rgba(41,191,18,0)',
+        borderRadius:7,
+        borderColor: "#eeeeef",
+        borderWidth: 2,
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:"center",
+        margin:10,
+
+    },
+    buttonText: {
+        color: '#ffffff',
+        fontWeight: '700',
+        fontSize: 16,
+    },
 });

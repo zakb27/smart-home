@@ -16,6 +16,7 @@ const LightDevice = ({data}) =>{
 
 
     const handleSend =() => {
+        console.log('sdf')
         const info = {
             id: data.id,
             value:percent,
@@ -114,22 +115,58 @@ const LightDevice = ({data}) =>{
             </Svg>
 
 
-            <Slider
-                style={{width: 200, height: 60}}
-                minimumValue={0}
-                value={percent}
-                onValueChange={changePercent}
-                maximumValue={100}
-                onSlidingComplete={handleSend}
-                minimumTrackTintColor="#f4a261"
-                maximumTrackTintColor="#e9c46a"
+            {/*<Slider*/}
+            {/*    style={{width: 200, height: 60}}*/}
+            {/*    minimumValue={0}*/}
+            {/*    value={percent}*/}
+            {/*    onValueChange={changePercent}*/}
+            {/*    maximumValue={100}*/}
+            {/*    onSlidingComplete={handleSend}*/}
+            {/*    minimumTrackTintColor="#f4a261"*/}
+            {/*    maximumTrackTintColor="#e9c46a"*/}
+            {/*/>*/}
+            <View style={styles.tempView}>
+                <TouchableOpacity
+                    onPress={handleSend}
+                    style={{
+                        flexDirection:"column",
+                        justifyContent:"center",
+                    }}
+                >
+                    <Ionicons name={"reload-outline"} size={75} color={'#ffffff'} />
+                </TouchableOpacity>
+
+            <RadialSlider value={percent}
+                          subTitle={""}
+                          variant={'radial-circle-slider'}
+                          unit={'%'}
+                          min={0} max={100}
+                          onChange={e=> {changePercent(e)}}
+                          linearGradient={
+                              [ { offset: '0%', color:'#f4a261' }, { offset: '100%', color: '#e9c46a' }]
+                          }
+                          step={1}
+                          sliderTrackColor={'#ffffff'}
+                          thumbColor={'#e9c46a'}
+                          lineColor={'#ffffff'}
+                          radius={75}
+                          subTitleStyle={
+                              {fontSize: 12}
+                          }
+                          valueStyle={{
+                              fontSize:20,
+                          }}
+                          sliderWidth={15}
+                          thumbBorderWidth={10}
+                          thumbRadius={15}
+                          isHideValue={true}
+                          isHideLines={true}
+                          isHideTailText={true}
+                          isHideButtons={true}
             />
 
-            {/*<TouchableOpacity*/}
-            {/*    onPress={() => alert('dfgdfg')}*/}
-            {/*>*/}
-            {/*    <Text>sdfsdfsdf</Text>*/}
-            {/*</TouchableOpacity>*/}
+
+            </View>
 
         </View>
     )
@@ -205,10 +242,11 @@ const TemperatureDevice = ({data}) =>{
                           sliderWidth={25}
                           thumbBorderWidth={10}
                           thumbRadius={20}
+                          isHideButtons={true}
             />
 
             <TouchableOpacity onPress={handleUpdate}>
-                <Ionicons name={"power"} size={75} color={'#ffffff'} />
+                <Ionicons name={"reload-outline"} size={75} color={'#ffffff'} />
             </TouchableOpacity>
 
 
@@ -694,7 +732,6 @@ const styles = StyleSheet.create({
         flexDirection:"row",
     },
     goBackTouch:{
-        width:'100%',
         padding:10,
         alignItems: 'flex-end',
         justifyContent:'flex-end',
