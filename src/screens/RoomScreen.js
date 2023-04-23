@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Button, StyleSheet, SafeAreaView, RefreshControl} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity, Button, StyleSheet, RefreshControl} from 'react-native';
 
 import DeviceScreen from "./DeviceScreen";
 import {fetchDevices, fetchRooms, getRoomDevices, getSaved, sendInfo} from "../hooks/Database";
@@ -7,6 +7,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import GetProductImage from "../components/GetProductImage";
 import Modal from "react-native-modal";
+import { SafeAreaView } from 'react-native-safe-area-context';
 const RoomScreen = ({route,navigation}) =>{
     const { roomID,roomName } = route.params;
     const [currentSearch,performSearch] = useState([]);

@@ -137,23 +137,25 @@ const ScheduleScreen = ({route}) =>{
             <View style={styles.timeView}>
                 <View style={styles.startTime}>
                     <Text style={styles.timeText}>Start time: </Text>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={'time'}
-                        is24Hour
-                        onChange={onChange}
-                    />
+                    {/*<DateTimePicker*/}
+                    {/*    */}
+                    {/*    testID="dateTimePicker"*/}
+                    {/*    value={date}*/}
+                    {/*    display={'spinner'}*/}
+                    {/*    mode={'time'}*/}
+                    {/*    is24Hour*/}
+                    {/*    onChange={onChange}*/}
+                    {/*/>*/}
                 </View>
                 <View style={styles.startTime}>
                     <Text style={styles.timeText}>End time: </Text>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date2}
-                        mode={'time'}
-                        is24Hour={true}
-                        onChange={onChange2}
-                    />
+                    {/*<DateTimePicker*/}
+                    {/*    testID="dateTimePicker"*/}
+                    {/*    value={date2}*/}
+                    {/*    mode={'time'}*/}
+                    {/*    is24Hour={true}*/}
+                    {/*    onChange={onChange2}*/}
+                    {/*/>*/}
                 </View>
 
             </View>

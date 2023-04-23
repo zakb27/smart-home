@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react';
-import {StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, View, RefreshControl} from 'react-native';
+import {StyleSheet, TouchableOpacity, ScrollView, View, RefreshControl} from 'react-native';
 import { Input, Text } from '@ui-kitten/components';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DeviceScreen from "../screens/DeviceScreen";
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {getRegisteredDevices, sendInfo} from "../hooks/Database";
 import {LinearGradient} from "expo-linear-gradient";
 import GetProductImage from "./GetProductImage";
@@ -27,7 +27,6 @@ const PerformSearchHome = ({navigation})=>{
     }, []);
 
     useEffect(() => {
-        console.log('here!@')
         performSearch([])
         getRegisteredDevices().then((data)=>{
             setDevices(data)
@@ -57,15 +56,15 @@ const PerformSearchHome = ({navigation})=>{
             <View style={styles.titleContainer}>
                 <Text style={styles.mainTitle}>Search</Text>
 
-                <Menu onSelect={value => navigation.navigate(`${value}`)}>
-                    <MenuTrigger customStyles={triggerStyles} children={<Ionicons  name={'add'} size={50} color={'#8DA0E2'} />} />
-                    <MenuOptions customStyles={optionsStyles}>
-                        <MenuOption value={'AddRoom'} text='Add Room' customStyles={optionsStyles} />
-                        <MenuOption value={'AddDevice'} text='Add Device' customStyles={optionsStyles} />
-                        <MenuOption value={'EditRoom'} text='Edit Room' customStyles={optionsStyles} />
-                        <MenuOption value={'EditDevice'} text='Edit Device' customStyles={optionsStyles} />
-                    </MenuOptions>
-                </Menu>
+                {/*<Menu onSelect={value => navigation.navigate(`${value}`)}>*/}
+                {/*    <MenuTrigger customStyles={triggerStyles} children={<Ionicons  name={'add'} size={50} color={'#8DA0E2'} />} />*/}
+                {/*    <MenuOptions customStyles={optionsStyles}>*/}
+                {/*        <MenuOption value={'AddRoom'} text='Add Room' customStyles={optionsStyles} />*/}
+                {/*        <MenuOption value={'AddDevice'} text='Add Device' customStyles={optionsStyles} />*/}
+                {/*        <MenuOption value={'EditRoom'} text='Edit Room' customStyles={optionsStyles} />*/}
+                {/*        <MenuOption value={'EditDevice'} text='Edit Device' customStyles={optionsStyles} />*/}
+                {/*    </MenuOptions>*/}
+                {/*</Menu>*/}
             </View>
             <Input
                 value = {value}
@@ -215,7 +214,6 @@ export default PerformSearch
 
 const styles = StyleSheet.create({
     fullContainer:{
-        padding:10,
         backgroundColor:'#8da0e2',
         flex:1,
         alignItems:'center'
@@ -249,7 +247,7 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
-        fontWeight: '500',
+        fontWeight: '675',
     },
     card: {
         width:165,

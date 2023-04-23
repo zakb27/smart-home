@@ -5,13 +5,12 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     TouchableOpacity,
     Button,
     StyleSheet,
     RefreshControl
 } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import DeviceScreen from "./DeviceScreen";
 import {fetchDevices, getRegisteredDevices, getSaved, sendInfo} from "../hooks/Database";
 import { createNativeStackNavigator } from '@react-navigation/native-stack'

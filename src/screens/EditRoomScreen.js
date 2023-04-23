@@ -4,7 +4,6 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     Button,
     TouchableOpacity,
     StyleSheet
@@ -19,7 +18,7 @@ import Modal from "react-native-modal";
 import { Dropdown } from 'react-native-element-dropdown';
 import GetRoomImage from "../components/GetRoomImage";
 import GetProductImage from "../components/GetProductImage";
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const EditRoomScreen = ({navigation}) =>{
     const [open, setOpen] = useState(false);

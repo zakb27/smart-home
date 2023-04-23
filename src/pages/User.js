@@ -5,7 +5,6 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     Button,
     StyleSheet,
     TouchableOpacity, ActivityIndicator
@@ -23,7 +22,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ChangeEmailScreen from "../screens/ChangeEmailScreen";
 import ChangePassScreen from "../screens/ChangePassScreen";
 import AddDoorCodeScreen from "../screens/AddDoorCodeScreen";
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 const Display = ({navigation}) =>{
     const [image, setImage] = useState(null);
     const [first, setFirst] = useState(null);
@@ -202,10 +201,18 @@ const styles = StyleSheet.create({
         borderRadius:10,
         backgroundColor:'rgba(255,255,255,0.9)',
     },
-    image:{
-        borderRadius:'50%',
+    imageContainer:{
+        borderRadius:200,
+        backgroundColor:'yellow',
         width:100,
         height:100,
+        overflow:'hidden',
+    },
+    image:{
+        width:100,
+        height:100,
+        overflow:'hidden',
+
     },
     changeContainer:{
         height:'30%',

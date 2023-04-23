@@ -4,7 +4,6 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     Button,
     TouchableOpacity,
     StyleSheet, Pressable
@@ -16,7 +15,7 @@ import Modal from "react-native-modal";
 import {deletePromptDevice, fetchRooms, getRegisteredDevices} from "../hooks/Database";
 import GetProductImage from "../components/GetProductImage";
 
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 const EditDeviceScreen = ({navigation}) =>{
 
     const [devices,setDevices] = useState([]);

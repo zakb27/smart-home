@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PerformSearch.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PerformSearch.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/devices/Devices.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/devices/Devices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Add.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Add.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Saved.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Saved.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/User.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AddRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AddRoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AllDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AllDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ChangeEmailScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ChangeEmailScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ChangePassScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ChangePassScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/DeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/DeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ScheduleScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ScheduleScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,18 +64,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/zakbrook/Documents/GitHub/smart-home/src/assets&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.language&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/zakbrook/Documents/GitHub/smart-home/src/assets",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.language",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/assets" />

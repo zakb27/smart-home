@@ -81,7 +81,7 @@ const Main = () =>{
                     tabBarInactiveTintColor: '#cdf4f0',
                     headerShown:false,
                     // tabBarShowLabel: false,
-                    tabBarStyle: { height: 80,
+                    tabBarStyle: { height: 70,
                         paddingTop:3,
                         backgroundColor: '#8da0e2',
                         borderTopWidth:0,

@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import {updateEmail, reauthenticateWithCredential, updatePassword} from "firebase/auth";
 import {auth} from "../../firebase";
 import { EmailAuthProvider } from "firebase/auth";
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import GetRoomImage from "../components/GetRoomImage";
 import DropDownPicker from "react-native-dropdown-picker";
 import {Snackbar} from "@react-native-material/core";
 import {checkEmailExists,updateFirebaseEmail} from "../hooks/Database";
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 const ChangePassScreen = ({navigation}) =>{
     const [email,setEmail] = useState('');
     const [oldPass,setOldPass] = useState('');

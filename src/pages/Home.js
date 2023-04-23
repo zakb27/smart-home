@@ -5,13 +5,12 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     TouchableOpacity,
     Button,
     StyleSheet,
     RefreshControl, ActivityIndicator
 } from 'react-native';
-
+import { SafeAreaView } from 'react-native-safe-area-context';
 import RoomScreen from "../screens/RoomScreen";
 import AllDeviceScreen from "../screens/AllDeviceScreen";
 import { createStackNavigator } from '@react-navigation/stack';

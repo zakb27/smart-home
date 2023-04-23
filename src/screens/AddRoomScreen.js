@@ -7,12 +7,12 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     Button,
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {auth, db} from "../../firebase";
 import {collection, doc, setDoc,addDoc,getDocs} from "firebase/firestore";
 import { Snackbar } from "@react-native-material/core";

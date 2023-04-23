@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef,useMemo} from 'react';
-import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet,Modal, SafeAreaView, StatusBar,} from 'react-native';
+import {View, Text, ScrollView, TouchableOpacity,Button,StyleSheet,Modal,  StatusBar,} from 'react-native';
 import {sendInfo, checkSaved, performSave, checkPin, updateDoor, getDoorTime,updateWasher} from "../hooks/Database";
 import Icon from "react-native-vector-icons/Ionicons"
 import { RadialSlider } from 'react-native-radial-slider';
@@ -9,6 +9,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Svg, {G, Path} from "react-native-svg";
 import GetProductImage from "../components/GetProductImage";
+import { SafeAreaView } from 'react-native-safe-area-context';
 const LightDevice = ({data}) =>{
     const [percent,changePercent] = useState(data.value)
     const [isSaved,changeSaved] = useState(false)

@@ -5,7 +5,6 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     Button,
     TouchableOpacity,
     StyleSheet
@@ -15,6 +14,7 @@ import AddDeviceScreen from "../screens/AddDeviceScreen";
 import { createStackNavigator } from '@react-navigation/stack';
 import {LinearGradient} from "expo-linear-gradient";
 import EditRoomScreen from "../screens/EditRoomScreen";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EditDeviceScreen from "../screens/EditDeviceScreen";
 const Stack = createStackNavigator();
 

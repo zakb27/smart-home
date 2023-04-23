@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-    SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
@@ -16,6 +15,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {LinearGradient} from "expo-linear-gradient";
 import GetProductImage from "../components/GetProductImage";
 const Stack = createStackNavigator();
+import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     Menu,
     MenuOptions,

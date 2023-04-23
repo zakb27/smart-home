@@ -4,12 +4,12 @@ import {
     Image,
     ScrollView,
     TextInput,
-    SafeAreaView,
     Button,
     TouchableOpacity,
     StyleSheet
 } from 'react-native';
 import React, {useEffect, useState} from "react";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import DropDownPicker from "react-native-dropdown-picker";
 import {fetchDevices, sendInfo} from "../hooks/Database";
 import {addDoc, collection, getDocs,doc, updateDoc, arrayUnion} from "firebase/firestore";

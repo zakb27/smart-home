@@ -4,7 +4,6 @@
     "slug": "smart-home",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "plugins": [
       "@config-plugins/react-native-ble-plx",
@@ -17,7 +16,6 @@
       ]
     ],
     "splash": {
-      "image": "./assets/homerino.png",
       "resizeMode": "contain",
       "backgroundColor": "#2d4d68"
     },
