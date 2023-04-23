@@ -18,7 +18,6 @@ const Stack = createStackNavigator();
 import * as ImagePicker from 'expo-image-picker';
 import {fetchProf, fetchRooms} from "../hooks/Database";
 import { getStorage,ref,uploadString,getDownloadURL,uploadBytesResumable } from "firebase/storage";
-import placeholder from "../assets/placeholder_main.png";
 import {LinearGradient} from "expo-linear-gradient";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ChangeEmailScreen from "../screens/ChangeEmailScreen";
