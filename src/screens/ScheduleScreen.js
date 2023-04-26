@@ -113,6 +113,7 @@ const ScheduleScreen = ({route}) =>{
                 bottom:0,
                 right:0,
             }}></LinearGradient>
+            <Text style={styles.titleText}>Create Schedule</Text>
             <View style={styles.buttonContainer}>
                 {DAYS.map((day, index) => (
                     <TouchableOpacity
@@ -133,7 +134,7 @@ const ScheduleScreen = ({route}) =>{
 
             </View>
             <View style={styles.rightSide}>
-                <Text style={styles.titleText}>Create Schedule</Text>
+
             <View style={styles.timeView}>
                 <View style={styles.startTime}>
                     <Text style={styles.timeText}>Start time: </Text>
@@ -192,9 +193,13 @@ const styles = StyleSheet.create({
     titleText:{
         color:'#333333',
         fontSize:27,
+        position:'absolute',
+        top:60,
+        right:70,
         fontWeight: '500',
     },
     rightSide:{
+        paddingTop:50,
         width:'80%',
        display:"flex",
        flexDirection:"column",
@@ -229,7 +234,6 @@ const styles = StyleSheet.create({
 
     },
     modalView: {
-        paddingTop:50,
         bottom:0,
         right:0,
         left:0,

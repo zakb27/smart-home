@@ -99,6 +99,8 @@ const styles = StyleSheet.create({
     titleText:{
         color:'#333333',
         fontSize:27,
+        position:'absolute',
+        paddingTop:60,
         fontWeight: '500',
         marginBottom:25,
     },
