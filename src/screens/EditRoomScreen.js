@@ -356,8 +356,8 @@ const styles = StyleSheet.create({
     },
     removeButton:{
         position:'absolute',
-        top:0,
-        right:0,
+        top:28,
+        right:8,
         padding:0,
         height:50,
         width:60,
@@ -483,8 +483,9 @@ const styles = StyleSheet.create({
     dropdown: {
         width:225,
         height: 40,
-        borderColor: 'gray',
-        borderWidth: 0.5,
+        borderColor: '#3b3b3b',
+        borderWidth: 1,
+        color:'white',
         borderRadius: 8,
         padding:15,
 
@@ -503,6 +504,7 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 14,
+        color:'#3b3b3b',
     },
     selectedTextStyle: {
         fontSize: 14,
