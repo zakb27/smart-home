@@ -28,9 +28,11 @@ const PerformSearchHome = ({navigation})=>{
 
     useEffect(() => {
         performSearch([])
+        // Gets devices registered with user from database
         getRegisteredDevices().then((data)=>{
             setDevices(data)
         })
+        // Checks input against device name and type
         for(let i=0;i<devices.length;i++){
             if(devices[i].name.toLowerCase().includes(value.toLowerCase()) ||
                devices[i].type.toLowerCase().includes(value.toLowerCase()))
@@ -38,7 +40,6 @@ const PerformSearchHome = ({navigation})=>{
                     performSearch(current=>[...current,devices[i]])
             }
         }
-
     }, [value,navigation,isModal,reRender]);
 
 

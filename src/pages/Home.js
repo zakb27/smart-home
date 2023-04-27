@@ -148,6 +148,7 @@ const HomeRooms = ({navigation}) =>{
 
 // SplashScreen.preventAutoHideAsync();
 const Home = ()=>{
+    // Navigation overview for different pages for room screens
     return(
         <Stack.Navigator
             screenOptions={{
@@ -162,10 +163,7 @@ const Home = ()=>{
             <Stack.Screen name="AddDevice" component={AddDeviceScreen} />
             <Stack.Screen name="EditRoom" component={EditRoomScreen} />
             <Stack.Screen name="EditDevice" component={EditDeviceScreen} />
-
         </Stack.Navigator>
-
-
     )
 }
 
