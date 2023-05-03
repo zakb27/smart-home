@@ -43,23 +43,22 @@ const AddRoomScreen = ({navigation})=>{
 
     const addRoom = async() =>{
         try{
-            if(roomName===''){
+
+            if(roomName===''){      //checks for empty input
                 changeSnack(true);
                 throw new Error('Enter name');
             }
+            // Gets database rooms and checks if name exists
             const email = auth.currentUser?.email
-
             const docRef = await collection(db,'users',email,'rooms')
-
             const docsSnap = await getDocs(docRef);
-
             docsSnap.forEach(doc =>{
                 if (doc.data().name.toLowerCase() ===roomName.toLowerCase()){
                     changeSnack(true)
                     throw new Error('Name taken');
                 }
             })
-            await addDoc(docRef, {
+            await addDoc(docRef, {      //Adds room details to database
                 name: roomName,
                 type: value
             });
