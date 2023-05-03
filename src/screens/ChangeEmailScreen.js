@@ -10,6 +10,7 @@ import GetRoomImage from "../components/GetRoomImage";
 import DropDownPicker from "react-native-dropdown-picker";
 import {Snackbar} from "@react-native-material/core";
 import {checkEmailExists,updateFirebaseEmail} from "../hooks/Database";
+import Svg, {G, Path, Rect} from "react-native-svg";
 
 const ChangeEmailScreen = ({navigation}) =>{
     const [oldEmail,setOld] = useState('');
@@ -97,7 +98,63 @@ const ChangeEmailScreen = ({navigation}) =>{
             <View style={styles.addContainer}>
                 <View style={styles.addContainer2}>
                     <View style={styles.imageContainer}>
-                        <GetRoomImage type={'other'} />
+                        <Svg
+                            width={150} height={150} viewBox="-0.04 0 96 96" xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <G
+                                data-name="Group 7"
+                                transform="translate(-111 -696)"
+                                stroke="#8da0e2"
+                                strokeLinejoin="round"
+                                strokeWidth={4}
+                            >
+                                <Path
+                                    data-name="Rectangle 54"
+                                    fill="#cdf4f0"
+                                    strokeLinecap="round"
+                                    d="M181 707h14v36h-14z"
+                                />
+                                <Path
+                                    data-name="Path 54"
+                                    d="m159 709-36 33v48h72v-49Z"
+                                    fill="#cdf4f0"
+                                    strokeLinecap="round"
+                                />
+                                <Path
+                                    data-name="Rectangle 55"
+                                    fill="#ebf4f7"
+                                    strokeLinecap="round"
+                                    d="M148 765h22v25h-22z"
+                                />
+                                <Rect
+                                    data-name="Rectangle 60"
+                                    width={30}
+                                    height={10}
+                                    rx={5}
+                                    transform="translate(144 755)"
+                                    fill="#fff"
+                                />
+                                <Rect
+                                    data-name="Rectangle 61"
+                                    width={22}
+                                    height={10}
+                                    rx={5}
+                                    transform="translate(177 698)"
+                                    fill="#fff"
+                                />
+                                <Path
+                                    data-name="Path 58"
+                                    d="m202 736.858-35.929-35.929a10 10 0 0 0-14.142 0L116 736.858a9.978 9.978 0 0 0-2.878 8.067A5.009 5.009 0 0 0 113 746v20a5 5 0 0 0 10 0v-8a5 5 0 0 0 10 0v-9.858l26-26L187.858 751A10 10 0 0 0 202 736.858Z"
+                                    fill="#fff"
+                                />
+                                <Path
+                                    data-name="Line 15"
+                                    fill="#fff"
+                                    strokeLinecap="round"
+                                    d="M123 758v-7"
+                                />
+                            </G>
+                        </Svg>
                     </View>
                     <TextInput
                         placeholder="Old Email: "

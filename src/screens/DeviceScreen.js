@@ -38,7 +38,7 @@ const DeviceScreen = (info) =>{
             >
 
                 <Tab.Navigator style={styles.tabView} screenOptions={{
-                    // swipeEnabled:true,
+                    swipeEnabled:false,
                     tabBarStyle:{
                         backgroundColor:'#cbeef0',
 
