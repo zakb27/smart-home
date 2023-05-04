@@ -6,6 +6,7 @@ const rooms = JSON.parse(fs.readFileSync('./rooms.json', 'utf8'));
 const devices = JSON.parse(fs.readFileSync('./devices.json', 'utf8'));
 let schedule = JSON.parse(fs.readFileSync('./schedule.json', 'utf8'));
 const { v4: uuidv4 } = require('uuid');
+const bcrypt = require('bcrypt');
 
 app.use(express.json());
 app.get('/', function(req, res) {
@@ -244,6 +245,8 @@ app.post('/getSeconds',function(req,res){
     let seconds=0
     allDevices.devices.forEach(device=>{
         if(device.id===id && device.value>0){
+            console.log(device.value);
+            console.log(device.id);
             newTime = new Date(device.startTime)
             seconds = Math.abs(currentTime.getTime() - newTime.getTime())/1000;
         }
@@ -251,22 +254,30 @@ app.post('/getSeconds',function(req,res){
     res.json(seconds)
 });
 
-app.post('/updateDoor',function(req,res){
-    const allDevices=devices;
+app.post('/updateDoor',async function (req, res) {
+    const allDevices = devices;
     const hold = devices;
-    const time =  new Date();
+    const time = new Date();
     const id = req.body.id;
-    allDevices.devices.forEach(device=>{
-        if(device.id===id){
-            device.value=1;
+    const pin = req.body.pin
+    let keyValid
+    for (const device of allDevices.devices) {
+        if (device.id === id) {
+            keyValid = await bcrypt.compare(pin, device.key);
+            if (!keyValid) {
+                return res.status(480).send('Incorrect pin');
+            }
+            device.value = 1;
             device.startTime = time
-        }
-    });
 
-    fs.writeFile('./devices.json', JSON.stringify(allDevices), function(err) {
+        }
+    }
+
+
+    fs.writeFile('./devices.json', JSON.stringify(allDevices), function (err) {
         if (err) {
             console.error(err);
-            res.status(500).send('Error updating rooms data');
+            return res.status(500).send('Error updating devices data');
         } else {
             devices.devices = allDevices.devices;
         }
@@ -277,23 +288,24 @@ app.post('/updateDoor',function(req,res){
 
     setTimeout(() => {
 
-        allDevices.devices.forEach(device=>{
-            if(device.id===id){
-                device.value=0;
+        allDevices.devices.forEach(device => {
+            if (device.id === id) {
+                device.value = 0;
             }
         });
         // Revert the JSON data to the original data
-        fs.writeFile('./devices.json', JSON.stringify(allDevices), function(err) {
+        fs.writeFile('./devices.json', JSON.stringify(allDevices), function (err) {
             if (err) {
                 console.error(err);
-                res.status(500).send('Error updating rooms data');
+                return res.status(500).send('Error updating devices data');
             } else {
                 devices.devices = allDevices.devices;
-                res.send('Rooms data updated successfully');
+
             }
         });
         console.log("Door closed")
     }, 10000);
+    return res.send('Doing updated successfully');
 
 });
 

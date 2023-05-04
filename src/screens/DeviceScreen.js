@@ -1,6 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback} from 'react-native';
-import {DishDevice, DoorDevice, LightDevice, SpeakerDevice, TemperatureDevice, WashingDevice} from "../devices/Devices";
+import {
+    DishDevice,
+    DoorDevice,
+    LightDevice,
+    OtherDevice,
+    SpeakerDevice,
+    TemperatureDevice,
+    WashingDevice
+} from "../devices/Devices";
 
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ViewScheduleScreen from "./ViewScheduleScreen";
@@ -26,8 +34,10 @@ const DeviceScreen = (info) =>{
                 return <WashingDevice data={data} />
             case "dishwasher":
                 return <WashingDevice data={data} />
+            case "other":
+                return <OtherDevice data={data} />
             default:
-                return <Text>Error</Text>
+                return <OtherDevice data={data} />
         }
     }
 

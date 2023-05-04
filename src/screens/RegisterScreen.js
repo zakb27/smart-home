@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
     View,
     Image,
-    ImageBackground
+    ImageBackground, Button
 } from 'react-native'
 import uuid from 'react-native-uuid';
 import {createUserWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
@@ -22,6 +22,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import Modal from "react-native-modal";
 import DeviceScreen from "./DeviceScreen";
 import Pincode from "../components/Pincode";
+import {Snackbar} from "@react-native-material/core";
 const RegisterScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -31,7 +32,8 @@ const RegisterScreen = ({navigation}) => {
     const [imageRef,changeRef] = useState('placeholder.png')
     const [pin,changePin] = useState('')
     const [isModal,openModal] = useState(false);
-
+    const [snackVisible,changeSnack] = useState(false)
+    const [errorMessage,changeErrorMessage] = useState("Error");
 
     const uploadImage = async () => {
         try{
@@ -53,7 +55,6 @@ const RegisterScreen = ({navigation}) => {
                 'firstname':first,
                 'lastname':last,
                 'url':`images/${newRef.toString()}`,
-                'pin':pin,
             });
 
         }
@@ -80,25 +81,34 @@ const RegisterScreen = ({navigation}) => {
 
     const handleSignUp = async() => {
         // const auth = getAuth();
-        console.log(pin);
-        if(first===''||last===''){
-            alert('Must submit names')
-            return('Must submit first and last name')
+        try {
+            if (email === '' || password === '') {
+                throw new Error('Must enter email and password')
+            }
+            if (first === '' || last === '') {
+                throw new Error('Must submit first and last name')
+            }
+            // if(pin===''){
+            //     alert('Must submit door code')
+            //     return('Must submit door code')
+            // }
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(userCredentials => {
+                    const user = userCredentials.user;
+                    console.log('Registered with:', user.email.toLowerCase());
+                    uploadImage().then(e => console.log('image uploaded'))
+                    // handleDatabase().then(e=>console.log('Database created'))
+                })
+                .catch(error => {
+                    changeErrorMessage('Registration unsuccessful')
+                    changeSnack(true)
+                })
         }
-        if(pin===''){
-            alert('Must submit door code')
-            return('Must submit door code')
+        catch(error){
+            console.log(error)
+            changeErrorMessage(error.toString())
+            changeSnack(true)
         }
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Registered with:', user.email.toLowerCase());
-
-                uploadImage().then(e=>console.log('image uploaded'))
-                // handleDatabase().then(e=>console.log('Database created'))
-
-            })
-            .catch(error => alert(error.message))
 
     }
 
@@ -106,7 +116,6 @@ const RegisterScreen = ({navigation}) => {
     return (
         <KeyboardAvoidingView
             style={styles.container}
-            behavior="padding"
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,
@@ -131,23 +140,23 @@ const RegisterScreen = ({navigation}) => {
             <View style={styles.roundContainer2}></View>
             <View style={styles.roundContainer}></View>
 
-            <Modal isVisible={isModal}
-                   onSwipeComplete={() => openModal(false)}
-                   swipeDirection="down"
-                   onBackdropPress={() => openModal(false)}
-            >
-                <Pincode openModal={openModal} setPin={changePin} />
-            </Modal>
+            {/*<Modal isVisible={isModal}*/}
+            {/*       onSwipeComplete={() => openModal(false)}*/}
+            {/*       swipeDirection="down"*/}
+            {/*       onBackdropPress={() => openModal(false)}*/}
+            {/*>*/}
+            {/*    <Pincode openModal={openModal} setPin={changePin} />*/}
+            {/*</Modal>*/}
 
 
-            <View style={styles.doorButtonContainer}>
-                <TouchableOpacity
-                    onPress={e=>openModal(true)}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText}>Set Door Code</Text>
-                </TouchableOpacity>
-            </View>
+            {/*<View style={styles.doorButtonContainer}>*/}
+            {/*    <TouchableOpacity*/}
+            {/*        onPress={e=>openModal(true)}*/}
+            {/*        style={styles.button}*/}
+            {/*    >*/}
+            {/*        <Text style={styles.buttonText}>Set Door Code</Text>*/}
+            {/*    </TouchableOpacity>*/}
+            {/*</View>*/}
             <View style={styles.formContainer}>
             <View style={styles.inputContainer}>
                 <Text style={styles.introInput}>Email:</Text>
@@ -196,6 +205,15 @@ const RegisterScreen = ({navigation}) => {
                 </TouchableOpacity>
             </View>
             </View>
+            {snackVisible&&(
+                <Snackbar
+                    message={errorMessage}
+                    action={<Button variant="text" title="Dismiss" color="#BB86FC" onPress={e=>changeSnack(false)} compact />}
+                    style={{ position: "absolute",
+                        start: 16, end: 16, bottom: 16,
+
+                    }} />
+            )}
         </KeyboardAvoidingView>
     )
 }
@@ -229,7 +247,7 @@ const styles = StyleSheet.create({
         height:'100%'
     },
     imageContainer:{
-        borderRadius:'100%',
+        borderRadius:200,
         borderColor:'white',
         borderWidth:2,
         height:150,

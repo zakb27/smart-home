@@ -127,8 +127,17 @@ const AllDeviceScreen = ({navigation}) =>{
                                 ifOn='Off'
                             }
                             break
+                        case('other'):
+                            thing='Other'
+                            if(item.value>0){
+                                ifOn='On'
+                            }
+                            else{
+                                ifOn='Off'
+                            }
+                            break
                         default:
-                            thing='other'
+                            thing='Other'
                             break
                     }
                     return(

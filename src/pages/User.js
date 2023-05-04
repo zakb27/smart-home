@@ -23,6 +23,7 @@ import ChangeEmailScreen from "../screens/ChangeEmailScreen";
 import ChangePassScreen from "../screens/ChangePassScreen";
 import AddDoorCodeScreen from "../screens/AddDoorCodeScreen";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import GuideScreen from "../screens/GuideScreen";
 const Display = ({navigation}) =>{
     const [image, setImage] = useState(null);
     const [first, setFirst] = useState(null);
@@ -99,6 +100,12 @@ const Display = ({navigation}) =>{
                         >
                             <Text style={styles.buttonText}>Change Password</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={()=>navigation.navigate("Guide")}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonText}>How to use</Text>
+                        </TouchableOpacity>
 
                         <TouchableOpacity
                             onPress={handleSignOut}
@@ -128,6 +135,7 @@ const UserMain = ()=>{
             <Stack.Screen name="Home" component={Display} />
             <Stack.Screen name="Email" component={ChangeEmailScreen} />
             <Stack.Screen name="Password" component={ChangePassScreen} />
+            <Stack.Screen name="Guide" component={GuideScreen} />
             <Stack.Screen name="Door" component={AddDoorCodeScreen} />
         </Stack.Navigator>
 
@@ -215,7 +223,7 @@ const styles = StyleSheet.create({
 
     },
     changeContainer:{
-        height:'30%',
+        height:'40%',
         width:'55%',
         backgroundColor:'rgba(255,255,255,0.9)',
         justifyContent:'center',
@@ -226,7 +234,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: 'rgba(255,255,255,0)',
         width: '100%',
-        height:'33%',
+        height:'25%',
         padding: 15,
         margin:0,
         borderRadius: 10,

@@ -10,6 +10,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Svg, {G, Path} from "react-native-svg";
 import GetProductImage from "../components/GetProductImage";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {Snackbar} from "@react-native-material/core";
 const LightDevice = ({data}) =>{
     const [percent,changePercent] = useState(data.value)
     const [isSaved,changeSaved] = useState(false)
@@ -290,20 +291,20 @@ const WashingDevice = ({data}) =>{
 
     useEffect(() => {
         let timer;
+        // checks if timer still on and updates time left every minute
         if (time > 0) {
             timer = setTimeout(() => changeTime(time - 1), 60000);
         }
         return () => clearTimeout(timer);
     }, [wash, time]);
-
     useEffect(() => {
+        // Opens functionality when time runs out
         if (time === 0) {
-            // perform any action you want when the countdown is over
             openWash(false);
         }
     }, [time]);
-
     useEffect(()=>{
+        // Closes functionality when time left
         if(data.time>0){
             openWash(true);
             changeTime(data.time)
@@ -417,7 +418,8 @@ const DoorDevice = ({data}) =>{
     const [isSaved,changeSaved] = useState(false);
     const [door,openDoor] = useState(false);
     const [time,changeTime] = useState(0);
-
+    const [snackVisible,changeSnack] = useState(false)
+    const [errorMessage,changeErrorMessage] = useState("Error");
     useEffect(() => {
         if (enteredPin.length > 0) {
             setShowRemoveButton(true)
@@ -463,16 +465,16 @@ const DoorDevice = ({data}) =>{
         })
     }
     const handlePin = (pin) =>{
-
-        checkPin(pin).then((res)=>{
-            if(res){
-                updateDoor(data.id).then((yo)=>{
-                    openDoor(true)
-                    changeTime(10)
+                updateDoor(data.id,pin).then((res)=>{
+                    if(res){
+                        openDoor(true)
+                        changeTime(10)
+                    }
+                    else{
+                        changeErrorMessage('Incorrect Pin')
+                        changeSnack(true)
+                    }
                 })
-            }
-        })
-
     }
 
 
@@ -567,6 +569,15 @@ const DoorDevice = ({data}) =>{
                     </View>
                 )
             }
+            {snackVisible&&(
+                <Snackbar
+                    message={errorMessage}
+                    action={<Button variant="text" title="Dismiss" color="#BB86FC" onPress={e=>changeSnack(false)} compact />}
+                    style={{ position: "absolute",
+                        start: 16, end: 16, bottom: 16,
+
+                    }} />
+            )}
         </View>
     )
 }
@@ -684,16 +695,95 @@ const SpeakerDevice = ({data}) =>{
 }
 
 const OtherDevice = ({data}) =>{
+    const [percent,changePercent] = useState(data.value)
+    const [isSaved,changeSaved] = useState(false)
+    const [isOn,changeOn] = useState()
+    const handleSend =() => {
+        if(isOn){
+            const info = {
+                id: data.id,
+                value:0,
+            }
+            sendInfo(info).then(response => {
+            });
+            changePercent(0)
+        }
+        else{
+            const info = {
+                id: data.id,
+                value:100,
+            }
+            sendInfo(info).then(response => {
+            });
+            changePercent(100)
+        }
+        console.log(percent)
+
+    }
+    const handleSave = () =>{
+        performSave(data.id).then((data)=>{
+            changeSaved(!isSaved)
+        })
+    }
+
+    useEffect(()=>{
+        checkSaved(data.id).then((item)=>{
+            changeSaved(item.exists)
+        })
+        if(percent>0){
+            changeOn(true)
+        }
+        else{
+            changeOn(false)
+        }
+        console.log(percent)
+    },[percent])
+
+
     return(
 
-        <View>
-            <Text>This is the other of {data.name}</Text>
+        <View style={styles.modalView}>
+            <LinearGradient colors={['#cdf4f0','#c3d0f3', '#7590db']} style={{
+                flex:1,
+                position:"absolute",
+                top:0,
+                left:0,
+                bottom:0,
+                right:0,
+            }}></LinearGradient>
+            <View style={styles.titleContainer}>
+                <TouchableOpacity onPress={handleSave} style={styles.goBackTouch}>
+                    {isSaved ?
+                        <Ionicons name={'bookmark'} size={35} color={'#7590db'} />
+                        :
+                        <Ionicons name={"bookmark-outline"} size={35} color={'#7590db'} />
+                    }
+                </TouchableOpacity>
+            </View>
+            <View style={{ aspectRatio: 1,
+                height:200,
+            }}>
+                <GetProductImage data={data.type} />
+            </View>
+            <TouchableOpacity onPress={handleSend} style={styles.goRight}>
+                {isOn ?
+                    <Ionicons name={'power'} size={170} color={'#52d32b'} />
+                    :
+                    <Ionicons name={'power'} size={170} color={'#d31616'} />
+                }
+            </TouchableOpacity>
+
+
         </View>
     )
 }
 
 
 const styles = StyleSheet.create({
+    goRight:{
+        marginTop:50,
+      marginRight:-10,
+    },
     blockDoor:{
         flex:1,
         position:"absolute",

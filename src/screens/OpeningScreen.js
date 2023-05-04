@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
         color:'#8da0e2',
         alignItems: 'center',
         justifyContent:'center',
-        fontFamily:"Kailasa-Bold",
     },
     goBackTouch:{
         padding:25,

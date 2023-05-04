@@ -1,6 +1,16 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, TextInput,Text, TouchableOpacity, View,Modal,Pressable } from 'react-native'
+import {
+    KeyboardAvoidingView,
+    StyleSheet,
+    TextInput,
+    Text,
+    TouchableOpacity,
+    View,
+    Modal,
+    Pressable,
+    Button
+} from 'react-native'
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
 import {auth} from "../../firebase"
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -11,11 +21,12 @@ import Svg, {
     Rect,
 } from 'react-native-svg';
 import { LinearGradient } from 'expo-linear-gradient';
+import {Snackbar} from "@react-native-material/core";
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [modalVisible, setModalVisible] = useState(false);
-
+    const [snackVisible, setSnackVisible] = useState(false);
+    const [errorMessage,changeErrorMessage] = useState("Sign in unsuccessful");
 
     const handleLogin = () => {
         // const auth = getAuth();
@@ -24,13 +35,12 @@ const LoginScreen = ({navigation}) => {
                 const user = userCredentials.user;
                 console.log('Logged in with:', user.email);
             })
-            .catch(error => setModalVisible(true))
+            .catch(error => setSnackVisible(true))
     }
 
     return (
         <KeyboardAvoidingView
             style={styles.container}
-            behavior="padding"
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,
@@ -140,6 +150,15 @@ const LoginScreen = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            {snackVisible&&(
+                <Snackbar
+                    message={errorMessage}
+                    action={<Button variant="text" title="Dismiss" color="#BB86FC" onPress={e=>setSnackVisible(false)} compact />}
+                    style={{ position: "absolute",
+                        start: 16, end: 16, bottom: 16,
+
+                    }} />
+            )}
         </KeyboardAvoidingView>
     )
 }

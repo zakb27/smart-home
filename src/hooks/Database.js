@@ -79,7 +79,6 @@ export const fetchProf = async() =>{
 export const getOtherDevices = async(items) =>{
 
     try{
-        console.log(items);
         const email = auth.currentUser?.email
         const docRef = await collection(db,'users',email,'devices')
         const docsSnap = await getDocs(docRef);
@@ -202,10 +201,8 @@ export const deleteRoom = async(id) =>{
         const docRef = await doc(db,'users',email,'rooms',id.toString());
         const docSnap = await getDoc(docRef)
         const devices = docSnap.data().devices
-        console.log(devices);
 
         if(devices>0){
-            console.log('here')
             const queryRef = query(
                 collection(db, "users", email, "devices"),
                 where("id", "in", devices)
@@ -227,7 +224,6 @@ export const updateRoom = async(name,devices,id,removeDevices) =>{
     try{
         const email = auth.currentUser?.email
         if (devices.length>0) {
-            console.log('here')
 
             const queryRef = query(
                 collection(db, "users", email, "devices"),
@@ -240,7 +236,6 @@ export const updateRoom = async(name,devices,id,removeDevices) =>{
             });
         }
         if(removeDevices.length>0){
-            console.log('here2')
             const queryRef = query(
                 collection(db, "users", email, "devices"),
                 where("id", "in", removeDevices)
@@ -296,7 +291,6 @@ export const updateWasher = async(id,temp,length) =>{
 
 export const getPromptDevice = async(id) =>{
     try{
-        console.log(id);
         const item = [id]
         const response = await fetch(key+'/getPromptDevices', {
             method: 'POST',
@@ -435,18 +429,23 @@ export const getDoorTime = async(id) =>{
     }
 }
 
-export const updateDoor = async (id)=>{
+export const updateDoor = async (id,pin)=>{
     try{
-        console.log(id);
-        const temp = {id}
-        fetch(key+'/updateDoor', {
+        const temp = {id,pin}
+        const response = await fetch(key+'/updateDoor', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(temp)
         });
-        return ('issue');
+        console.log(response.ok)
+        if(response.ok){
+            return true
+        }
+        else{
+            return false
+        }
 
     }
     catch(e){
