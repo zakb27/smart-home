@@ -161,23 +161,21 @@ app.post('/createSchedule',function (req, res) {
 
     const start = starter;
     const end = ender;
+    // Loops through schedule days to check if system exists
     for (const day of days) {
         const daySchedule = schedules[day] || {};
         for (const existingSchedule of Object.values(daySchedule)) {
             if (((existingSchedule.startTime <= start && existingSchedule.endTime >= start) ||
                     (existingSchedule.startTime <= end && existingSchedule.endTime >= end))
-                && (existingSchedule.id==id))
-            {
-                return res.status(400).send('Schedule overlaps with existing schedule');
+                && (existingSchedule.id==id)){
+                return res.status(411).send('New schedule overlaps');
             }
         }
     }
     // Generate a unique ID for the new schedule
-
-
     for (const day of days) {
-        const newScheduleId = uuidv4();
-        schedules[day][newScheduleId] ={
+        const newId = uuidv4();
+        schedules[day][newId] ={
             startTime: start,
             endTime: end,
             value: value,
@@ -263,13 +261,13 @@ app.post('/updateDoor',async function (req, res) {
     let keyValid
     for (const device of allDevices.devices) {
         if (device.id === id) {
+            // Compares hashed pin and returns if false otherwise continues
             keyValid = await bcrypt.compare(pin, device.key);
             if (!keyValid) {
                 return res.status(480).send('Incorrect pin');
             }
             device.value = 1;
             device.startTime = time
-
         }
     }
 
@@ -316,6 +314,18 @@ app.get('/getAllDevices', function(req, res) {
 
 
 
+
+app.get('/getMachine', function(req, res) {
+    const allDevices=devices;
+    let element=''
+    allDevices.devices.forEach(device=>{
+        if((device.type==='washer'||device.type==='dishwasher')&&device.time>0){
+            element=(device)
+        }
+    });
+    res.json(element)
+});
+
 const updateDevice = (existingSchedule) =>{
     const allDevices = devices;
     allDevices.devices.forEach(device=>{
@@ -333,17 +343,6 @@ const updateDevice = (existingSchedule) =>{
         }
     });
 }
-app.get('/getMachine', function(req, res) {
-    const allDevices=devices;
-    let element=''
-    allDevices.devices.forEach(device=>{
-        if((device.type==='washer'||device.type==='dishwasher')&&device.time>0){
-            element=(device)
-        }
-    });
-    res.json(element)
-});
-
 const runMachines = () =>{
     const allDevices=devices;
     allDevices.devices.forEach(device=>{
@@ -360,24 +359,20 @@ const runMachines = () =>{
     });
 }
 const scheduleDevice = () =>{
+    // Gets date and formats it to look similar to json format
     const date = new Date();
-    const options = { weekday: "long" };
-    const day = (new Intl.DateTimeFormat("en-US", options).format(date));
-
+    const day = (new Intl.DateTimeFormat("en-GB", { weekday: "long" }).format(date));
     const start = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-
-    const daySchedule = schedule[day] || {};
-    for (const existingSchedule of Object.values(daySchedule)) {
-        if(existingSchedule.startTime==start){
-            updateDevice(existingSchedule)
-
+    // Loops through schedules JSON days to find a corresponding start time to run updateDevice
+    const daySchedule = schedule[day];
+    for (const current of Object.values(daySchedule)) {
+        if(current.startTime==start){
+            updateDevice(current)
         }
     }
+    // Sets up washing/dishwasher checks
     runMachines();
-
-
 }
-
 setInterval(scheduleDevice,60000);
 
 app.listen(3000);
