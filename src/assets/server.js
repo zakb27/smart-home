@@ -179,6 +179,7 @@ app.post('/createSchedule',function (req, res) {
             startTime: start,
             endTime: end,
             value: value,
+            originalValue:value,
             id:id
         };
     }
@@ -194,12 +195,16 @@ app.post('/createSchedule',function (req, res) {
     });
 
 });
+
 app.post('/updateDevice',function(req,res){
 
     const allDevices=devices;
     const id = req.body.id;
     allDevices.devices.forEach(device=>{
         if(device.id===id){
+            if(device.hasOwnProperty("color")){
+                device.color=req.body.color
+            }
             device.value=req.body.value;
         }
     });
@@ -330,6 +335,7 @@ const updateDevice = (existingSchedule) =>{
     const allDevices = devices;
     allDevices.devices.forEach(device=>{
         if(device.id===existingSchedule.id){
+            device.originalValue = device.value
             device.value=existingSchedule.value;
         }
     });
@@ -343,6 +349,25 @@ const updateDevice = (existingSchedule) =>{
         }
     });
 }
+
+const revertDevice = (existingSchedule) =>{
+    const allDevices = devices;
+    allDevices.devices.forEach(device=>{
+        if(device.id===existingSchedule.id){
+            device.value = device.originalValue
+        }
+    });
+    fs.writeFile('./devices.json', JSON.stringify(allDevices), function(err) {
+        if (err) {
+            console.error(err);
+            console.log('Error updating device data');
+        } else {
+            devices.devices = allDevices.devices;
+            console.log('Device updated successfully');
+        }
+    });
+}
+
 const runMachines = () =>{
     const allDevices=devices;
     allDevices.devices.forEach(device=>{
@@ -368,6 +393,9 @@ const scheduleDevice = () =>{
     for (const current of Object.values(daySchedule)) {
         if(current.startTime==start){
             updateDevice(current)
+        }
+        else if(current.endTime==start){
+            revertDevice(current)
         }
     }
     // Sets up washing/dishwasher checks

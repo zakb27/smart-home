@@ -56,12 +56,12 @@ const GuideScreen = ({navigation}) =>{
                     </Text>
                     <Text style={styles.subtitle}>Devices</Text>
                     <Text style={styles.body}>Clicking on a device opens up the control panel where you can control your devices as follows: {'\n'}
-                        Light:A circular slider that can control the light emitted from the smart bulb {'\n'}
-                        Temperature: A radial slider to control the temperature {'\n'}
+                        Light:A circular slider that can control the light emitted from the smart bulb, click on button to accept changes {'\n'}
+                        Temperature: A radial slider to control the temperature, click on button to accept changes {'\n'}
                         Speaker: A slider to control the volume of your speaker {'\n'}
-                        Washing Machine: Two sliders to control temperature and time of machine {'\n'}
-                        Dish washer: Two sliders as well to control temperature and time taken {'\n'}
-                        Door: Enter pin code attributed to your smart door to open for ten seconds {'\n'}
+                        Washing Machine: Two sliders to control temperature and time of machine, click on button to accept changes {'\n'}
+                        Dish washer: Two sliders as well to control temperature and time taken, click on button to accept changes {'\n'}
+                        Door: Enter pin code attributed to your smart door to open for ten seconds, click on tick to accept changes {'\n'}
                         Other: Simple off/on switch
                     </Text>
                     <Text style={styles.subtitle}>Schedules</Text>

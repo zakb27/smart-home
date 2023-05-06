@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Button} from 'react-native';
 import {DeadDoorDevice, DeadLightDevice,DeadTemperatureDevice} from "../devices/DeadDevices";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {createSchedule, performSave} from "../hooks/Database";
 import {LinearGradient} from "expo-linear-gradient";
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 const DAYS = [
     {
         key: "Sunday",
@@ -38,12 +38,13 @@ const DAYS = [
 
 
 const ScheduleScreen = ({route}) =>{
-    const [date, setDate] = useState(new Date(1598051730000));
-    const [date2, setDate2] = useState(new Date(1598053001002));
+    const [date, setDate] = useState('12:00');
+    const [date2, setDate2] = useState('13:00');
     const [isEnabled, setIsEnabled] = useState({});
     const [selectedDays, setSelectedDays] = useState([]);
     const [value,changeValue] = useState();
-
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
     const data = route.params.data;
 
     const RenderSwitch=()=>{
@@ -62,23 +63,26 @@ const ScheduleScreen = ({route}) =>{
 
     const handleSubmit = () =>{
         if(selectedDays.length===0){
-
+            alert('Have to select a day')
+            return ''
         }
-        const start = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
-        const end = `${date2.getHours().toString().padStart(2, '0')}:${date2.getMinutes().toString().padStart(2, '0')}`;
+
+        if(date>date2){
+            alert('Start time must be before the end')
+            return ''
+        }
         const sender = {
             "id":data.id,
             "value":value,
-            "starter":start,
-            "ender":end,
+            "starter":date,
+            "ender":date2,
             "days":selectedDays,
         }
         console.log(sender);
-        // createSchedule(sender).then((data)=>{
-        //     console.log(data);
-        // })
+        createSchedule(sender).then((data)=>{
+            console.log(data);
+        })
     }
-
     const toggleSwitch = (key) => {
 
         if (selectedDays.includes(key)) {
@@ -94,13 +98,22 @@ const ScheduleScreen = ({route}) =>{
     };
 
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setDate(currentDate);
+    const onChange = (event) => {
+
+        const start = `${event.getHours().toString().padStart(2, '0')}:${event.getMinutes().toString().padStart(2, '0')}`;
+
+        console.log(start)
+        setDatePickerVisibility(false)
+        setDate(start);
+
     };
-    const onChange2 = (event, selectedDate) => {
-        const currentDate = selectedDate;
+    const onChange2 = (event) => {
+        const currentDate = `${event.getHours().toString().padStart(2, '0')}:${event.getMinutes().toString().padStart(2, '0')}`;
+        console.log(currentDate)
+        setDatePickerVisibility(false)
         setDate2(currentDate);
+
+
     };
 
     return(
@@ -138,25 +151,31 @@ const ScheduleScreen = ({route}) =>{
             <View style={styles.timeView}>
                 <View style={styles.startTime}>
                     <Text style={styles.timeText}>Start time: </Text>
-                    {/*<DateTimePicker*/}
-                    {/*    */}
+                    {/*<RNDateTimePicker*/}
+
                     {/*    testID="dateTimePicker"*/}
                     {/*    value={date}*/}
-                    {/*    display={'spinner'}*/}
                     {/*    mode={'time'}*/}
                     {/*    is24Hour*/}
                     {/*    onChange={onChange}*/}
                     {/*/>*/}
+                    <Button title={date} onPress={e=>setDatePickerVisibility(true)} />
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        mode="time"
+                        onConfirm={onChange}
+                        onCancel={e=>setDatePickerVisibility(false)}
+                    />
                 </View>
                 <View style={styles.startTime}>
                     <Text style={styles.timeText}>End time: </Text>
-                    {/*<DateTimePicker*/}
-                    {/*    testID="dateTimePicker"*/}
-                    {/*    value={date2}*/}
-                    {/*    mode={'time'}*/}
-                    {/*    is24Hour={true}*/}
-                    {/*    onChange={onChange2}*/}
-                    {/*/>*/}
+                    <Button title={date2} onPress={e=>setDatePickerVisibility2(true)} />
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible2}
+                        mode="time"
+                        onConfirm={onChange2}
+                        onCancel={e=>setDatePickerVisibility2(false)}
+                    />
                 </View>
 
             </View>

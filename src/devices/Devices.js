@@ -11,27 +11,46 @@ import Svg, {G, Path} from "react-native-svg";
 import GetProductImage from "../components/GetProductImage";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {Snackbar} from "@react-native-material/core";
+import ColorPicker from 'react-native-wheel-color-picker'
 const LightDevice = ({data}) =>{
     const [percent,changePercent] = useState(data.value)
     const [isSaved,changeSaved] = useState(false)
-
-
+    const [color,changeColor] = useState(data.color)
+    const [rgba,changeRgba] = useState()
 
     const handleSend =() => {
-        console.log('sdf')
+
         const info = {
             id: data.id,
             value:percent,
+            color:color,
         }
         sendInfo(info).then(response => {
-
+            console.log(response)
         });
     }
+
+    // Code used for changing colour https://stackoverflow.com/questions/21646738/convert-hex-to-rgba
+    useEffect(()=>{
+        let c;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(color)){
+            c= color.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            const thing = 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+(Math.round(percent)/100 + ')');
+            changeRgba(thing)
+        }
+    },[color,percent])
 
     const handleSave = () =>{
         performSave(data.id).then((data)=>{
             changeSaved(!isSaved)
         })
+    }
+    const handleReset = () =>{
+        changeColor('#e9c46a')
     }
 
     useEffect(()=>{
@@ -60,6 +79,12 @@ const LightDevice = ({data}) =>{
                         <Ionicons name={"bookmark-outline"} size={35} color={'#7590db'} />
                     }
                 </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={handleReset}
+                    style={styles.reset}
+                >
+                    <Ionicons name={"reload-outline"} size={35} color={'#7590db'} />
+                </TouchableOpacity>
             </View>
             <Svg
                 height={250}
@@ -83,13 +108,13 @@ const LightDevice = ({data}) =>{
 
                 <Path
                     style={{
-                        fill: `rgba(246,226,125,${Math.round(percent)/100})`,
+                        fill: rgba,
                     }}
                     d="M195.048 402.286c0-115.81-109.714-115.81-109.714-231.619C85.333 76.411 161.744 0 256 0s170.667 76.411 170.667 170.667c0 115.81-109.714 115.81-109.714 231.619"
                 />
                 <Path
                     style={{
-                        fill: `rgba(246,226,125,${Math.round(percent)/100})`,
+                        fill: rgba,
                     }}
                     d="M426.667 170.667C426.667 76.411 350.256 0 256 0h-.001v402.286h60.954c-.001-115.81 109.714-115.81 109.714-231.619z"
                 />
@@ -117,27 +142,26 @@ const LightDevice = ({data}) =>{
             </Svg>
 
 
-            {/*<Slider*/}
-            {/*    style={{width: 200, height: 60}}*/}
-            {/*    minimumValue={0}*/}
-            {/*    value={percent}*/}
-            {/*    onValueChange={changePercent}*/}
-            {/*    maximumValue={100}*/}
-            {/*    onSlidingComplete={handleSend}*/}
-            {/*    minimumTrackTintColor="#f4a261"*/}
-            {/*    maximumTrackTintColor="#e9c46a"*/}
-            {/*/>*/}
             <View style={styles.tempView}>
-                <TouchableOpacity
-                    onPress={handleSend}
-                    style={{
-                        flexDirection:"column",
-                        justifyContent:"center",
-                    }}
-                >
-                    <Ionicons name={"reload-outline"} size={75} color={'#ffffff'} />
-                </TouchableOpacity>
+                <View>
 
+                </View>
+                <ColorPicker
+                    color={color}
+                    swatchesOnly={false}
+                    onColorChange={changeColor}
+                    // color={'#F6E27DFF'}
+                    onColorChangeComplete={changeColor}
+                    thumbSize={50}
+                    sliderSize={40}
+                    noSnap={true}
+                    sliderHidden= {true}
+                    row={true}
+                    swatchesLast={false}
+                    swatches={false}
+                    discrete={false}
+                    s
+                />
             <RadialSlider value={percent}
                           subTitle={""}
                           variant={'radial-circle-slider'}
@@ -158,9 +182,9 @@ const LightDevice = ({data}) =>{
                           valueStyle={{
                               fontSize:20,
                           }}
-                          sliderWidth={15}
-                          thumbBorderWidth={10}
-                          thumbRadius={15}
+                          sliderWidth={18}
+                          thumbBorderWidth={8}
+                          thumbRadius={18}
                           isHideValue={true}
                           isHideLines={true}
                           isHideTailText={true}
@@ -169,7 +193,9 @@ const LightDevice = ({data}) =>{
 
 
             </View>
-
+            <TouchableOpacity onPress={handleSend} style={styles.setLight}>
+                    <Ionicons name={'checkmark-circle'} size={65} color={'#ffffff'} />
+            </TouchableOpacity>
         </View>
     )
 }
@@ -784,6 +810,12 @@ const styles = StyleSheet.create({
         marginTop:50,
       marginRight:-10,
     },
+    setLight:{
+       position:"absolute",
+       bottom:20,
+
+       margin: 0,
+    },
     blockDoor:{
         flex:1,
         position:"absolute",
@@ -821,14 +853,20 @@ const styles = StyleSheet.create({
     titleContainer:{
         width:'100%',
         flexDirection:"row",
+        alignItems:'center',
+        justifyContent:'space-between',
     },
     goBackTouch:{
         padding:10,
-        alignItems: 'flex-end',
-        justifyContent:'flex-end',
-
+        alignItems: 'flex-start',
+        justifyContent:'flex-start',
     },
-
+    reset:{
+        padding:10,
+        // alignItems: 'flex-end',
+        // justifyContent:'flex-end',
+        // transform:'scale(-1, 1)'
+    },
     buttonContainer:{
         flexDirection:'row',
     },
@@ -891,6 +929,7 @@ const styles = StyleSheet.create({
     tempView:{
         display:'flex',
         justifyContent:'center',
+        alignItems:'center',
         flexDirection:"row",
         margin:0,
     },
