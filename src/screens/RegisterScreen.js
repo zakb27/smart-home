@@ -70,10 +70,9 @@ const RegisterScreen = ({navigation}) => {
             aspect: [4, 3],
             quality: 0,
         });
-
-        if(result.assets[0]){
+        console.log(result)
+        if(result.assets!==null&&result.assets[0]!==null){
             await setImage(result.assets[0].uri);
-
         }
 
 

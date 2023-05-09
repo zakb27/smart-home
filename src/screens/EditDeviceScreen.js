@@ -51,62 +51,66 @@ const EditDeviceScreen = ({navigation}) =>{
                 </TouchableOpacity>
                 <Text style={styles.mainTitle}>Edit Device</Text>
             </View>
-
-            <ScrollView contentContainerStyle={styles.touchableContainer}>
-                {devices.map((item,index)=>{
-                    let thing='Other'
-                    switch(item.type){
-                        case('temp'):
-                            thing="Set Temperature"
-                            break
-                        case('light'):
-                            thing="Light"
-                            break
-                        case('door'):
-                            thing="Door Control"
-                            break
-                        case('speaker'):
-                            thing="Speaker"
-                            break
-                        case('washer'):
-                            thing="Washing machine"
-                            break
-                        case('dishwasher'):
-                            thing="Dish Washer"
-                            break
-                        default:
-                            thing='other'
-                            break
-                    }
-                    return(
-                        <TouchableOpacity key={index} style={styles.card}
-                                          onPress={() => {
-                                          }}
-                        >
-                            <View style={{ aspectRatio: 1,
-                                height:35,
-                                position:"absolute",
-                                left:10,
-
-                            }}>
-                                <GetProductImage type ={item.type} />
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text}>{item.name}</Text>
-                                <Text style={styles.textsmaller}>{thing}</Text>
-                            </View>
-                            <TouchableOpacity style={styles.removeButton}
-                                              onPress={()=>handleRemove(item)}
+            {devices.length>0?
+                <ScrollView contentContainerStyle={styles.touchableContainer}>
+                    {devices.map((item,index)=>{
+                        let thing='Other'
+                        switch(item.type){
+                            case('temp'):
+                                thing="Set Temperature"
+                                break
+                            case('light'):
+                                thing="Light"
+                                break
+                            case('door'):
+                                thing="Door Control"
+                                break
+                            case('speaker'):
+                                thing="Speaker"
+                                break
+                            case('washer'):
+                                thing="Washing machine"
+                                break
+                            case('dishwasher'):
+                                thing="Dish Washer"
+                                break
+                            default:
+                                thing='other'
+                                break
+                        }
+                        return(
+                            <TouchableOpacity key={index} style={styles.card}
+                                              onPress={() => {
+                                              }}
                             >
-                                <Ionicons name={'trash-outline'} size={25} color={'#cc3737'} />
+                                <View style={{ aspectRatio: 1,
+                                    height:35,
+                                    position:"absolute",
+                                    left:10,
 
+                                }}>
+                                    <GetProductImage type ={item.type} />
+                                </View>
+                                <View style={styles.textView}>
+                                    <Text style={styles.text}>{item.name}</Text>
+                                    <Text style={styles.textsmaller}>{thing}</Text>
+                                </View>
+                                <TouchableOpacity style={styles.removeButton}
+                                                  onPress={()=>handleRemove(item)}
+                                >
+                                    <Ionicons name={'trash-outline'} size={25} color={'#cc3737'} />
+
+                                </TouchableOpacity>
                             </TouchableOpacity>
-                        </TouchableOpacity>
 
-                    )
+                        )
 
-                })}
-            </ScrollView>
+                    })}
+                </ScrollView>
+                :
+                <><Text style={styles.openingText}>No devices connected</Text></>
+            }
+
 
 
 
@@ -123,6 +127,12 @@ const styles = StyleSheet.create({
         width:'100%',
         flexDirection:"row",
 
+    },
+    openingText:{
+        color:'#8da0e2',
+        fontSize:16,
+        fontWeight:'600',
+        padding:20,
     },
     removeButton:{
         position:"absolute",

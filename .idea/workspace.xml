@@ -5,27 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/components/InitialHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/components/InitialHeader.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/pages/Home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/pages/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/pages/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/pages/Register.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/pages/Register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/client/src/styles/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/client/src/styles/header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/server/Server.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/server/Server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/server/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/server/database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/server/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/server/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../bloggerino/server/testdata.js" beforeDir="false" afterPath="$PROJECT_DIR$/../bloggerino/server/testdata.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/devices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/devices/Devices.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/devices/Devices.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/GuideScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/GuideScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ScheduleScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ScheduleScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/schedule.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/schedule.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/Database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Saved.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Saved.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AddDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ChangeEmailScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ChangeEmailScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditDeviceScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditDeviceScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/EditRoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/RegisterScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +164,9 @@
       <workItem from="1683154633472" duration="16795000" />
       <workItem from="1683382703882" duration="4340000" />
       <workItem from="1683387387646" duration="2977000" />
-      <workItem from="1683391477680" duration="1342000" />
+      <workItem from="1683391477680" duration="2177000" />
+      <workItem from="1683471747254" duration="8000" />
+      <workItem from="1683476069138" duration="9269000" />
     </task>
     <servers />
   </component>

@@ -27,7 +27,7 @@ const ChangeEmailScreen = ({navigation}) =>{
                 throw new Error('Not valid email')
             }
             if(auth.currentUser.email!==oldEmail){
-                throw new Error('Not old email')
+                throw new Error('Email authentication error')
             }
 
             if(oldEmail===newEmail){
@@ -44,7 +44,7 @@ const ChangeEmailScreen = ({navigation}) =>{
                 const user = userCredentials.user;
                 console.log('Reauthenticated in with:', user.email);
             }).catch((error) => {
-                throw new Error('Original details wrong')
+                throw new Error('Email authentication error')
             });
 
             await updateEmail(auth.currentUser,newEmail)
@@ -59,7 +59,7 @@ const ChangeEmailScreen = ({navigation}) =>{
 
             await updateFirebaseEmail({oldEmail,newEmail}).then((r)=>{
                 if(r){
-                    throw new Error('Issue with updating firebase make new account')
+                    throw new Error('Email change failed')
                 }
                 else{
                     alert('Email updated')
@@ -70,7 +70,7 @@ const ChangeEmailScreen = ({navigation}) =>{
 
         catch(error){
             console.log(error)
-            changeErrorMessage(error.toString())
+            changeErrorMessage(error.message.toString())
             changeSnack(true)
         }
 

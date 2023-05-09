@@ -128,6 +128,7 @@ export const fetchRooms = async() =>{
 
 export const updateFirebaseEmail = async(data)=>{
     try{
+        console.log('savedDocs.docs')
         const roomRef = await collection(db,'users',data.oldEmail,'rooms')
         const roomDocs = await getDocs(roomRef);
         const deviceRef = await collection(db,'users',data.oldEmail,'devices')
@@ -136,24 +137,35 @@ export const updateFirebaseEmail = async(data)=>{
         const savedDocs = await getDocs(savedRef);
         const detailRef = await collection(db,'users',data.oldEmail,'details')
         const detailDocs = await getDocs(detailRef);
-
-        for (const doc of roomDocs.docs) {
+        console.log(data.newEmail)
+        for (const item of roomDocs.docs) {
+            console.log(item.id)
             const newDocRef = collection(db,'users',data.newEmail,'rooms');
-            await setDoc(newDocRef, doc.data());
+            console.log(newDocRef)
+            await addDoc(newDocRef, item.data());
+            await deleteDoc(doc(db,'users',data.oldEmail,'rooms',item.id));
         }
-        for (const doc of deviceDocs.docs) {
+        for (const item of deviceDocs.docs) {
             const newDocRef = collection(db,'users',data.newEmail,'devices');
-            await setDoc(newDocRef, doc.data());
+
+            await addDoc(newDocRef, item.data());
+            await deleteDoc(doc(db,'users',data.oldEmail,'devices',item.id));
+
         }
-        for (const doc of savedDocs.docs) {
+        for (const item of savedDocs.docs) {
             const newDocRef = collection(db,'users',data.newEmail,'saved');
-            await setDoc(newDocRef, doc.data());
+
+            await addDoc(newDocRef, item.data());
+            await deleteDoc(doc(db,'users',data.oldEmail,'saved',item.id));
+
         }
-        for (const doc of detailDocs.docs) {
+
+        for (const item of detailDocs.docs) {
             const newDocRef = collection(db,'users',data.newEmail,'details');
-            await setDoc(newDocRef, doc.data());
+            await addDoc(newDocRef, item.data());
+            await deleteDoc(doc(db,'users',data.oldEmail,'details',item.id));
         }
-        await deleteDoc(doc(db, "users", data.oldEmail));
+
         return false
     }
     catch (e){
@@ -222,7 +234,7 @@ export const deleteRoom = async(id) =>{
 
 export const updateRoom = async(name,devices,id,removeDevices) =>{
     try{
-        const email = auth.currentUser?.email
+
         if (devices.length>0) {
 
             const queryRef = query(

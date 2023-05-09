@@ -115,63 +115,68 @@ const SavedMain = ({navigation})=>{
                 <ScrollView contentContainerStyle={styles.container}         refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }>
-                    <View style={styles.avgCard}>
-                        <View style={{ aspectRatio: 1,
-                            height:45,
-                            position:"absolute",
-                            top:10,
-                            left:10,
-                        }}>
-                            <GetProductImage type ={'temp'} />
-                        </View>
-                        <View style={styles.avgTemp}>
-                            <Text style={styles.bigTemp}>{avgTemp}</Text>
-                            <Text style={styles.degree}>°C</Text>
-                        </View>
-                        <Text style={styles.wish}>My home</Text>
-                        <Text style={styles.subwish}>Average Temperature</Text>
-                    </View>
-                    {time &&
-                        (<View style={styles.avgCard}>
-                            <View style={{
-                                aspectRatio: 1,
-                                height: 45,
-                                position: "absolute",
-                                top: 10,
-                                left: 10,
-                            }}>
-                                <GetProductImage type={time.type}/>
+                    {registered.length>0?
+                        <>
+                            <View style={styles.avgCard}>
+                                <View style={{ aspectRatio: 1,
+                                    height:45,
+                                    position:"absolute",
+                                    top:10,
+                                    left:10,
+                                }}>
+                                    <GetProductImage type ={'temp'} />
+                                </View>
+                                <View style={styles.avgTemp}>
+                                    <Text style={styles.bigTemp}>{avgTemp}</Text>
+                                    <Text style={styles.degree}>°C</Text>
+                                </View>
+                                <Text style={styles.wish}>My home</Text>
+                                <Text style={styles.subwish}>Average Temperature</Text>
                             </View>
-                            <View style={styles.avgTemp}>
-                                <Text style={styles.bigTemp}>{time.time}</Text>
-                                <Text style={styles.degree}>Mins</Text>
-                            </View>
-                            <Text style={styles.wish}>Washing</Text>
-                            <Text style={styles.subwish}>Reminder</Text>
-                        </View>)
+                            {time &&
+                                (<View style={styles.avgCard}>
+                                    <View style={{
+                                        aspectRatio: 1,
+                                        height: 45,
+                                        position: "absolute",
+                                        top: 10,
+                                        left: 10,
+                                    }}>
+                                        <GetProductImage type={time.type}/>
+                                    </View>
+                                    <View style={styles.avgTemp}>
+                                        <Text style={styles.bigTemp}>{time.time}</Text>
+                                        <Text style={styles.degree}>Mins</Text>
+                                    </View>
+                                    <Text style={styles.wish}>Washing</Text>
+                                    <Text style={styles.subwish}>Reminder</Text>
+                                </View>)
+                            }
+                            <TouchableOpacity  style={styles.cardConnected}
+                                               onPress={() =>{
+                                                   navigation.navigate('AllDevices')
+                                               }}
+                            >
+                                <View style={{ aspectRatio: 1,
+                                    height:30,
+                                    position:"absolute",
+                                    top:10,
+                                    left:10,
+                                }}>
+                                    <GetProductImage type ={'other'} />
+                                </View>
+                                <Text style={styles.text2}>
+                                    {registered.length} devices connected
+                                </Text>
+                                <View style={styles.goOn}>
+                                    <Ionicons name={'open-outline'} size={20} color={'#ffffff'} />
+                                </View>
+                            </TouchableOpacity>
+                        </>
+                        :
+                        <><Text style={styles.openingText}>To get started click on the + icon</Text></>
                     }
 
-
-                    <TouchableOpacity  style={styles.cardConnected}
-                                       onPress={() =>{
-                                           navigation.navigate('AllDevices')
-                                       }}
-                    >
-                        <View style={{ aspectRatio: 1,
-                            height:30,
-                            position:"absolute",
-                            top:10,
-                            left:10,
-                        }}>
-                            <GetProductImage type ={'other'} />
-                        </View>
-                        <Text style={styles.text2}>
-                            {registered.length} devices connected
-                        </Text>
-                        <View style={styles.goOn}>
-                            <Ionicons name={'open-outline'} size={20} color={'#ffffff'} />
-                        </View>
-                    </TouchableOpacity>
 
                     {devices.map((item,index)=>{
                         let thing='Other'
@@ -335,6 +340,12 @@ const styles = StyleSheet.create({
     mainContainer:{
         flex:1,
         backgroundColor:'#8da0e2',
+    },
+    openingText:{
+        color:'#8da0e2',
+        fontSize:16,
+        fontWeight:'600',
+        padding:20,
     },
     container:{
         paddingVertical:25,

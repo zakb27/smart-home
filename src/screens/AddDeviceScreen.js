@@ -20,6 +20,7 @@ import GetProductImage from "../components/GetProductImage";
 import Modal from "react-native-modal";
 import DeviceScreen from "./DeviceScreen";
 import GetRoomImage from "../components/GetRoomImage";
+import {Snackbar} from "@react-native-material/core";
 
 
 
@@ -31,25 +32,38 @@ const AddRoomScreen = ({navigation})=>{
     const [rooms,changeRooms] = useState([]);
     const [isEnabled, setIsEnabled] = useState({});
     const [selectedRooms, setSelectedRooms] = useState([]);
-
+    const [snackVisible,changeSnack] = useState(false)
+    const [errorMessage,changeErrorMessage] = useState("Error");
     const addDevice = async() =>{
-        const email = auth.currentUser?.email
-        const docRef = await collection(db,'users',email,'devices')
 
-        await addDoc(docRef, {
-            id: value.value,
-            rooms:selectedRooms,
-        });
+        try{
+            if(selectedRooms.length===0){
+                setOpen(false)
+                throw new Error('Must select room');
+            }
+            const email = auth.currentUser?.email
+            const docRef = await collection(db,'users',email,'devices')
 
-        for (const item of selectedRooms) {
-            const index = selectedRooms.indexOf(item);
-            const newRef = doc(db, "users", email,'rooms',item);
-            await updateDoc(newRef, {
-                devices: arrayUnion(value.value)
+            await addDoc(docRef, {
+                id: value.value,
+                rooms:selectedRooms,
             });
+
+            for (const item of selectedRooms) {
+                const index = selectedRooms.indexOf(item);
+                const newRef = doc(db, "users", email,'rooms',item);
+                await updateDoc(newRef, {
+                    devices: arrayUnion(value.value)
+                });
+            }
+            setOpen(false)
+            setSelectedRooms([])
         }
-        setOpen(false)
-        setSelectedRooms([])
+        catch(e){
+            changeSnack(true)
+            changeErrorMessage(e.message.toString())
+        }
+
     }
 
 
@@ -194,43 +208,62 @@ const AddRoomScreen = ({navigation})=>{
                         borderRadius: 20,
                         right:0,
                     }}></LinearGradient>
-                    <Text style={styles.title2}>Select rooms to sync</Text>
-                    <View style={styles.scrollLimiter}>
-                    <ScrollView>
-                        {rooms.map((item,index)=>{
-                            return(
-                                <TouchableOpacity key={index}                         style={[
-                                    styles.card2,
-                                    {
-                                        backgroundColor: isEnabled[item.value]
-                                            ? "#52d32b"
-                                            : "#ffffff",
-                                    },
-                                ]}
-                                                  onPress={() => toggleSwitch(item.value)}
-                                >
-                                    <View style={{ aspectRatio: 1,
-                                        height:30,
-                                        position:"absolute",
-                                        left:7,
-                                    }}>
-                                        <GetRoomImage type={item.type} />
-                                    </View>
-                                    <Text style={[styles.text,{position:"absolute",
-                                        left:50,}]}>{item.label}</Text>
+
+                        {rooms.length>0 ?
+                            <>
+                            <Text style={styles.title2}>Select rooms to sync</Text>
+                            <View style={styles.scrollLimiter}>
+                                <ScrollView>
+                                    {rooms.map((item,index)=>{
+                                        return(
+                                            <TouchableOpacity key={index}                         style={[
+                                                styles.card2,
+                                                {
+                                                    backgroundColor: isEnabled[item.value]
+                                                        ? "#52d32b"
+                                                        : "#ffffff",
+                                                },
+                                            ]}
+                                                              onPress={() => toggleSwitch(item.value)}
+                                            >
+                                                <View style={{ aspectRatio: 1,
+                                                    height:30,
+                                                    position:"absolute",
+                                                    left:7,
+                                                }}>
+                                                    <GetRoomImage type={item.type} />
+                                                </View>
+                                                <Text style={[styles.text,{position:"absolute",
+                                                    left:50,}]}>{item.label}</Text>
+                                            </TouchableOpacity>
+                                        )
+                                    })}
+                                </ScrollView>
+                                <TouchableOpacity onPress={addDevice} style={styles.button}>
+                                    <Text style={styles.buttonText}>Add Device</Text>
                                 </TouchableOpacity>
-                            )
-                        })}
-                    </ScrollView>
-                    </View>
-                    <TouchableOpacity onPress={addDevice} style={styles.button}>
-                        <Text style={styles.buttonText}>Add Device</Text>
-                    </TouchableOpacity>
+                            </View>
+                            </>
+                            :
+                            <>
+                                <Text style={styles.title2}>No rooms connected</Text>
+                                <Text style={styles.openingText}>(Must add a room first)</Text>
+                            </>
+
+                        }
 
                 </View>
             </Modal>
 
+            {snackVisible&&(
+                <Snackbar
+                    message={errorMessage}
+                    action={<Button variant="text" title="Dismiss" color="#BB86FC" onPress={e=>changeSnack(false)} compact />}
+                    style={{ position: "absolute",
+                        start: 16, end: 16, bottom: 16,
 
+                    }} />
+            )}
         </SafeAreaView>
     )
 }
@@ -242,6 +275,12 @@ const styles = StyleSheet.create({
     },
     scrollLimiter:{
         height:375,
+    },
+    openingText:{
+        color:'#8da0e2',
+        fontSize:16,
+        fontWeight:'400',
+        padding:20,
     },
     modalView: {
         paddingTop:50,

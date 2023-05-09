@@ -19,6 +19,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import GetRoomImage from "../components/GetRoomImage";
 import GetProductImage from "../components/GetProductImage";
 import { SafeAreaView } from 'react-native-safe-area-context';
+import {Snackbar} from "@react-native-material/core";
 
 const EditRoomScreen = ({navigation}) =>{
     const [open, setOpen] = useState(false);
@@ -35,22 +36,50 @@ const EditRoomScreen = ({navigation}) =>{
     const [removeDevices,changeRemoveDevices] = useState([])
 
     const [currentRoomID,changeRoomID] = useState('');
+    const [snackVisible,changeSnack] = useState(false)
+    const [errorMessage,changeErrorMessage] = useState("Error");
 
     const handleSubmit = async() =>{
-        await updateRoom(name,selectedDevices,currentRoomID,removeDevices).then(() =>{
-            console.log('updated room')
-            setOpen(false)
-            setName('')
-            setItems([])
-            setValue({})
-            setValue2([])
-            setIsEnabled({})
-            setDropOpen(false)
-            changeConnected([])
-            changeSelectedDevices([])
-            changeRemoveDevices([])
-            changeRoomID('')
-        })
+        try {
+            const email = auth.currentUser?.email
+            const docRef = await collection(db, 'users', email, 'rooms')
+            const docsSnap = await getDocs(docRef);
+            docsSnap.forEach(doc => {
+                if (doc.data().name.toLowerCase() === name.toLowerCase()) {
+                    setOpen(false)
+                    setName('')
+                    setItems([])
+                    setValue({})
+                    setValue2([])
+                    setIsEnabled({})
+                    setDropOpen(false)
+                    changeConnected([])
+                    changeSelectedDevices([])
+                    changeRemoveDevices([])
+                    changeRoomID('')
+                    throw new Error('Name taken');
+                }
+            })
+
+            await updateRoom(name, selectedDevices, currentRoomID, removeDevices).then(() => {
+                console.log('updated room')
+                setOpen(false)
+                setName('')
+                setItems([])
+                setValue({})
+                setValue2([])
+                setIsEnabled({})
+                setDropOpen(false)
+                changeConnected([])
+                changeSelectedDevices([])
+                changeRemoveDevices([])
+                changeRoomID('')
+            })
+        }
+        catch(e){
+            changeSnack(true)
+            changeErrorMessage(e.toString())
+        }
     }
 
     const handleDelete = () =>{
@@ -146,48 +175,53 @@ const EditRoomScreen = ({navigation}) =>{
                 <Text style={styles.mainTitle}>Edit Room</Text>
             </View>
 
+            {rooms.length>0?
+                <ScrollView contentContainerStyle={styles.touchableContainer}>
+                    {rooms.map((item,index)=>{
+                        return(
+                            <TouchableOpacity key={index} style={styles.card2}
+                                              onPress={() => {
+                                                  setValue(item)
+                                                  setName(item.name)
+                                                  setOpen(true)
+                                                  others(item.devices)
+                                                  getDevices(item.id)
+                                              }}
+                            >
+                                <View style={{ aspectRatio: 1,
+                                    height:35,
+                                    position:"absolute",
+                                    left:10,
+                                }}>
+                                    <GetRoomImage type={item.type} />
+                                </View>
+                                <View style={styles.textView}>
+                                    <Text style={styles.text}>{item.name}</Text>
+                                    <Text style={styles.textsmaller}>Edit Room</Text>
+                                </View>
+                                <View style={{
+                                    height:'100%',
+                                    position:"absolute",
+                                    right:10,
+                                    paddingLeft:15,
+                                    display:'flex',
+                                    alignItems:'center',
+                                    justifyContent:'center',
+                                    // top:2,
+                                    borderLeftWidth:1,
+                                    borderLeftColor:'black',
+                                }}>
+                                    <Ionicons name={'exit-outline'} size={25} color={'#1e1d1d'} />
+                                </View>
+                            </TouchableOpacity>
+                        )
+                    })}
+                </ScrollView>
+                :
+                <><Text style={styles.openingText}>No rooms connected</Text></>
 
-            <ScrollView contentContainerStyle={styles.touchableContainer}>
-                {rooms.map((item,index)=>{
-                    return(
-                        <TouchableOpacity key={index} style={styles.card2}
-                                          onPress={() => {
-                                              setValue(item)
-                                              setName(item.name)
-                                              setOpen(true)
-                                              others(item.devices)
-                                              getDevices(item.id)
-                                          }}
-                        >
-                            <View style={{ aspectRatio: 1,
-                                height:35,
-                                position:"absolute",
-                                left:10,
-                            }}>
-                                <GetRoomImage type={item.type} />
-                            </View>
-                            <View style={styles.textView}>
-                                <Text style={styles.text}>{item.name}</Text>
-                                <Text style={styles.textsmaller}>Edit Room</Text>
-                            </View>
-                            <View style={{
-                                height:'100%',
-                                position:"absolute",
-                                right:10,
-                                paddingLeft:15,
-                                display:'flex',
-                                alignItems:'center',
-                                justifyContent:'center',
-                                // top:2,
-                                borderLeftWidth:1,
-                                borderLeftColor:'black',
-                            }}>
-                                <Ionicons name={'exit-outline'} size={25} color={'#1e1d1d'} />
-                            </View>
-                        </TouchableOpacity>
-                    )
-                })}
-            </ScrollView>
+            }
+
 
 
             <Modal isVisible={open}
@@ -312,7 +346,15 @@ const EditRoomScreen = ({navigation}) =>{
 
             </Modal>
 
+            {snackVisible&&(
+                <Snackbar
+                    message={errorMessage}
+                    action={<Button variant="text" title="Dismiss" color="#BB86FC" onPress={e=>changeSnack(false)} compact />}
+                    style={{ position: "absolute",
+                        start: 16, end: 16, bottom: 16,
 
+                    }} />
+            )}
         </SafeAreaView>
     )
 
@@ -323,6 +365,12 @@ export default EditRoomScreen;
 const styles = StyleSheet.create({
     container:{
        flex:1,
+    },
+    openingText:{
+        color:'#8da0e2',
+        fontSize:16,
+        fontWeight:'600',
+        padding:20,
     },
     editTitle:{
         marginTop:-20,
@@ -420,7 +468,7 @@ const styles = StyleSheet.create({
         right:-20,
         left:-20,
         height:600,
-        borderRadius:'20',
+        borderRadius:20,
         backgroundColor: "white",
         padding: 15,
         alignItems: "center",

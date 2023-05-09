@@ -99,6 +99,8 @@ const HomeRooms = ({navigation}) =>{
                 <ScrollView contentContainerStyle={styles.container} refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                 }>
+                    {currentRooms.length>0?
+                        <>
                     {currentRooms.map((item)=>{
                         return(
                             <TouchableOpacity key={item.id} style={styles.card}
@@ -133,6 +135,10 @@ const HomeRooms = ({navigation}) =>{
                             </TouchableOpacity>
                         )
                     })}
+                        </>
+                        :
+                        <><Text style={styles.openingText}>To get started click on the + icon</Text></>
+                    }
                 </ScrollView>
                 </>
                 :
@@ -173,9 +179,15 @@ export default Home;
 const styles = StyleSheet.create({
     overall:{
         flex:1,
-        alignItems:"center",
+        // alignItems:"center",
         backgroundColor:'#8da0e2',
 
+    },
+    openingText:{
+        color:'#8da0e2',
+        fontSize:16,
+        fontWeight:'600',
+        padding:20,
     },
     titleContainer:{
         justifyContent:'space-between',

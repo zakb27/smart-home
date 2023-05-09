@@ -18,7 +18,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider} from '@ui-kitten/components';
 import { MenuProvider } from 'react-native-popup-menu';
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs()
 const Authenticator = () =>{
     const config = {
         animation: 'spring',
