@@ -96,11 +96,17 @@ export const getOtherDevices = async(items) =>{
             },
             body: JSON.stringify(fire)
         });
-        return await response.json();
+        await response.json();
+        if(response.ok){
+            return(response.json())
+        }
+        else{
+            return([])
+        }
     }
     catch(e){
         // console.error(e);
-        return ({});
+        return ([]);
     }
 
 }
@@ -293,7 +299,14 @@ export const updateWasher = async(id,temp,length) =>{
             },
             body: JSON.stringify({id,temp,length})
         });
-        return await response.json();
+
+        await response.json();
+        if(response.ok){
+            return(response.json())
+        }
+        else{
+            return([])
+        }
     }
     catch(e){
         console.error(e)
@@ -311,7 +324,13 @@ export const getPromptDevice = async(id) =>{
             },
             body: JSON.stringify(item)
         });
-        return await response.json();
+        await response.json();
+        if(response.ok){
+            return(response.json())
+        }
+        else{
+            return([])
+        }
     }
     catch(e){
         console.error(error);
@@ -338,7 +357,13 @@ export const getRegisteredDevices = async() =>{
             },
             body: JSON.stringify(fire)
         });
-        return await response.json();
+        await response.json();
+        if(response.ok){
+            return(response.json())
+        }
+        else{
+            return([])
+        }
     }
 
     catch (error) {
@@ -365,7 +390,13 @@ export const getRoomDevices = async(roomID) =>{
             },
             body: JSON.stringify(fire)
         });
-        return await response.json();
+        await response.json();
+        if(response.ok){
+            return(response.json())
+        }
+        else{
+            return([])
+        }
     }
     catch (error) {
         // console.error(error);
@@ -526,7 +557,13 @@ export const getSaved = async() =>{
             },
             body: JSON.stringify(objects)
         });
-        return await response.json();
+        await response.json();
+        if(response.ok){
+            return(response.json())
+        }
+        else{
+            return([])
+        }
     }
     catch(e){
         console.error(e)
