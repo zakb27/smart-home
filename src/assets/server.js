@@ -2,9 +2,12 @@ const http = require('http');
 const express = require('express');
 const app = express();
 const fs = require("fs");
-const rooms = JSON.parse(fs.readFileSync('./src/assets/rooms.json', 'utf8'));
-const devices = JSON.parse(fs.readFileSync('./src/assets/devices.json', 'utf8'));
-let schedule = JSON.parse(fs.readFileSync('./src/assets/schedule.json', 'utf8'));
+// const rooms = JSON.parse(fs.readFileSync('./src/assets/rooms.json', 'utf8'));
+// const devices = JSON.parse(fs.readFileSync('./src/assets/devices.json', 'utf8'));
+// let schedule = JSON.parse(fs.readFileSync('./src/assets/schedule.json', 'utf8'));
+const rooms = JSON.parse(fs.readFileSync('./rooms.json', 'utf8'));
+const devices = JSON.parse(fs.readFileSync('./devices.json', 'utf8'));
+let schedule = JSON.parse(fs.readFileSync('./schedule.json', 'utf8'));
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 
@@ -329,6 +332,7 @@ app.post('/updateDoor',async function (req, res) {
 
 
 app.get('/getAllDevices', function(req, res) {
+    console.log(devices)
     res.json(devices);
 });
 
