@@ -208,7 +208,6 @@ const styles = StyleSheet.create({
     container:{
         paddingVertical:25,
         paddingHorizontal:5,
-        marginHorizontal:5,
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        width:145,
+        width:150,
         height:125,
         padding:5,
         paddingBottom:25,

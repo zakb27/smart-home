@@ -165,7 +165,7 @@ const SavedMain = ({navigation})=>{
                                         }}>
                                             <GetProductImage type={"washer"}/>
                                         </View>
-                                        <Text style={styles.wish}>No machines in use</Text>
+                                        <Text style={styles.wish}>Nothing in use</Text>
                                         <Text style={styles.subwish}>Start one to show here</Text>
                                     </>
                                 )
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     container:{
         paddingVertical:25,
         paddingHorizontal:5,
-        marginHorizontal:5,
+
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
@@ -440,7 +440,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#f5f5f5'
     },
     card: {
-        width:145,
+        width:150,
         height:115,
         padding:5,
         paddingBottom:25,
@@ -453,7 +453,7 @@ const styles = StyleSheet.create({
     },
     cardConnected:{
         backgroundColor:'rgba(0,0,0,0.4)',
-        width:310,
+        width:320,
         height:75,
         borderRadius:18,
         marginBottom:25,
@@ -468,7 +468,7 @@ const styles = StyleSheet.create({
     },
     avgCard:{
         backgroundColor:'rgba(0,0,0,0.4)',
-        width:145,
+        width:150,
         height:125,
         marginHorizontal:10,
         marginVertical:5,

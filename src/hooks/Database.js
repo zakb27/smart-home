@@ -98,7 +98,7 @@ export const getOtherDevices = async(items) =>{
         });
         const thing = await response.json();
         if(response.ok){
-            return(response.json())
+            return(thing)
         }
         else{
             return([])
@@ -302,7 +302,7 @@ export const updateWasher = async(id,temp,length) =>{
 
         const thing = await response.json();
         if(response.ok){
-            return(response.json())
+            return(thing)
         }
         else{
             return([])
@@ -326,7 +326,7 @@ export const getPromptDevice = async(id) =>{
         });
         const thing = await response.json();
         if(response.ok){
-            return(response.json())
+            return(thing)
         }
         else{
             return([])
