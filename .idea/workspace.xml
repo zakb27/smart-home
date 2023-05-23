@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/devices.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schedule.json" beforeDir="false" afterPath="$PROJECT_DIR$/schedule.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/devices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hooks/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/Database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +78,10 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha.src\assets\tests.js">
+  <component name="RunManager" selected="Node.js.Database.js">
+    <configuration name="Database.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/hooks/Database.js" working-dir="$PROJECT_DIR$/src/hooks">
+      <method v="2" />
+    </configuration>
     <configuration name="Account creation" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
@@ -109,22 +110,6 @@
       <test-names>
         <name value="Account creation" />
         <name value="Main page content" />
-      </test-names>
-      <method v="2" />
-    </configuration>
-    <configuration name="GET /.responds with status 200" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
-      <working-directory>$PROJECT_DIR$</working-directory>
-      <pass-parent-env>true</pass-parent-env>
-      <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>TEST</test-kind>
-      <test-file>$PROJECT_DIR$/src/assets/tests.js</test-file>
-      <test-names>
-        <name value="GET /" />
-        <name value="responds with status 200" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -157,11 +142,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Node.js.Database.js" />
         <item itemvalue="Mocha.src\assets\tests.js" />
         <item itemvalue="Mocha./Updatewash" />
         <item itemvalue="Mocha.Account creation.Main page content" />
         <item itemvalue="Mocha.Account creation" />
-        <item itemvalue="Mocha.GET /.responds with status 200" />
       </list>
     </recent_temporary>
   </component>
@@ -254,6 +239,7 @@
       <workItem from="1683725086010" duration="143000" />
       <workItem from="1683816317094" duration="1224000" />
       <workItem from="1683817996607" duration="9152000" />
+      <workItem from="1684854032980" duration="720000" />
     </task>
     <servers />
   </component>

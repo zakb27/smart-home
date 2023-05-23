@@ -96,7 +96,7 @@ export const getOtherDevices = async(items) =>{
             },
             body: JSON.stringify(fire)
         });
-        await response.json();
+        const thing = await response.json();
         if(response.ok){
             return(response.json())
         }
@@ -300,7 +300,7 @@ export const updateWasher = async(id,temp,length) =>{
             body: JSON.stringify({id,temp,length})
         });
 
-        await response.json();
+        const thing = await response.json();
         if(response.ok){
             return(response.json())
         }
@@ -324,7 +324,7 @@ export const getPromptDevice = async(id) =>{
             },
             body: JSON.stringify(item)
         });
-        await response.json();
+        const thing = await response.json();
         if(response.ok){
             return(response.json())
         }
@@ -357,9 +357,9 @@ export const getRegisteredDevices = async() =>{
             },
             body: JSON.stringify(fire)
         });
-        await response.json();
+        const thing = await response.json();
         if(response.ok){
-            return(response.json())
+            return(thing)
         }
         else{
             return([])
@@ -390,9 +390,9 @@ export const getRoomDevices = async(roomID) =>{
             },
             body: JSON.stringify(fire)
         });
-        await response.json();
+        const thing = await response.json();
         if(response.ok){
-            return(response.json())
+            return(thing)
         }
         else{
             return([])
@@ -550,6 +550,8 @@ export const getSaved = async() =>{
         docsSnap.forEach((doc) => {
             objects.push(doc.data().id)
         });
+
+
         const response = await fetch(key+'/getPromptDevices', {
             method: 'POST',
             headers: {
@@ -557,9 +559,9 @@ export const getSaved = async() =>{
             },
             body: JSON.stringify(objects)
         });
-        await response.json();
+        const thing = await response.json();
         if(response.ok){
-            return(response.json())
+            return(thing)
         }
         else{
             return([])
