@@ -133,25 +133,46 @@ const SavedMain = ({navigation})=>{
                                 <Text style={styles.wish}>My home</Text>
                                 <Text style={styles.subwish}>Average Temperature</Text>
                             </View>
-                            {time &&
-                                (<View style={styles.avgCard}>
-                                    <View style={{
-                                        aspectRatio: 1,
-                                        height: 45,
-                                        position: "absolute",
-                                        top: 10,
-                                        left: 10,
-                                    }}>
-                                        <GetProductImage type={time.type}/>
-                                    </View>
-                                    <View style={styles.avgTemp}>
-                                        <Text style={styles.bigTemp}>{time.time}</Text>
-                                        <Text style={styles.degree}>Mins</Text>
-                                    </View>
-                                    <Text style={styles.wish}>Washing</Text>
-                                    <Text style={styles.subwish}>Reminder</Text>
-                                </View>)
+
+                                <View style={styles.avgCard}>
+                            {time ? (
+                                    <>
+                                        <View style={{
+                                            aspectRatio: 1,
+                                            height: 45,
+                                            position: "absolute",
+                                            top: 10,
+                                            left: 10,
+                                        }}>
+                                            <GetProductImage type={time.type}/>
+                                        </View>
+                                        <View style={styles.avgTemp}>
+                                            <Text style={styles.bigTemp}>{time.time}</Text>
+                                            <Text style={styles.degree}>Mins</Text>
+                                        </View>
+                                        <Text style={styles.wish}>Washing</Text>
+                                        <Text style={styles.subwish}>Reminder</Text>
+                                    </>)
+                                :
+                                (
+                                    <>
+                                        <View style={{
+                                            aspectRatio: 1,
+                                            height: 45,
+                                            position: "absolute",
+                                            top: 10,
+                                            left: 10,
+                                        }}>
+                                            <GetProductImage type={"washer"}/>
+                                        </View>
+                                        <Text style={styles.wish}>No machines in use</Text>
+                                        <Text style={styles.subwish}>Start one to show here</Text>
+                                    </>
+                                )
                             }
+
+                                </View>
+
                             <TouchableOpacity  style={styles.cardConnected}
                                                onPress={() =>{
                                                    navigation.navigate('AllDevices')
@@ -354,7 +375,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
-        justifyContent:'flex-start',
+        justifyContent:'center',
     },
     titleContainer:{
         justifyContent:'space-between',
@@ -371,20 +392,7 @@ const styles = StyleSheet.create({
         alignItems:'flex-start',
         fontWeight: '500',
     },
-    card: {
-        width:165,
-        height:115,
-        padding:5,
-        paddingBottom:25,
-        marginHorizontal:10,
-        marginVertical:5,
-        backgroundColor:'rgba(255,255,255,1)',
-        borderRadius:18,
-        alignItems: 'flex-start',
-        justifyContent:'flex-end',
 
-
-    },
     goOn:{
         position:"absolute",
         padding:7,
@@ -431,15 +439,25 @@ const styles = StyleSheet.create({
         right:7,
         backgroundColor:'#f5f5f5'
     },
+    card: {
+        width:145,
+        height:115,
+        padding:5,
+        paddingBottom:25,
+        marginHorizontal:10,
+        marginVertical:5,
+        backgroundColor:'rgba(255,255,255,1)',
+        borderRadius:18,
+        alignItems: 'flex-start',
+        justifyContent:'flex-end',
+    },
     cardConnected:{
         backgroundColor:'rgba(0,0,0,0.4)',
-        width:165,
+        width:310,
         height:75,
         borderRadius:18,
-        marginLeft:8,
-        marginRight:50,
-        // marginVertical:15,
-        marginBottom:15,
+        marginBottom:25,
+        alignContent:'center'
     },
     text2:{
         position:"absolute",
@@ -450,12 +468,13 @@ const styles = StyleSheet.create({
     },
     avgCard:{
         backgroundColor:'rgba(0,0,0,0.4)',
-        width:165,
+        width:145,
         height:125,
         marginHorizontal:10,
         marginVertical:5,
         borderRadius:18,
-        marginBottom:25,
+        alignSelf:'flex-start',
+        marginBottom:5,
     },
     avgTemp:{
         position:"absolute",

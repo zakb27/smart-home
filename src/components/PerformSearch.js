@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
-        justifyContent:'flex-start',
+        justifyContent:'center',
     },
     titleContainer:{
         justifyContent:'space-between',
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
         fontWeight: '675',
     },
     card: {
-        width:165,
+        width:145,
         height:115,
         padding:5,
         paddingBottom:25,

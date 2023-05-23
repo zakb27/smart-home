@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     },
     imageContainer:{
         borderRadius:200,
-        backgroundColor:'yellow',
+        backgroundColor:'#ffffff',
         width:100,
         height:100,
         overflow:'hidden',

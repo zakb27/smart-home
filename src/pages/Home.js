@@ -212,11 +212,11 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
-        justifyContent:'flex-start',
+        justifyContent:'center',
     },
 
     card: {
-        width:165,
+        width:145,
         height:125,
         padding:5,
         paddingBottom:25,

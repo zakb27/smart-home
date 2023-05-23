@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexWrap:"wrap",
         alignItems:'center',
-        justifyContent:'flex-start',
+        justifyContent:'center',
     },
     mainTitle:{
         color:'#8da0e2',
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
         width:'100%',
     },
     card: {
-        width:165,
+        width:145,
         height:115,
         padding:5,
         paddingBottom:25,
