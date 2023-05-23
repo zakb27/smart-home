@@ -87,7 +87,7 @@ describe('/createSchedules', () => {
     it('Input schedule that already exists', async() =>{
         const response = await testSession
             .post('/createSchedule')
-            .send({starter:"9:02",ender:"10:00",value:68,id:1,days:['Monday']})
+            .send({starter:"09:02",ender:"10:00",value:68,id:1,days:['Monday']})
             .expect(408);
         expect(response.body.message).to.equal('New schedule overlaps');
     });

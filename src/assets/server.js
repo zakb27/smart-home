@@ -181,10 +181,9 @@ app.post('/createSchedule',function (req, res) {
     for (const day of days) {
         const daySchedule = schedules[day] || {};
         for (const existingSchedule of Object.values(daySchedule)) {
-            console.log(existingSchedule.startTime<=starter)
             if (((existingSchedule.startTime <= start && existingSchedule.endTime >= start) ||
                     (existingSchedule.startTime <= end && existingSchedule.endTime >= end))
-                && (existingSchedule.id==id)){
+                && (existingSchedule.id===id)){
                 console.log('here')
                 return res.status(408).json({message: 'New schedule overlaps'});
             }
