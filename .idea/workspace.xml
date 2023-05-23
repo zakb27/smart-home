@@ -7,10 +7,10 @@
     <list default="true" id="e5d8bcb3-4631-44ff-b1b9-f323e936fb2a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/devices.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule.json" beforeDir="false" afterPath="$PROJECT_DIR$/schedule.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/schedule.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/schedule.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/devices.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/devices.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/server.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/assets/tests.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/tests.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hooks/Database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/hooks/Database.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,14 +79,8 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Mocha./createSchedules">
-    <configuration name="Database.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/hooks/Database.js" working-dir="$PROJECT_DIR$/src/hooks">
-      <method v="2" />
-    </configuration>
-    <configuration name="server.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/assets/server.js" working-dir="$PROJECT_DIR$/src/assets">
-      <method v="2" />
-    </configuration>
-    <configuration name="/Updatewash" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Mocha./updateDevice">
+    <configuration name="/deleteSchedules" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
@@ -97,11 +91,27 @@
       <test-kind>SUITE</test-kind>
       <test-file>$PROJECT_DIR$/src/assets/tests.js</test-file>
       <test-names>
-        <name value="/Updatewash" />
+        <name value="/deleteSchedules" />
       </test-names>
       <method v="2" />
     </configuration>
-    <configuration name="/createSchedules" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+    <configuration name="/getMinutes.Input valid ID" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>TEST</test-kind>
+      <test-file>$PROJECT_DIR$/src/assets/tests.js</test-file>
+      <test-names>
+        <name value="/getMinutes" />
+        <name value="Input valid ID" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/updateDevice" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
@@ -112,7 +122,22 @@
       <test-kind>SUITE</test-kind>
       <test-file>$PROJECT_DIR$/src/assets/tests.js</test-file>
       <test-names>
-        <name value="/createSchedules" />
+        <name value="/updateDevice" />
+      </test-names>
+      <method v="2" />
+    </configuration>
+    <configuration name="/updateDoor" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options />
+      <test-kind>SUITE</test-kind>
+      <test-file>$PROJECT_DIR$/src/assets/tests.js</test-file>
+      <test-names>
+        <name value="/updateDoor" />
       </test-names>
       <method v="2" />
     </configuration>
@@ -130,11 +155,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Mocha./createSchedules" />
-        <item itemvalue="Node.js.server.js" />
-        <item itemvalue="Node.js.Database.js" />
+        <item itemvalue="Mocha./updateDevice" />
+        <item itemvalue="Mocha./updateDoor" />
+        <item itemvalue="Mocha./deleteSchedules" />
         <item itemvalue="Mocha.src\assets\tests.js" />
-        <item itemvalue="Mocha./Updatewash" />
+        <item itemvalue="Mocha./getMinutes.Input valid ID" />
       </list>
     </recent_temporary>
   </component>

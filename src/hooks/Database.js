@@ -16,7 +16,7 @@ export const createSchedule = async(data) =>{
             },
             body: JSON.stringify(data)
         });
-        return await response.text();
+        return await response.json();
     }
     catch(e){
         console.error(e)
@@ -34,7 +34,7 @@ export const deleteSchedule = async(data) =>{
             },
             body: JSON.stringify(data)
         });
-        return await response.text();
+        return await response.json();
     }
     catch(e){
 
@@ -586,7 +586,7 @@ export const sendInfo = async(info) =>{
             body: JSON.stringify(temp)
         });
 
-        return await response.text();
+        return await response.json();
     }
     catch (error) {
         // console.error(error);

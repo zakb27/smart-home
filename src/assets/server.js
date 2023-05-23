@@ -98,7 +98,8 @@ app.post('/deleteSchedules',function(req,res) {
         if (newSchedule.hasOwnProperty(day)) {
             for (const id of ids) {
                 if (newSchedule[day].hasOwnProperty(id)) {
-                    delete newSchedule[day][id];
+                    console.log('woop')
+                    // delete newSchedule[day][id];
                 }
             }
         }
@@ -110,7 +111,7 @@ app.post('/deleteSchedules',function(req,res) {
             res.status(500).send('Error updating schedule data');
         } else {
             schedule = newSchedule;
-            res.send('Schedule updated successfully');
+            return res.status(200).json({message: 'Schedule updated successfully'});
         }
     });
 })
@@ -204,10 +205,11 @@ app.post('/createSchedule',function (req, res) {
     fs.writeFile('./schedule.json', JSON.stringify(schedules), function(err) {
         if (err) {
             console.error(err);
-            res.status(500).send('Error updating schedule data');
+            return res.status(500).json({message: 'Error updating schedule data'});
+
         } else {
             schedule = schedules;
-            res.send('Schedule updated successfully');
+            return res.status(200).json({message: 'Schedule updated successfully'});
         }
     });
 
@@ -230,10 +232,10 @@ app.post('/updateDevice',function(req,res){
     fs.writeFile('./devices.json', JSON.stringify(allDevices), function(err) {
         if (err) {
             console.error(err);
-            res.status(500).send('Error updating rooms data');
+            res.status(500).json({message: 'Error updating device data'});
         } else {
             devices.devices = allDevices.devices;
-            res.send('Rooms data updated successfully');
+            res.status(200).json({message: 'Device data updated successfully'});
         }
     });
 });
@@ -242,18 +244,18 @@ app.post('/getMinutes',function(req,res){
 
     const allDevices=devices;
     const id = req.body.id;
-    const currentTime = new Date()
+    const current = new Date()
     let newTime=0
     let minutes=0
     allDevices.devices.forEach(device=>{
         if(device.id===id && device.value>0){
-            newTime = new Date(device.startTime)
-            const seconds = Math.abs(currentTime.getTime() - newTime.getTime())/1000;
-            minutes = seconds/60
+            minutes = (device.time)
+            // const seconds = Math.abs(current.getTime() - newTime.getTime())/1000;
+            // minutes = seconds/60
         }
     });
-
-    res.json(minutes)
+    console.log(minutes)
+    res.status(200).json(minutes);
 });
 
 app.post('/getSeconds',function(req,res){
@@ -265,12 +267,13 @@ app.post('/getSeconds',function(req,res){
     let seconds=0
     allDevices.devices.forEach(device=>{
         if(device.id===id && device.value>0){
-            console.log(device.value);
-            console.log(device.id);
+            // console.log(device.value);
+            // console.log(device.id);
             newTime = new Date(device.startTime)
             seconds = Math.abs(currentTime.getTime() - newTime.getTime())/1000;
         }
     });
+    console.log(seconds)
     res.json(seconds)
 });
 
@@ -286,7 +289,7 @@ app.post('/updateDoor',async function (req, res) {
             // Compares hashed pin and returns if false otherwise continues
             keyValid = await bcrypt.compare(pin, device.key);
             if (!keyValid) {
-                return res.status(480).send('Incorrect pin');
+                return res.status(480).json({message:'Incorrect pin'});
             }
             device.value = 1;
             device.startTime = time
