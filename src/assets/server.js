@@ -2,10 +2,8 @@ const http = require('http');
 const express = require('express');
 const app = express();
 const fs = require("fs");
-// const rooms = JSON.parse(fs.readFileSync('./src/assets/rooms.json', 'utf8'));
 // const devices = JSON.parse(fs.readFileSync('./src/assets/devices.json', 'utf8'));
 // let schedule = JSON.parse(fs.readFileSync('./src/assets/schedule.json', 'utf8'));
-const rooms = JSON.parse(fs.readFileSync('./rooms.json', 'utf8'));
 const devices = JSON.parse(fs.readFileSync('./devices.json', 'utf8'));
 let schedule = JSON.parse(fs.readFileSync('./schedule.json', 'utf8'));
 const { v4: uuidv4 } = require('uuid');
@@ -16,9 +14,6 @@ app.get('/', function(req, res) {
     console.log('something happen');
     res.status(200).json({ success: true, message: 'Secret saved successfully' });
 
-});
-app.get('/getAllRooms', function(req, res) {
-    res.json(rooms);
 });
 
 app.post('/updateWash',function(req, res) {

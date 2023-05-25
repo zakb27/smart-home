@@ -5,6 +5,9 @@ const request = require('supertest')(app);
 const session  = require('supertest-session');
 const { describe, it } = require('mocha');
 
+// Before using, fix server location of local database key for tests by commenting out to other file read location
+
+
 describe('/getpromptdevice', () => {
     let testSession = null;
     before(async () => {
@@ -123,21 +126,6 @@ describe('/deleteSchedules', () => {
 
 });
 
-// Check code
-
-// describe('/getSchedules', () => {
-//     let testSession = null;
-//     before(async () => {
-//         testSession = session(app);
-//     });
-//     it('Input schedule that already exists', async() =>{
-//         const response = await testSession
-//             .post('/createSchedule')
-//             .send({id:1})
-//             .expect(408);
-//         expect(response.body.message).to.equal('New schedule overlaps');
-//     });
-// });
 
 describe('/getMinutes', () => {
     let testSession = null;
