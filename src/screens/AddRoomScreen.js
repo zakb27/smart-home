@@ -63,8 +63,9 @@ const AddRoomScreen = ({navigation})=>{
                 type: value
             });
             console.log("Created Room")
-            changeSnack(true)
-            changeErrorMessage('Room Created')
+            navigation.goBack()
+            // changeSnack(true)
+            // changeErrorMessage('Room Created')
         }
         catch(e){
             changeSnack(true)
@@ -99,6 +100,7 @@ const AddRoomScreen = ({navigation})=>{
                     placeholder="Choose name... " onChangeText={setName}
                     value={roomName}
                     style={styles.textInput}
+                    maxLength={15}
                     placeholderTextColor={'#C4CBFD'}/>
                 <DropDownPicker
                     open={open}

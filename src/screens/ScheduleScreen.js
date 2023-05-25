@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {View, Text,TouchableOpacity,StyleSheet,Modal,TouchableWithoutFeedback,Button} from 'react-native';
-import {DeadDoorDevice, DeadLightDevice,DeadTemperatureDevice} from "../devices/DeadDevices";
+import {DeadLightDevice,DeadTemperatureDevice} from "../devices/DeadDevices";
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {createSchedule, performSave} from "../hooks/Database";
 import {LinearGradient} from "expo-linear-gradient";
@@ -54,8 +54,6 @@ const ScheduleScreen = ({route}) =>{
                 return <DeadLightDevice value={value} changeValue = {changeValue}/>
             case "temp":
                 return <DeadTemperatureDevice value={value} changeValue = {changeValue} />
-            case "door":
-                return <DeadDoorDevice value={value} changeValue = {changeValue} />
             default:
                 return <Text>Error</Text>
         }
@@ -110,7 +108,7 @@ const ScheduleScreen = ({route}) =>{
     const onChange2 = (event) => {
         const currentDate = `${event.getHours().toString().padStart(2, '0')}:${event.getMinutes().toString().padStart(2, '0')}`;
         console.log(currentDate)
-        setDatePickerVisibility(false)
+        setDatePickerVisibility2(false)
         setDate2(currentDate);
 
 

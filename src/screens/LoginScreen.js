@@ -40,6 +40,7 @@ const LoginScreen = ({navigation}) => {
 
     return (
         <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{

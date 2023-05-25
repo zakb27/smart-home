@@ -115,6 +115,7 @@ const RegisterScreen = ({navigation}) => {
     return (
         <KeyboardAvoidingView
             style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,

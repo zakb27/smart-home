@@ -127,7 +127,7 @@ const SavedMain = ({navigation})=>{
                                     <GetProductImage type ={'temp'} />
                                 </View>
                                 <View style={styles.avgTemp}>
-                                    <Text style={styles.bigTemp}>{avgTemp}</Text>
+                                    <Text style={styles.bigTemp}>{Math.round(avgTemp)}</Text>
                                     <Text style={styles.degree}>°C</Text>
                                 </View>
                                 <Text style={styles.wish}>My home</Text>

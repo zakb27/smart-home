@@ -254,6 +254,7 @@ const EditRoomScreen = ({navigation}) =>{
                         placeholder="Choose name... " onChangeText={setName}
                         value={name}
                         style={styles.textInput}
+                        maxLength={15}
                         placeholderTextColor={'#C4CBFD'}
                     />
                         <View style={{
@@ -376,6 +377,7 @@ const styles = StyleSheet.create({
         marginTop:-20,
         padding:10,
         paddingHorizontal:30,
+        width:200,
     },
     textInput:{
         color:'#000000',

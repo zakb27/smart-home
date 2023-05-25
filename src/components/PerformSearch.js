@@ -56,16 +56,6 @@ const PerformSearchHome = ({navigation})=>{
 
             <View style={styles.titleContainer}>
                 <Text style={styles.mainTitle}>Search</Text>
-
-                {/*<Menu onSelect={value => navigation.navigate(`${value}`)}>*/}
-                {/*    <MenuTrigger customStyles={triggerStyles} children={<Ionicons  name={'add'} size={50} color={'#8DA0E2'} />} />*/}
-                {/*    <MenuOptions customStyles={optionsStyles}>*/}
-                {/*        <MenuOption value={'AddRoom'} text='Add Room' customStyles={optionsStyles} />*/}
-                {/*        <MenuOption value={'AddDevice'} text='Add Device' customStyles={optionsStyles} />*/}
-                {/*        <MenuOption value={'EditRoom'} text='Edit Room' customStyles={optionsStyles} />*/}
-                {/*        <MenuOption value={'EditDevice'} text='Edit Device' customStyles={optionsStyles} />*/}
-                {/*    </MenuOptions>*/}
-                {/*</Menu>*/}
             </View>
             <Input
                 value = {value}
@@ -256,7 +246,7 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
-        fontWeight: '675',
+        fontWeight: '500',
     },
     card: {
         width:150,

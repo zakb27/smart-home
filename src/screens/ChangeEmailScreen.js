@@ -11,6 +11,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import {Snackbar} from "@react-native-material/core";
 import {checkEmailExists,updateFirebaseEmail} from "../hooks/Database";
 import Svg, {G, Path, Rect} from "react-native-svg";
+import KeyboardAvoidingView from "react-native/Libraries/Components/Keyboard/KeyboardAvoidingView";
 
 const ChangeEmailScreen = ({navigation}) =>{
     const [oldEmail,setOld] = useState('');
@@ -77,9 +78,9 @@ const ChangeEmailScreen = ({navigation}) =>{
     }
 
     return(
-        <SafeAreaView
+        <KeyboardAvoidingView
             style={styles.container}
-            behavior="padding"
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,
@@ -193,7 +194,7 @@ const ChangeEmailScreen = ({navigation}) =>{
 
                     }} />
             )}
-        </SafeAreaView>)
+        </KeyboardAvoidingView>)
 }
 export default ChangeEmailScreen
 
@@ -221,14 +222,14 @@ const styles = StyleSheet.create({
             display:'flex',
             justifyContent:'flex-start',
             alignItems:'flex-start',
-            fontWeight: '700',
+            fontWeight: '500',
         },
         textInput:{
             width:'100%',
             borderWidth:1,
             borderColor:'rgba(0,0,0,0.13)',
             marginBottom:25,
-            fontWeight: '700',
+            fontWeight: '500',
             padding:15,
             borderRadius:10,
             // backgroundColor:'#C4CBFD',

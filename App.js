@@ -83,7 +83,7 @@ const Main = () =>{
                     headerShown:false,
                     // tabBarShowLabel: false,
                     tabBarStyle: { height: 75,
-                        paddingTop:3,
+                        alignContent:'center',
                         backgroundColor: '#8da0e2',
                         borderTopWidth:0,
                     },
