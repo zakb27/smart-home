@@ -274,7 +274,7 @@ const TemperatureDevice = ({data}) =>{
             />
 
             <TouchableOpacity onPress={handleUpdate}>
-                <Ionicons name={"reload-outline"} size={75} color={'#ffffff'} />
+                <Ionicons name={"checkmark-circle"} size={75} color={'#ffffff'} />
             </TouchableOpacity>
 
 
