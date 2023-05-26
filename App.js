@@ -59,7 +59,7 @@ const Main = () =>{
                             iconName=focused?'home'
                                 : 'home-outline';
                         }
-                        else if (route.name === 'Favourites') {
+                        else if (route.name === 'Dashboard') {
                             iconName = focused ? 'bookmark' : 'bookmark-outline';
                         }
                         else if (route.name === 'Search') {
@@ -89,7 +89,7 @@ const Main = () =>{
                     },
                 })}
                 >
-                    <Tabs.Screen name={"Favourites"} component={Saved} />
+                    <Tabs.Screen name={"Dashboard"} component={Saved} />
                     <Tabs.Screen name={"Rooms"} component={Home} tabBarShowLabel={false} />
                     <Tabs.Screen name={"Search"} component={Search} />
                     {/*<Tabs.Screen name={"Add"} component={Add} />*/}

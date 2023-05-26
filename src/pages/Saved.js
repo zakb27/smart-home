@@ -97,7 +97,7 @@ const SavedMain = ({navigation})=>{
                 right:0,
             }}></LinearGradient>
             <View style={styles.titleContainer}>
-                <Text style={styles.mainTitle}>Favourites</Text>
+                <Text style={styles.mainTitle}>Dashboard</Text>
 
             <Menu onSelect={value => navigation.navigate(`${value}`)}>
                 <MenuTrigger customStyles={triggerStyles} children={<Ionicons  name={'add'} size={50} color={'#8DA0E2'} />} />
