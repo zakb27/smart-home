@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
     mainTitle:{
         color:'#8da0e2',
         fontSize:40,
-        paddingHorizontal:25,
+        paddingHorizontal:35,
         display:'flex',
         justifyContent:'flex-start',
         alignItems:'flex-start',
