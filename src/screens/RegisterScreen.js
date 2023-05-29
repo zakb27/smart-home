@@ -37,17 +37,21 @@ const RegisterScreen = ({navigation}) => {
 
     const uploadImage = async () => {
         try{
-            const storage = getStorage();
-            const response = await fetch(image)
-            const blobFile = await response.blob()
-            const newRef = uuid.v4();
-            changeRef(newRef.toString())
-            const storageRef = ref(storage, `images/${newRef.toString()}`);
-            const newFile = new File([blobFile], `images/${newRef.toString()}`, {
-                type: 'image/jpeg',
-            })
-            uploadBytesResumable(storageRef, newFile).then((snapshot) => {
-            });
+            let newRef='placeholder.png';
+            if(image){
+                const storage = getStorage();
+                const response = await fetch(image)
+                const blobFile = await response.blob()
+                newRef = uuid.v4();
+                changeRef(newRef.toString())
+                const storageRef = ref(storage, `images/${newRef.toString()}`);
+                const newFile = new File([blobFile], `images/${newRef.toString()}`, {
+                    type: 'image/jpeg',
+                })
+                uploadBytesResumable(storageRef, newFile).then((snapshot) => {
+                });
+            }
+
 
             const item = email.toLowerCase()
             const thirdRef = await collection(db,'users',item,'details')

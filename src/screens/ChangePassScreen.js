@@ -159,12 +159,16 @@ const ChangePassScreen = ({navigation}) =>{
                         value={newPass}
                         onChangeText={text => setNewPass(text.toLowerCase())}
                         style={styles.textInput}
+                        secureTextEntry
+
                     />
                     <TextInput
                         placeholder="Confirm password: "
                         value={confirmPass}
                         onChangeText={text => setConfirmPass(text.toLowerCase())}
                         style={styles.textInput}
+                        secureTextEntry
+
                     />
                     <TouchableOpacity
                         onPress={handlePassChange}
