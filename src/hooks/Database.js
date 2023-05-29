@@ -1,5 +1,4 @@
-import rooms from '../utils/rooms.json'
-import devices from '../utils/devices.json'
+
 // import {key} from '../../assets/key'
 import key from '../assets/key'
 import {addDoc, collection, deleteDoc, doc, getDoc,
@@ -7,9 +6,9 @@ import {addDoc, collection, deleteDoc, doc, getDoc,
 import {auth, db} from "../../firebase";
 
 
-export const createSchedule = async(data) =>{
-    try{
-        const response = await fetch(key+'/createSchedule', {
+export const createSchedule = async(data) => {
+    try {
+        const response = await fetch(key + '/createSchedule', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -17,13 +16,11 @@ export const createSchedule = async(data) =>{
             body: JSON.stringify(data)
         });
         return await response.json();
-    }
-    catch(e){
+    } catch (e) {
         console.error(e)
 
     }
 }
-
 export const deleteSchedule = async(data) =>{
 
     try{
@@ -127,7 +124,6 @@ export const fetchRooms = async() =>{
     }
     catch(error){
         console.error(error)
-        return (rooms.rooms);
     }
 }
 
@@ -240,6 +236,7 @@ export const deleteRoom = async(id) =>{
 
 export const updateRoom = async(name,devices,id,removeDevices) =>{
     try{
+        const email = auth.currentUser?.email
 
         if (devices.length>0) {
 
@@ -605,7 +602,8 @@ export const fetchDevices = async() =>{
 
     }
     catch(error){
-        // console.error(error)
-        return (devices.devices);
+        console.error(error)
     }
 }
+
+

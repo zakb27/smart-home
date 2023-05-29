@@ -58,6 +58,7 @@ const AddRoomScreen = ({navigation})=>{
             }
             setOpen(false)
             setSelectedRooms([])
+            setIsEnabled({})
         }
         catch(e){
             changeSnack(true)
@@ -194,6 +195,7 @@ const AddRoomScreen = ({navigation})=>{
                    onBackdropPress={() => {
                        setOpen(false)
                        setSelectedRooms([])
+                       setIsEnabled({})
                    }
             }
             >

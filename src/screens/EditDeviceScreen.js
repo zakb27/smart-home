@@ -25,6 +25,10 @@ const EditDeviceScreen = ({navigation}) =>{
     const handleRemove = async(data) =>{
         await deletePromptDevice(data.id);
         updateData('Done');
+        getRegisteredDevices().then((data)=>{
+            setDevices(data)
+        })
+
     }
 
 

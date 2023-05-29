@@ -34,7 +34,7 @@ const EditRoomScreen = ({navigation}) =>{
     const [selectedDevices,changeSelectedDevices] = useState([])
     const [isFocus, setIsFocus] = useState(false);
     const [removeDevices,changeRemoveDevices] = useState([])
-
+    const [original,setOriginal] = useState('');
     const [currentRoomID,changeRoomID] = useState('');
     const [snackVisible,changeSnack] = useState(false)
     const [errorMessage,changeErrorMessage] = useState("Error");
@@ -45,7 +45,8 @@ const EditRoomScreen = ({navigation}) =>{
             const docRef = await collection(db, 'users', email, 'rooms')
             const docsSnap = await getDocs(docRef);
             docsSnap.forEach(doc => {
-                if (doc.data().name.toLowerCase() === name.toLowerCase()) {
+                if ((doc.data().name.toLowerCase() === name.toLowerCase()) &&
+                    (doc.data().name.toLowerCase()!== original.toLowerCase())) {
                     setOpen(false)
                     setName('')
                     setItems([])
@@ -60,7 +61,6 @@ const EditRoomScreen = ({navigation}) =>{
                     throw new Error('Name taken');
                 }
             })
-
             await updateRoom(name, selectedDevices, currentRoomID, removeDevices).then(() => {
                 console.log('updated room')
                 setOpen(false)
@@ -183,6 +183,7 @@ const EditRoomScreen = ({navigation}) =>{
                                               onPress={() => {
                                                   setValue(item)
                                                   setName(item.name)
+                                                  setOriginal(item.name)
                                                   setOpen(true)
                                                   others(item.devices)
                                                   getDevices(item.id)

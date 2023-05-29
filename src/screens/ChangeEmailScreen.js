@@ -78,10 +78,7 @@ const ChangeEmailScreen = ({navigation}) =>{
     }
 
     return(
-        <SafeAreaView
-            style={styles.container}
-
-        >
+        <SafeAreaView style={styles.container}>
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,
                 position:"absolute",
