@@ -78,9 +78,9 @@ const ChangeEmailScreen = ({navigation}) =>{
     }
 
     return(
-        <KeyboardAvoidingView
+        <SafeAreaView
             style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
                 flex:1,
@@ -96,7 +96,9 @@ const ChangeEmailScreen = ({navigation}) =>{
                 </TouchableOpacity>
                 <Text style={styles.mainTitle}>Change email</Text>
             </View>
-            <View style={styles.addContainer}>
+            <KeyboardAvoidingView style={styles.addContainer}
+                                  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
                 <View style={styles.addContainer2}>
                     <View style={styles.imageContainer}>
                         <Svg
@@ -183,7 +185,7 @@ const ChangeEmailScreen = ({navigation}) =>{
                         <Text style={styles.buttonText}>Change Email</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
 
             {snackVisible&&(
                 <Snackbar
@@ -194,7 +196,7 @@ const ChangeEmailScreen = ({navigation}) =>{
 
                     }} />
             )}
-        </KeyboardAvoidingView>)
+        </SafeAreaView>)
 }
 export default ChangeEmailScreen
 

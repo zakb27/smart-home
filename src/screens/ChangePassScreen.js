@@ -61,9 +61,9 @@ const ChangePassScreen = ({navigation}) =>{
     }
 
     return(
-        <KeyboardAvoidingView
+        <SafeAreaView
             style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+
 
         >
             <LinearGradient colors={['#CDF4F0', '#C4CBFD', '#8DA0E2']} style={{
@@ -80,7 +80,7 @@ const ChangePassScreen = ({navigation}) =>{
                 </TouchableOpacity>
                 <Text style={styles.mainTitle}>Change password</Text>
             </View>
-            <View style={styles.addContainer}>
+            <KeyboardAvoidingView style={styles.addContainer}  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                 <View style={styles.addContainer2}>
                     <View style={styles.imageContainer}>
                         <Svg
@@ -173,7 +173,7 @@ const ChangePassScreen = ({navigation}) =>{
                         <Text style={styles.buttonText}>Change Password</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
 
             {snackVisible&&(
                 <Snackbar
@@ -184,7 +184,7 @@ const ChangePassScreen = ({navigation}) =>{
 
                     }} />
             )}
-        </KeyboardAvoidingView>)
+        </SafeAreaView>)
 }
 export default ChangePassScreen
 
