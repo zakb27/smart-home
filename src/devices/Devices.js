@@ -396,7 +396,7 @@ const WashingDevice = ({data}) =>{
                                           fontSize:20,
                                       }}
                                       sliderWidth={15}
-                                      thumbBorderWidth={10}
+                                      thumbBorderWidth={15}
                                       thumbRadius={15}
                                       isHideLines={true}
                                       isHideTailText={true}
@@ -422,7 +422,7 @@ const WashingDevice = ({data}) =>{
                                           fontSize:20,
                                       }}
                                       sliderWidth={15}
-                                      thumbBorderWidth={10}
+                                      thumbBorderWidth={15}
                                       thumbRadius={15}
                                       isHideLines={true}
                         />
@@ -928,8 +928,8 @@ const styles = StyleSheet.create({
     },
     tempView:{
         display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
+        // justifyContent:'center',
+        // alignItems:'center',
         flexDirection:"row",
         margin:0,
     },

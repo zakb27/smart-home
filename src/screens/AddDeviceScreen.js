@@ -275,6 +275,7 @@ const styles = StyleSheet.create({
     },
     scrollLimiter:{
         height:375,
+        alignItems:'center'
     },
     openingText:{
         color:'#8da0e2',
