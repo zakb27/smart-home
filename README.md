@@ -35,7 +35,8 @@ ip found in step 6
 8) Run npx expo start in the directory of smart-home, press a to run an android simulator(which must be open) or i to run an ios simulator. 
 9) The app should now be running the emulator ready to be used.
 
-![dashboard](https://github.com/zakb27/smart-home/assets/46377498/1d757f6b-65d8-410a-b9a7-42434956a5e7)
-![light](https://github.com/zakb27/smart-home/assets/46377498/5b41afcf-0bef-414f-8896-4031f6586127)
-![temperature](https://github.com/zakb27/smart-home/assets/46377498/0c302962-6884-4c7c-8c56-4bb0074f8bfe)
-![new_rooms](https://github.com/zakb27/smart-home/assets/46377498/4c1cee53-57fd-43f3-b224-903f900874ab)
+
+<img width="300" alt="Screenshot 2022-08-11 at 17 08 37" src="https://github.com/zakb27/smart-home/assets/46377498/1d757f6b-65d8-410a-b9a7-42434956a5e7">
+<img width="300" alt="Screenshot 2022-08-11 at 17 08 37" src="https://github.com/zakb27/smart-home/assets/46377498/5b41afcf-0bef-414f-8896-4031f6586127">
+<img width="300" alt="Screenshot 2022-08-11 at 17 08 37" src="https://github.com/zakb27/smart-home/assets/46377498/0c302962-6884-4c7c-8c56-4bb0074f8bfe">
+<img width="300" alt="Screenshot 2022-08-11 at 17 08 37" src="https://github.com/zakb27/smart-home/assets/46377498/4c1cee53-57fd-43f3-b224-903f900874ab">
